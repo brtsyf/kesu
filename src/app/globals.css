@@ -224,15 +224,9 @@
     z-index: 1;
   }
 
-  /* Product stage — sage field (not black, not white) */
+  /* Product stage — transparent; page atmosphere shows through */
   .kesu-product-stage {
-    background:
-      radial-gradient(
-        ellipse 80% 70% at 50% 42%,
-        color-mix(in srgb, var(--accent-soft) 55%, white) 0%,
-        color-mix(in srgb, var(--accent) 22%, #e4e8df) 48%,
-        #d5ddd0 100%
-      );
+    background: transparent;
   }
 }
 

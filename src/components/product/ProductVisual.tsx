@@ -105,7 +105,7 @@ export function ProductVisual({
                 : undefined
             }
           >
-            <div className="relative h-full w-full drop-shadow-[0_20px_40px_rgba(24,32,27,0.18)]">
+            <div className="relative h-full w-full drop-shadow-[0_18px_36px_rgba(24,32,27,0.14)]">
               <Image
                 src={bottleSrc}
                 alt={getImageAlt(bottle ?? image, alt)}
