@@ -59,7 +59,7 @@ export function ProductVisual({
       layoutId={shared ? layoutId : undefined}
       transition={shared ? sharedImageTransition : undefined}
       className={cn(
-        "relative overflow-hidden bg-dark aspect-[4/5]",
+        "relative overflow-hidden bg-surface aspect-[4/5]",
         className,
       )}
       style={{ borderRadius: 0 }}
@@ -81,7 +81,6 @@ export function ProductVisual({
               className="object-cover scale-[1.08]"
               draggable={false}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/20" />
           </div>
 
           <motion.div
@@ -106,7 +105,7 @@ export function ProductVisual({
                 : undefined
             }
           >
-            <div className="relative h-full w-full drop-shadow-[0_28px_50px_rgba(0,0,0,0.55)]">
+            <div className="relative h-full w-full drop-shadow-[0_20px_40px_rgba(24,32,27,0.18)]">
               <Image
                 src={bottleSrc}
                 alt={getImageAlt(bottle ?? image, alt)}
