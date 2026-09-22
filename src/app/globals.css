@@ -1,17 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f5f5f1;
+  --background: #f2f3ee;
   --foreground: #171817;
-  --muted: #6d706b;
+  --muted: #6a7168;
   --accent: #7d8f72;
   --accent-soft: #c5d1bc;
-  --border: #e2e2db;
-  --surface: #fafaf7;
-  --surface-elevated: #ffffff;
+  --accent-deep: #5f6f56;
+  --border: #d8ddd4;
+  --surface: #f7f8f3;
+  --surface-elevated: #fcfcf9;
   --dark: #18201b;
   --dark-muted: #9aa59a;
   --ring: #7d8f72;
+  --mist: color-mix(in srgb, var(--accent-soft) 38%, transparent);
   --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
   --header-height: 4.5rem;
 }
@@ -22,6 +24,7 @@
   --color-muted: var(--muted);
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
+  --color-accent-deep: var(--accent-deep);
   --color-border: var(--border);
   --color-surface: var(--surface);
   --color-surface-elevated: var(--surface-elevated);
@@ -58,7 +61,25 @@
   }
 
   body {
-    background: var(--background);
+    background-color: var(--background);
+    background-image:
+      radial-gradient(
+        ellipse 90% 55% at 0% -10%,
+        var(--mist),
+        transparent 58%
+      ),
+      radial-gradient(
+        ellipse 70% 45% at 100% 8%,
+        color-mix(in srgb, var(--accent) 10%, transparent),
+        transparent 55%
+      ),
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--accent-soft) 18%, var(--background)) 0%,
+        var(--background) 28%,
+        var(--background) 100%
+      );
+    background-attachment: fixed;
     color: var(--foreground);
     font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 1.0625rem;
@@ -117,8 +138,19 @@
     font-size: 0.75rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: var(--accent-deep);
     font-weight: 500;
+  }
+
+  .eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 1.25rem;
+    height: 1px;
+    margin-right: 0.65rem;
+    margin-bottom: 0.2em;
+    vertical-align: middle;
+    background: color-mix(in srgb, var(--accent) 75%, transparent);
   }
 
   .container-page {
@@ -129,15 +161,67 @@
   }
 
   .link-underline {
-    background-image: linear-gradient(currentColor, currentColor);
+    background-image: linear-gradient(var(--accent), var(--accent));
     background-position: 0 100%;
     background-repeat: no-repeat;
     background-size: 0% 1px;
-    transition: background-size 0.5s var(--ease-premium);
+    transition:
+      background-size 0.5s var(--ease-premium),
+      color 0.45s var(--ease-premium);
   }
 
   .link-underline:hover {
     background-size: 100% 1px;
+    color: var(--accent-deep);
+  }
+
+  .section-sage {
+    background:
+      linear-gradient(
+        165deg,
+        color-mix(in srgb, var(--accent-soft) 28%, var(--surface)) 0%,
+        var(--surface) 55%,
+        color-mix(in srgb, var(--accent) 6%, var(--surface)) 100%
+      );
+  }
+
+  .section-cta-glow {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .section-cta-glow::before,
+  .section-cta-glow::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(48px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .section-cta-glow::before {
+    width: min(70vw, 28rem);
+    height: min(70vw, 28rem);
+    left: -8%;
+    top: -30%;
+    background: color-mix(in srgb, var(--accent) 35%, transparent);
+    opacity: 0.55;
+  }
+
+  .section-cta-glow::after {
+    width: min(55vw, 22rem);
+    height: min(55vw, 22rem);
+    right: -6%;
+    bottom: -35%;
+    background: color-mix(in srgb, var(--accent-soft) 40%, transparent);
+    opacity: 0.4;
+  }
+
+  .section-cta-glow > * {
+    position: relative;
+    z-index: 1;
   }
 }
 

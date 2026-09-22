@@ -19,7 +19,7 @@ export function Benefits({ eyebrow, title, benefits, image }: BenefitsProps) {
       <Container>
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
           <Reveal className="lg:col-span-5 order-2 lg:order-1">
-            <div className="relative aspect-[3/4] overflow-hidden bg-surface">
+            <div className="relative aspect-[3/4] overflow-hidden bg-surface ring-1 ring-accent/10">
               {src ? (
                 <Image
                   src={src}

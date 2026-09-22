@@ -38,7 +38,7 @@ export function Header({ logoText, navigation }: HeaderProps) {
         className={cn(
           "fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter,border-color,box-shadow] duration-700 ease-[var(--ease-premium)]",
           scrolled || mobileOpen
-            ? "border-b border-border/80 bg-background/80 backdrop-blur-md"
+            ? "border-b border-accent/15 bg-background/75 backdrop-blur-md"
             : "border-b border-transparent bg-transparent",
         )}
       >
@@ -58,7 +58,7 @@ export function Header({ logoText, navigation }: HeaderProps) {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-[0.75rem] tracking-[0.14em] uppercase text-foreground/80 link-underline"
+                className="text-[0.75rem] tracking-[0.14em] uppercase text-foreground/75 hover:text-accent-deep link-underline"
               >
                 {item.label}
               </Link>

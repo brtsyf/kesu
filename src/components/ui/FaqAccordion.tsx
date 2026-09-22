@@ -9,7 +9,12 @@ function FaqItemRow({ item, index }: { item: FaqItem; index: number }) {
   const id = `faq-${index}`;
 
   return (
-    <div className="border-b border-border">
+    <div
+      className={cn(
+        "border-b border-border transition-colors",
+        open && "border-accent/30",
+      )}
+    >
       <h3>
         <button
           type="button"
@@ -17,14 +22,14 @@ function FaqItemRow({ item, index }: { item: FaqItem; index: number }) {
           aria-expanded={open}
           aria-controls={`${id}-panel`}
           onClick={() => setOpen((v) => !v)}
-          className="flex w-full items-center justify-between gap-6 py-6 text-left text-base md:text-lg tracking-tight transition-colors hover:text-accent"
+          className="flex w-full items-center justify-between gap-6 py-6 text-left text-base md:text-lg tracking-tight transition-colors hover:text-accent-deep"
         >
           <span>{item.question}</span>
           <span
             aria-hidden
             className={cn(
-              "text-muted transition-transform duration-500 ease-[var(--ease-premium)]",
-              open && "rotate-45",
+              "text-accent transition-transform duration-500 ease-[var(--ease-premium)]",
+              open && "rotate-45 text-accent-deep",
             )}
           >
             +

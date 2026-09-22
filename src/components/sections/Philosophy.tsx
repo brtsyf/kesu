@@ -16,7 +16,7 @@ export function Philosophy({ eyebrow, title, body, image }: PhilosophyProps) {
   const lines = title.split("\n");
 
   return (
-    <section className="py-24 md:py-32 bg-surface">
+    <section className="section-sage py-24 md:py-32">
       <Container>
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           <Reveal className="lg:col-span-5">

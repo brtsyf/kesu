@@ -5,11 +5,11 @@ type ButtonVariant = "primary" | "secondary" | "ghost" | "dark";
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "bg-foreground text-background hover:bg-foreground/90",
+    "bg-dark text-background hover:bg-accent-deep",
   secondary:
-    "border border-foreground/20 text-foreground hover:border-foreground/50",
-  ghost: "text-foreground hover:text-accent",
-  dark: "bg-background text-dark hover:bg-surface",
+    "border border-accent/35 text-foreground hover:border-accent hover:bg-accent-soft/25",
+  ghost: "text-foreground hover:text-accent-deep",
+  dark: "bg-background text-dark hover:bg-accent-soft/40",
 };
 
 type ButtonProps = {
@@ -32,7 +32,7 @@ export function Button({
   "aria-label": ariaLabel,
 }: ButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 px-7 py-3.5 text-[0.8125rem] tracking-[0.08em] uppercase transition-colors duration-500 ease-[var(--ease-premium)]",
+    "inline-flex items-center justify-center gap-2 px-7 py-3.5 text-[0.8125rem] tracking-[0.08em] uppercase transition-[color,background-color,border-color,box-shadow] duration-500 ease-[var(--ease-premium)]",
     variants[variant],
     className,
   );

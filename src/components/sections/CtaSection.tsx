@@ -13,10 +13,13 @@ export function CtaSection({ title, description, label, href }: CtaSectionProps)
   const lines = title.split("\n");
 
   return (
-    <section className="py-24 md:py-32 bg-dark text-background">
+    <section className="section-cta-glow py-24 md:py-32 bg-dark text-background">
       <Container>
         <Reveal>
           <div className="max-w-3xl">
+            <p className="mb-6 text-[0.75rem] tracking-[0.16em] uppercase text-accent-soft/90">
+              Keşfet
+            </p>
             <h2 className="heading-section text-balance mb-6">
               {lines.map((line) => (
                 <span key={line} className="block">

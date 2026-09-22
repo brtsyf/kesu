@@ -5,7 +5,7 @@ import { BrandLogo } from "@/components/brand/BrandLogo";
 
 export function Footer({ settings }: { settings: SiteSettings }) {
   return (
-    <footer className="mt-auto border-t border-border bg-background">
+    <footer className="mt-auto border-t border-accent/15 bg-surface">
       <Container className="py-16 md:py-20">
         <div className="grid gap-12 md:grid-cols-3 md:gap-8">
           <div className="max-w-sm">
