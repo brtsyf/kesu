@@ -25,8 +25,8 @@ export default async function ProductsPage() {
             Ürünler
           </h1>
           <p className="text-muted max-w-xl mb-14 md:mb-20 leading-relaxed">
-            Sade bir rutin için seçilmiş formüller. Her ürün tek başına güçlü,
-            birlikte dengeli.
+            Lifting, anti-aging, whitening, eyes ve hair — profesyonel
+            mezoterapi solüsyonları.
           </p>
         </Reveal>
         <ProductCatalog products={products} categories={categories} />

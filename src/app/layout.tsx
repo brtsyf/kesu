@@ -9,12 +9,18 @@ const manrope = Manrope({
   display: "swap",
 });
 
-export const metadata: Metadata = buildMetadata({
-  title: "Kesu — Premium Bakım",
-  description:
-    "Modern bakım rutini için minimal, bilimsel ve premium cilt bakım ürünleri.",
-  path: "/",
-});
+export const metadata: Metadata = {
+  ...buildMetadata({
+    title: "Kesu — Premium Bakım",
+    description:
+      "Modern bakım rutini için minimal, bilimsel ve premium cilt bakım ürünleri.",
+    path: "/",
+  }),
+  icons: {
+    icon: [{ url: "/brand/kesu-logo.png", type: "image/png" }],
+    apple: [{ url: "/brand/kesu-logo.png" }],
+  },
+};
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
