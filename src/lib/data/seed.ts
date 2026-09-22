@@ -46,7 +46,7 @@ const placeholders = {
   hairBg: img("/images/products/hair-bg.webp", "Kesu Hair arka plan"),
   editorial: {
     hero: img(
-      "/images/editorial/hero.jpg",
+      "/images/editorial/hero-portrait.jpg",
       "Kesu — doğal ışıltılı cilt bakımı",
     ),
     philosophy: img(

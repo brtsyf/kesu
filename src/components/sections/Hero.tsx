@@ -12,7 +12,8 @@ const ease = [0.22, 1, 0.36, 1] as const;
 export function Hero({ content }: { content: HeroContent }) {
   const reduced = useReducedMotion();
   const lines = content.headline.split("\n");
-  const imageSrc = getImageUrl(content.image, 1800);
+  const imageSrc =
+    getImageUrl(content.image, 1800) || "/images/editorial/hero-portrait.jpg";
 
   const fade = (delay: number) =>
     reduced
@@ -82,12 +83,12 @@ export function Hero({ content }: { content: HeroContent }) {
             {imageSrc ? (
               <Image
                 src={imageSrc}
-                alt={getImageAlt(content.image, "Kesu cilt bakımı")}
+                alt={getImageAlt(content.image, "Kesu — cilt bakımı")}
                 fill
                 priority
                 quality={92}
                 sizes="(max-width: 1024px) 100vw, 55vw"
-                className="object-cover object-[center_20%]"
+                className="object-cover object-center"
               />
             ) : null}
           </div>
