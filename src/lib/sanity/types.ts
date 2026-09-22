@@ -37,6 +37,10 @@ export type Product = {
   comparePrice?: number;
   images: SanityImage[];
   thumbnail: SanityImage;
+  /** Cutout / soft-masked bottle layer */
+  bottle?: SanityImage;
+  /** Fixed liquid / splash backdrop */
+  backdrop?: SanityImage;
   category?: Category;
   ingredients: string[];
   benefits: string[];
@@ -66,6 +70,8 @@ export type HeroContent = {
   primaryCta: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
   image: SanityImage;
+  bottle?: SanityImage;
+  backdrop?: SanityImage;
 };
 
 export type Testimonial = {

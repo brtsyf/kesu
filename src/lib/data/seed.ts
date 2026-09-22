@@ -12,24 +12,38 @@ const img = (url: string, alt: string) => ({
   alt,
 });
 
-/** Catalog product photos (extracted from Kesu Katalog PDF) */
+/** Catalog product photos — layered bottle + fixed liquid backdrop */
 const placeholders = {
   lift: img("/images/products/six-lift.jpg", "Kesu Six Lift ampul"),
-  liftSplash: img("/images/products/six-lift-splash.jpg", "Kesu Six Lift görsel"),
+  liftBottle: img(
+    "/images/products/six-lift-bottle.webp",
+    "Kesu Six Lift ampul",
+  ),
+  liftBg: img("/images/products/six-lift-bg.jpg", "Kesu Six Lift arka plan"),
   aging: img("/images/products/anti-aging.jpg", "Kesu Anti-Aging ampul"),
-  agingSplash: img(
-    "/images/products/anti-aging-splash.jpg",
-    "Kesu Anti-Aging görsel",
+  agingBottle: img(
+    "/images/products/anti-aging-bottle.webp",
+    "Kesu Anti-Aging ampul",
+  ),
+  agingBg: img(
+    "/images/products/anti-aging-bg.jpg",
+    "Kesu Anti-Aging arka plan",
   ),
   white: img("/images/products/white-effect.jpg", "Kesu White Effect ampul"),
-  whiteSplash: img(
-    "/images/products/white-effect-splash.jpg",
-    "Kesu White Effect görsel",
+  whiteBottle: img(
+    "/images/products/white-effect-bottle.webp",
+    "Kesu White Effect ampul",
+  ),
+  whiteBg: img(
+    "/images/products/white-effect-bg.jpg",
+    "Kesu White Effect arka plan",
   ),
   eyes: img("/images/products/eyes.jpg", "Kesu Eyes ampul"),
-  eyesSplash: img("/images/products/eyes-splash.jpg", "Kesu Eyes görsel"),
+  eyesBottle: img("/images/products/eyes-bottle.webp", "Kesu Eyes ampul"),
+  eyesBg: img("/images/products/eyes-bg.jpg", "Kesu Eyes arka plan"),
   hair: img("/images/products/hair.jpg", "Kesu Hair ampul"),
-  hairSplash: img("/images/products/hair-splash.jpg", "Kesu Hair görsel"),
+  hairBottle: img("/images/products/hair-bottle.webp", "Kesu Hair ampul"),
+  hairBg: img("/images/products/hair-bg.jpg", "Kesu Hair arka plan"),
   editorial: {
     hero: img("/images/products/six-lift.jpg", "Kesu profesyonel bakım"),
     philosophy: img(
@@ -116,7 +130,9 @@ export const products: Product[] = [
     description:
       "Kesu Lifting Mezoterapi Solüsyonu; sarkma ve elastikiyet kaybı, ince kırışıklıklar, donuk ve yorgun cilt ile cilt tonu eşitsizliklerine yönelik geliştirilmiştir. Somon DNA ile hücre yenileyici bakım sunar; kolajen üretimini destekler, cilt tonunu dengeler ve parlaklık kazandırır.",
     thumbnail: placeholders.lift,
-    images: [placeholders.lift, placeholders.liftSplash],
+    bottle: placeholders.liftBottle,
+    backdrop: placeholders.liftBg,
+    images: [placeholders.liftBottle, placeholders.liftBg, placeholders.lift],
     category: categories[0],
     ingredients: [
       "Aqua",
@@ -162,7 +178,13 @@ export const products: Product[] = [
     description:
       "Kesu Anti-Aging Mezoterapi Solüsyonu; mimik çizgileri, statik kırışıklıklar, mat ve canlılığını yitirmiş cilt, yaşlanma kaynaklı elastikiyet kaybı ile göz çevresi kırışıklıkları ve cilt kuruluğuna yönelik formüle edilmiştir. Nem dengesini destekler, serbest radikallere karşı koruma sağlar ve yorgun cildi canlandırır.",
     thumbnail: placeholders.aging,
-    images: [placeholders.aging, placeholders.agingSplash],
+    bottle: placeholders.agingBottle,
+    backdrop: placeholders.agingBg,
+    images: [
+      placeholders.agingBottle,
+      placeholders.agingBg,
+      placeholders.aging,
+    ],
     category: categories[1],
     ingredients: [
       "Hyaluronic Acid",
@@ -200,7 +222,13 @@ export const products: Product[] = [
     description:
       "Kesu White Effect Mezoterapi Solüsyonu; güneş lekeleri, melazma, akne sonrası lekeler ile donuk cilt görünümüne yönelik geliştirilmiştir. Cilt tonunu eşitler, ışıltı kazandırır, serbest radikallere karşı koruma sunar ve retinol ile hücre yenilenmesini destekler. Yüz, boyun, el üstü ve dekolte bölgelerinde kullanılabilir.",
     thumbnail: placeholders.white,
-    images: [placeholders.white, placeholders.whiteSplash],
+    bottle: placeholders.whiteBottle,
+    backdrop: placeholders.whiteBg,
+    images: [
+      placeholders.whiteBottle,
+      placeholders.whiteBg,
+      placeholders.white,
+    ],
     category: categories[2],
     ingredients: [
       "Ascorbic Acid",
@@ -244,7 +272,9 @@ export const products: Product[] = [
     description:
       "Kesu Eyes Mezoterapi Solüsyonu; göz altı torbaları, morluklar, ince çizgiler ve göz çevresi ton eşitsizliklerine yönelik özel formüle edilmiştir. İnce çizgilerin görünümünü azaltmaya yardımcı olur, koyu halka ve yorgunluk görünümünü hafifletir, aydınlatır, nemlendirir ve sıkılaştırıcı bir etki sunar.",
     thumbnail: placeholders.eyes,
-    images: [placeholders.eyes, placeholders.eyesSplash],
+    bottle: placeholders.eyesBottle,
+    backdrop: placeholders.eyesBg,
+    images: [placeholders.eyesBottle, placeholders.eyesBg, placeholders.eyes],
     category: categories[3],
     ingredients: [
       "Ascorbic Acid",
@@ -287,7 +317,9 @@ export const products: Product[] = [
     description:
       "Kesu Hair Mezoterapi Solüsyonu; androgenetik alopesi, kadın tipi yaygın dökülme, mevsimsel dökülmeler, zayıf/ince teller ile stres veya gebelik sonrası dökülmeye yönelik geliştirilmiştir. Saç köklerini besler, yeni saç oluşumunu destekler, telleri kalınlaştırmaya yardımcı olur ve dolaşımı artırarak saç derisini canlandırır. Tüm saç tiplerine uygundur.",
     thumbnail: placeholders.hair,
-    images: [placeholders.hair, placeholders.hairSplash],
+    bottle: placeholders.hairBottle,
+    backdrop: placeholders.hairBg,
+    images: [placeholders.hairBottle, placeholders.hairBg, placeholders.hair],
     category: categories[4],
     ingredients: [
       "Aqua",
@@ -332,6 +364,8 @@ export const homePage: HomePageContent = {
     primaryCta: { label: "Ürünleri Keşfet", href: "/urunler" },
     secondaryCta: { label: "Marka Hikayesi", href: "/hakkimizda" },
     image: placeholders.editorial.hero,
+    bottle: placeholders.liftBottle,
+    backdrop: placeholders.liftBg,
   },
   featuredEyebrow: "Öne çıkanlar",
   featuredTitle: "Klinik rutinin temel solüsyonları.",

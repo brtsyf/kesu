@@ -73,7 +73,12 @@ export default async function ProductDetailPage({
         <Container>
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
             <div className="lg:col-span-6">
-              <ProductGallery images={gallery} title={product.title} />
+              <ProductGallery
+                images={gallery}
+                title={product.title}
+                bottle={product.bottle}
+                backdrop={product.backdrop}
+              />
             </div>
             <div className="lg:col-span-6 lg:pt-4">
               {product.category ? (

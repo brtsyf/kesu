@@ -1,7 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
+import { ProductVisual } from "@/components/product/ProductVisual";
 import { cn } from "@/lib/utils/cn";
 import type { Product } from "@/lib/sanity/types";
 
@@ -12,32 +11,20 @@ type ProductCardProps = {
 };
 
 export function ProductCard({ product, className, large }: ProductCardProps) {
-  const src = getImageUrl(product.thumbnail ?? product.images?.[0], large ? 1400 : 900);
-
   return (
     <Link
       href={`/urunler/${product.slug}`}
       className={cn("group block", className)}
     >
-      <div
-        className={cn(
-          "relative overflow-hidden bg-surface mb-5",
-          "aspect-[4/5]",
-        )}
-      >
-        {src ? (
-          <Image
-            src={src}
-            alt={getImageAlt(product.thumbnail, product.title)}
-            fill
-            sizes={
-              large
-                ? "(max-width: 768px) 100vw, 55vw"
-                : "(max-width: 768px) 100vw, 33vw"
-            }
-            className="object-cover transition-transform duration-700 ease-[var(--ease-premium)] group-hover:scale-[1.03]"
-          />
-        ) : null}
+      <div className="mb-5">
+        <ProductVisual
+          bottle={product.bottle}
+          backdrop={product.backdrop}
+          image={product.thumbnail ?? product.images?.[0]}
+          alt={product.title}
+          large={large}
+          className="transition-[box-shadow] duration-700 ease-[var(--ease-premium)] group-hover:shadow-[0_24px_60px_rgba(24,32,27,0.18)]"
+        />
       </div>
       <div className="flex items-start justify-between gap-4">
         <div>

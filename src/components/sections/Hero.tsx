@@ -1,17 +1,15 @@
 "use client";
 
-import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
+import { ProductVisual } from "@/components/product/ProductVisual";
 import type { HeroContent } from "@/lib/sanity/types";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Hero({ content }: { content: HeroContent }) {
   const reduced = useReducedMotion();
-  const imageSrc = getImageUrl(content.image, 1600);
   const lines = content.headline.split("\n");
 
   const fade = (delay: number) =>
@@ -78,18 +76,15 @@ export function Hero({ content }: { content: HeroContent }) {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.55, ease }}
         >
-          <div className="relative aspect-[4/5] md:aspect-[5/6] lg:aspect-[4/5] xl:ml-8 overflow-hidden bg-surface">
-            {imageSrc ? (
-              <Image
-                src={imageSrc}
-                alt={getImageAlt(content.image, "Kesu ürün görseli")}
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 55vw"
-                className="object-cover"
-              />
-            ) : null}
-          </div>
+          <ProductVisual
+            bottle={content.bottle}
+            backdrop={content.backdrop}
+            image={content.image}
+            alt="Kesu ürün görseli"
+            priority
+            large
+            className="md:aspect-[5/6] lg:aspect-[4/5] xl:ml-8 shadow-[0_32px_80px_rgba(24,32,27,0.16)]"
+          />
         </motion.div>
       </Container>
     </section>
