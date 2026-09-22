@@ -59,7 +59,7 @@ export function ProductVisual({
       layoutId={shared ? layoutId : undefined}
       transition={shared ? sharedImageTransition : undefined}
       className={cn(
-        "relative overflow-hidden bg-surface aspect-[4/5]",
+        "kesu-product-stage relative overflow-hidden aspect-[4/5]",
         className,
       )}
       style={{ borderRadius: 0 }}

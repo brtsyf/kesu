@@ -19,14 +19,14 @@ const placeholders = {
     "/images/products/six-lift-bottle.webp",
     "Kesu Six Lift ampul",
   ),
-  liftBg: img("/images/products/six-lift-bg.webp", "Kesu Six Lift arka plan"),
+  liftBg: img("/images/products/six-lift-bg.jpg", "Kesu Six Lift arka plan"),
   aging: img("/images/products/anti-aging.jpg", "Kesu Anti-Aging ampul"),
   agingBottle: img(
     "/images/products/anti-aging-bottle.webp",
     "Kesu Anti-Aging ampul",
   ),
   agingBg: img(
-    "/images/products/anti-aging-bg.webp",
+    "/images/products/anti-aging-bg.jpg",
     "Kesu Anti-Aging arka plan",
   ),
   white: img("/images/products/white-effect.jpg", "Kesu White Effect ampul"),
@@ -35,15 +35,15 @@ const placeholders = {
     "Kesu White Effect ampul",
   ),
   whiteBg: img(
-    "/images/products/white-effect-bg.webp",
+    "/images/products/white-effect-bg.jpg",
     "Kesu White Effect arka plan",
   ),
   eyes: img("/images/products/eyes.jpg", "Kesu Eyes ampul"),
   eyesBottle: img("/images/products/eyes-bottle.webp", "Kesu Eyes ampul"),
-  eyesBg: img("/images/products/eyes-bg.webp", "Kesu Eyes arka plan"),
+  eyesBg: img("/images/products/eyes-bg.jpg", "Kesu Eyes arka plan"),
   hair: img("/images/products/hair.jpg", "Kesu Hair ampul"),
   hairBottle: img("/images/products/hair-bottle.webp", "Kesu Hair ampul"),
-  hairBg: img("/images/products/hair-bg.webp", "Kesu Hair arka plan"),
+  hairBg: img("/images/products/hair-bg.jpg", "Kesu Hair arka plan"),
   editorial: {
     hero: img("/images/products/six-lift.jpg", "Kesu profesyonel bakım"),
     philosophy: img(
