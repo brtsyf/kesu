@@ -1,6 +1,7 @@
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { IntroScreen } from "@/components/sections/IntroScreen";
+import { MotionProvider } from "@/components/animation/MotionProvider";
 import { getSiteSettings } from "@/lib/sanity/fetch";
 
 export default async function SiteLayout({
@@ -11,7 +12,7 @@ export default async function SiteLayout({
   const settings = await getSiteSettings();
 
   return (
-    <>
+    <MotionProvider>
       <IntroScreen
         brand={settings.logoText}
         line={"Klinik sonuç.\nKesin formül."}
@@ -20,6 +21,6 @@ export default async function SiteLayout({
       <Header logoText={settings.logoText} navigation={settings.navigation} />
       <main className="flex-1">{children}</main>
       <Footer settings={settings} />
-    </>
+    </MotionProvider>
   );
 }

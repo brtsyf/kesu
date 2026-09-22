@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
+import { sharedImageTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils/cn";
 import type { SanityImage } from "@/lib/sanity/types";
 
@@ -15,8 +17,10 @@ type ProductVisualProps = {
   className?: string;
   priority?: boolean;
   large?: boolean;
-  /** Idle float animation for the bottle */
+  /** Idle float animation for the bottle (deferred until shared morph settles) */
   animate?: boolean;
+  /** Shared-element id — same slug on card + detail */
+  layoutId?: string;
 };
 
 export function ProductVisual({
@@ -28,6 +32,7 @@ export function ProductVisual({
   priority,
   large,
   animate = true,
+  layoutId,
 }: ProductVisualProps) {
   const reduced = useReducedMotion();
   const bottleSrc = getImageUrl(bottle ?? image, large ? 1600 : 1200);
@@ -35,12 +40,29 @@ export function ProductVisual({
   const layered = Boolean(bottleSrc && backdropSrc);
   const singleSrc = bottleSrc || getImageUrl(image, large ? 1600 : 1200);
 
+  const [floatReady, setFloatReady] = useState(false);
+  useEffect(() => {
+    if (!animate || reduced) {
+      setFloatReady(false);
+      return;
+    }
+    // Let shared-element morph finish before idle float
+    const delay = layoutId ? 950 : 0;
+    const timer = window.setTimeout(() => setFloatReady(true), delay);
+    return () => window.clearTimeout(timer);
+  }, [animate, layoutId, reduced]);
+
+  const shared = Boolean(layoutId) && !reduced;
+
   return (
-    <div
+    <motion.div
+      layoutId={shared ? layoutId : undefined}
+      transition={shared ? sharedImageTransition : undefined}
       className={cn(
         "relative overflow-hidden bg-dark aspect-[4/5]",
         className,
       )}
+      style={{ borderRadius: 0 }}
     >
       {layered ? (
         <>
@@ -57,6 +79,7 @@ export function ProductVisual({
                   : "(max-width: 768px) 100vw, 33vw"
               }
               className="object-cover scale-[1.08]"
+              draggable={false}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/20" />
           </div>
@@ -64,23 +87,23 @@ export function ProductVisual({
           <motion.div
             className="absolute inset-0 flex items-center justify-center p-[8%] md:p-[10%]"
             animate={
-              animate && !reduced
+              floatReady
                 ? { y: [0, -10, 0], rotate: [0, 0.6, 0] }
-                : undefined
+                : { y: 0, rotate: 0 }
             }
             transition={
-              animate && !reduced
+              floatReady
                 ? {
                     duration: 6.5,
                     repeat: Infinity,
                     ease: "easeInOut",
                   }
-                : undefined
+                : { duration: 0.4 }
             }
             whileHover={
-              reduced
-                ? undefined
-                : { y: -14, scale: 1.03, transition: { duration: 0.55 } }
+              floatReady && !reduced
+                ? { y: -14, scale: 1.03, transition: { duration: 0.55 } }
+                : undefined
             }
           >
             <div className="relative h-full w-full drop-shadow-[0_28px_50px_rgba(0,0,0,0.55)]">
@@ -96,6 +119,7 @@ export function ProductVisual({
                     : "(max-width: 768px) 70vw, 28vw"
                 }
                 className="object-contain"
+                draggable={false}
               />
             </div>
           </motion.div>
@@ -113,8 +137,9 @@ export function ProductVisual({
               : "(max-width: 768px) 100vw, 33vw"
           }
           className="object-cover"
+          draggable={false}
         />
       ) : null}
-    </div>
+    </motion.div>
   );
 }

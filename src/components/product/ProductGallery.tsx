@@ -2,28 +2,33 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { useReducedMotion } from "framer-motion";
 import { ProductVisual } from "@/components/product/ProductVisual";
 import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
+import { productImageLayoutId } from "@/lib/motion";
 import { cn } from "@/lib/utils/cn";
 import type { SanityImage } from "@/lib/sanity/types";
 
 export function ProductGallery({
   images,
   title,
+  slug,
   bottle,
   backdrop,
 }: {
   images: SanityImage[];
   title: string;
+  slug: string;
   bottle?: SanityImage;
   backdrop?: SanityImage;
 }) {
+  const reduced = useReducedMotion();
   const gallery = images.length ? images : [];
   const [active, setActive] = useState(0);
   const hasLayers = Boolean(bottle && backdrop);
   const showLayered = hasLayers && active === 0;
   const current = gallery[active] ?? gallery[0];
-  const src = getImageUrl(current, 1600);
+  const layoutId = reduced ? undefined : productImageLayoutId(slug);
 
   if (!gallery.length && !hasLayers) {
     return (
@@ -42,21 +47,18 @@ export function ProductGallery({
           alt={title}
           priority
           large
+          animate
+          layoutId={layoutId}
         />
       ) : (
-        <div className="relative aspect-[4/5] overflow-hidden bg-surface">
-          {src ? (
-            <Image
-              src={src}
-              alt={getImageAlt(current, title)}
-              fill
-              priority
-              quality={92}
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
-            />
-          ) : null}
-        </div>
+        <ProductVisual
+          image={current}
+          alt={title}
+          priority
+          large
+          animate={false}
+          layoutId={active === 0 ? layoutId : undefined}
+        />
       )}
       {gallery.length > 1 ? (
         <div className="grid grid-cols-4 gap-3">

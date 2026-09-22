@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { ProductGallery } from "@/components/product/ProductGallery";
+import { ProductDetailInfo } from "@/components/product/ProductDetailInfo";
 import { ProductCard } from "@/components/product/ProductCard";
 import { Reveal } from "@/components/animation/Reveal";
-import { Button } from "@/components/ui/Button";
 import { getImageUrl } from "@/lib/sanity/image";
 import { getProductBySlug, getProducts } from "@/lib/sanity/fetch";
 import { buildMetadata, productJsonLd } from "@/lib/seo";
@@ -76,66 +76,13 @@ export default async function ProductDetailPage({
               <ProductGallery
                 images={gallery}
                 title={product.title}
+                slug={product.slug}
                 bottle={product.bottle}
                 backdrop={product.backdrop}
               />
             </div>
-            <div className="lg:col-span-6 lg:pt-4">
-              {product.category ? (
-                <p className="eyebrow mb-4">{product.category.title}</p>
-              ) : null}
-              <h1 className="heading-display text-balance mb-4">
-                {product.title}
-              </h1>
-              <p className="text-muted text-lg mb-10 max-w-md leading-relaxed">
-                {product.shortDescription}
-              </p>
-              <Button href="/iletisim" className="mb-14">
-                Bilgi Al
-              </Button>
-
-              <div className="space-y-10 border-t border-border pt-10">
-                <div>
-                  <h2 className="text-sm tracking-[0.14em] uppercase mb-3">
-                    Açıklama
-                  </h2>
-                  <p className="text-muted leading-relaxed max-w-lg">
-                    {product.description}
-                  </p>
-                </div>
-                {product.benefits?.length ? (
-                  <div>
-                    <h2 className="text-sm tracking-[0.14em] uppercase mb-3">
-                      Faydalar
-                    </h2>
-                    <ul className="space-y-2 text-muted">
-                      {product.benefits.map((b) => (
-                        <li key={b}>{b}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
-                {product.usage ? (
-                  <div>
-                    <h2 className="text-sm tracking-[0.14em] uppercase mb-3">
-                      Kullanım
-                    </h2>
-                    <p className="text-muted leading-relaxed max-w-lg">
-                      {product.usage}
-                    </p>
-                  </div>
-                ) : null}
-                {product.ingredients?.length ? (
-                  <div>
-                    <h2 className="text-sm tracking-[0.14em] uppercase mb-3">
-                      İçerikler
-                    </h2>
-                    <p className="text-muted leading-relaxed max-w-lg">
-                      {product.ingredients.join(" · ")}
-                    </p>
-                  </div>
-                ) : null}
-              </div>
+            <div className="lg:col-span-6">
+              <ProductDetailInfo product={product} />
             </div>
           </div>
         </Container>

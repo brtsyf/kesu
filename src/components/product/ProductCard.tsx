@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
 import { ProductVisual } from "@/components/product/ProductVisual";
+import { productImageLayoutId } from "@/lib/motion";
 import { cn } from "@/lib/utils/cn";
 import type { Product } from "@/lib/sanity/types";
 
@@ -11,10 +15,17 @@ type ProductCardProps = {
 };
 
 export function ProductCard({ product, className, large }: ProductCardProps) {
+  const reduced = useReducedMotion();
+  const layoutId = reduced
+    ? undefined
+    : productImageLayoutId(product.slug);
+
   return (
     <Link
       href={`/urunler/${product.slug}`}
+      scroll
       className={cn("group block", className)}
+      prefetch
     >
       <div className="mb-5">
         <ProductVisual
@@ -23,6 +34,8 @@ export function ProductCard({ product, className, large }: ProductCardProps) {
           image={product.thumbnail ?? product.images?.[0]}
           alt={product.title}
           large={large}
+          animate={false}
+          layoutId={layoutId}
           className="transition-[box-shadow] duration-700 ease-[var(--ease-premium)] group-hover:shadow-[0_24px_60px_rgba(24,32,27,0.18)]"
         />
       </div>
