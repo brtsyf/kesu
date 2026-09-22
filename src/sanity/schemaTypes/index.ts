@@ -169,6 +169,7 @@ export const siteSettings = defineType({
       fields: [
         defineField({ name: "email", type: "string" }),
         defineField({ name: "phone", type: "string" }),
+        defineField({ name: "whatsapp", type: "string", title: "WhatsApp" }),
         defineField({ name: "address", type: "string" }),
       ],
     }),

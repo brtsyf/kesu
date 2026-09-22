@@ -29,11 +29,17 @@ export function Footer({ settings }: { settings: SiteSettings }) {
           </nav>
 
           <div className="flex flex-col gap-3 text-[0.95rem] text-muted">
-            <a href={`mailto:${settings.contact.email}`} className="hover:text-foreground transition-colors">
-              {settings.contact.email}
-            </a>
-            <p>{settings.contact.phone}</p>
             <p>{settings.contact.address}</p>
+            {settings.contact.whatsapp ? (
+              <a
+                href={`https://wa.me/${settings.contact.whatsapp.replace(/\D/g, "")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-foreground transition-colors w-fit"
+              >
+                WhatsApp · {settings.contact.whatsapp}
+              </a>
+            ) : null}
             <div className="flex gap-5 pt-3">
               {settings.socialLinks.map((link) => (
                 <a

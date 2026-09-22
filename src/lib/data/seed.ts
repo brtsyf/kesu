@@ -29,6 +29,7 @@ export const siteSettings: SiteSettings = {
   contact: {
     email: "hello@kesu.studio",
     phone: "+90 212 000 00 00",
+    whatsapp: "+90 532 000 00 00",
     address: "Nişantaşı, İstanbul",
   },
   footerContent:

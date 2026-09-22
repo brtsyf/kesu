@@ -88,6 +88,7 @@ export type SiteSettings = {
   contact: {
     email: string;
     phone: string;
+    whatsapp?: string;
     address: string;
   };
   footerContent: string;
