@@ -45,7 +45,10 @@ const placeholders = {
   hairBottle: img("/images/products/hair-bottle.webp", "Kesu Hair ampul"),
   hairBg: img("/images/products/hair-bg.webp", "Kesu Hair arka plan"),
   editorial: {
-    hero: img("/images/products/six-lift.jpg", "Kesu profesyonel bakım"),
+    hero: img(
+      "/images/editorial/hero.jpg",
+      "Kesu — doğal ışıltılı cilt bakımı",
+    ),
     philosophy: img(
       "/images/products/anti-aging.jpg",
       "Klinik bakım atmosferi",
@@ -364,8 +367,6 @@ export const homePage: HomePageContent = {
     primaryCta: { label: "Ürünleri Keşfet", href: "/urunler" },
     secondaryCta: { label: "Marka Hikayesi", href: "/hakkimizda" },
     image: placeholders.editorial.hero,
-    bottle: placeholders.liftBottle,
-    backdrop: placeholders.liftBg,
   },
   featuredEyebrow: "Öne çıkanlar",
   featuredTitle: "Klinik rutinin temel solüsyonları.",
