@@ -1,25 +1,21 @@
 "use client";
 
 import { useLayoutEffect } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useProductMorphOptional } from "@/components/product/ProductMorphContext";
 
-/**
- * Keep scroll stable for shared-element morph:
- * Next.js default scroll-to-top runs before Framer measures the leaving card,
- * so on mobile the image appears to fly in from above the viewport.
- * Cards navigate with scroll={false}; we jump to top in layout before paint.
- */
+/** Direct visits / non-morph navigations still land at top. */
 export function ProductTransitionScroll() {
-  const reduced = useReducedMotion();
+  const morph = useProductMorphOptional();
+  const morphing = Boolean(morph?.active);
 
   useLayoutEffect(() => {
-    if (reduced) {
-      window.scrollTo(0, 0);
-      return;
-    }
-    // Instant jump so destination layoutId is measured at the correct place
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" in window ? "instant" : "auto" });
-  }, [reduced]);
+    if (morphing) return;
+    const html = document.documentElement;
+    const prev = html.style.scrollBehavior;
+    html.style.scrollBehavior = "auto";
+    window.scrollTo(0, 0);
+    html.style.scrollBehavior = prev;
+  }, [morphing]);
 
   return null;
 }

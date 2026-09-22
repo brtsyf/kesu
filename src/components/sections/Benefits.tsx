@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
+import { MediaBox } from "@/components/ui/MediaBox";
 import { Reveal } from "@/components/animation/Reveal";
 import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
 import type { SanityImage } from "@/lib/sanity/types";
@@ -19,17 +22,21 @@ export function Benefits({ eyebrow, title, benefits, image }: BenefitsProps) {
       <Container>
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
           <Reveal className="lg:col-span-5 order-2 lg:order-1">
-            <div className="relative aspect-[3/4] overflow-hidden bg-surface ring-1 ring-accent/10">
-              {src ? (
-                <Image
-                  src={src}
-                  alt={getImageAlt(image, "Bakım detayı")}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover"
-                />
-              ) : null}
-            </div>
+            <MediaBox className="aspect-[3/4]">
+              {({ onLoad, imgClassName }) =>
+                src ? (
+                  <Image
+                    src={src}
+                    alt={getImageAlt(image, "Bakım detayı")}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    className={`object-cover ${imgClassName}`}
+                    onLoad={onLoad}
+                    onError={onLoad}
+                  />
+                ) : null
+              }
+            </MediaBox>
           </Reveal>
 
           <div className="lg:col-span-7 order-1 lg:order-2 lg:pl-8">

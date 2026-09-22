@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
+import { MediaBox } from "@/components/ui/MediaBox";
 import { Reveal } from "@/components/animation/Reveal";
 import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
 import type { SanityImage } from "@/lib/sanity/types";
@@ -31,17 +34,21 @@ export function Philosophy({ eyebrow, title, body, image }: PhilosophyProps) {
             <p className="text-muted leading-relaxed max-w-md">{body}</p>
           </Reveal>
           <Reveal className="lg:col-span-7" delay={0.1}>
-            <div className="relative aspect-[4/5] md:aspect-[5/4] overflow-hidden bg-background">
-              {src ? (
-                <Image
-                  src={src}
-                  alt={getImageAlt(image, "Kesu felsefe görseli")}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 55vw"
-                  className="object-cover"
-                />
-              ) : null}
-            </div>
+            <MediaBox className="aspect-[4/5] md:aspect-[5/4]">
+              {({ onLoad, imgClassName }) =>
+                src ? (
+                  <Image
+                    src={src}
+                    alt={getImageAlt(image, "Kesu felsefe görseli")}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 55vw"
+                    className={`object-cover ${imgClassName}`}
+                    onLoad={onLoad}
+                    onError={onLoad}
+                  />
+                ) : null
+              }
+            </MediaBox>
           </Reveal>
         </div>
       </Container>

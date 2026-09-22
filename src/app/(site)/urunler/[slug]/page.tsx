@@ -91,7 +91,7 @@ export default async function ProductDetailPage({
       </section>
 
       {relatedFallback.length ? (
-        <section className="pb-24 md:pb-32 border-t border-border pt-20">
+        <section className="kesu-related-products pb-24 md:pb-32 border-t border-border pt-20">
           <Container>
             <Reveal>
               <p className="eyebrow mb-5">İlgili ürünler</p>

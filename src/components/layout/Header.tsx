@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
@@ -14,9 +15,15 @@ type HeaderProps = {
 };
 
 export function Header({ logoText, navigation }: HeaderProps) {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+
+  useEffect(() => {
+    setMobileOpen(false);
+    setSearchOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -95,10 +102,15 @@ export function Header({ logoText, navigation }: HeaderProps) {
           id="mobile-menu"
           className={cn(
             "lg:hidden overflow-hidden border-t border-border/60 bg-background transition-[max-height,opacity] duration-700 ease-[var(--ease-premium)]",
-            mobileOpen ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0 border-transparent",
+            mobileOpen
+              ? "max-h-[80vh] opacity-100"
+              : "max-h-0 opacity-0 border-transparent",
           )}
         >
-          <nav className="container-page flex flex-col gap-1 py-8" aria-label="Mobil menü">
+          <nav
+            className="container-page flex flex-col gap-1 py-8"
+            aria-label="Mobil menü"
+          >
             {navigation.map((item) => (
               <Link
                 key={item.href}

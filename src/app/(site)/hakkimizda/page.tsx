@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { Container } from "@/components/ui/Container";
+import { CoverImage } from "@/components/ui/CoverImage";
 import { Reveal } from "@/components/animation/Reveal";
 import { getAboutPage } from "@/lib/sanity/fetch";
 import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
@@ -59,27 +59,21 @@ export default async function AboutPage() {
                         : "lg:grid-cols-12 lg:gap-16 items-center",
                     )}
                   >
-                    <div
+                    <CoverImage
+                      src={src}
+                      alt={getImageAlt(block.image, block.title ?? "Kesu")}
                       className={cn(
-                        "relative overflow-hidden bg-surface",
                         block.fullWidth
                           ? "aspect-[21/9] md:aspect-[2.4/1]"
                           : "lg:col-span-7 aspect-[4/5] md:aspect-[5/4]",
                         !block.fullWidth && index % 2 === 1 && "lg:order-2",
                       )}
-                    >
-                      <Image
-                        src={src}
-                        alt={getImageAlt(block.image, block.title ?? "Kesu")}
-                        fill
-                        sizes={
-                          block.fullWidth
-                            ? "100vw"
-                            : "(max-width: 1024px) 100vw, 55vw"
-                        }
-                        className="object-cover"
-                      />
-                    </div>
+                      sizes={
+                        block.fullWidth
+                          ? "100vw"
+                          : "(max-width: 1024px) 100vw, 55vw"
+                      }
+                    />
                     <div
                       className={cn(
                         block.fullWidth

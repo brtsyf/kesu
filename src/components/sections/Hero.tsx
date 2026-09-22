@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { MediaBox } from "@/components/ui/MediaBox";
 import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
 import type { HeroContent } from "@/lib/sanity/types";
 
@@ -79,19 +80,23 @@ export function Hero({ content }: { content: HeroContent }) {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.55, ease }}
         >
-          <div className="relative aspect-[4/5] md:aspect-[5/6] lg:aspect-[4/5] xl:ml-8 overflow-hidden bg-surface">
-            {imageSrc ? (
-              <Image
-                src={imageSrc}
-                alt={getImageAlt(content.image, "Kesu — cilt bakımı")}
-                fill
-                priority
-                quality={92}
-                sizes="(max-width: 1024px) 100vw, 55vw"
-                className="object-cover object-center"
-              />
-            ) : null}
-          </div>
+          <MediaBox className="aspect-[4/5] md:aspect-[5/6] lg:aspect-[4/5] xl:ml-8">
+            {({ onLoad, imgClassName }) =>
+              imageSrc ? (
+                <Image
+                  src={imageSrc}
+                  alt={getImageAlt(content.image, "Kesu — cilt bakımı")}
+                  fill
+                  priority
+                  quality={92}
+                  sizes="(max-width: 1024px) 100vw, 55vw"
+                  className={`object-cover object-center ${imgClassName}`}
+                  onLoad={onLoad}
+                  onError={onLoad}
+                />
+              ) : null
+            }
+          </MediaBox>
         </motion.div>
       </Container>
     </section>

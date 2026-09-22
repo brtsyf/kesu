@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Search, X } from "lucide-react";
+import { MediaBox } from "@/components/ui/MediaBox";
 import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
 import type { Product } from "@/lib/sanity/types";
 
@@ -122,17 +123,21 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                       onClick={onClose}
                       className="flex items-center gap-4 py-4 group"
                     >
-                      <div className="relative size-16 overflow-hidden bg-surface shrink-0">
-                        {src ? (
-                          <Image
-                            src={src}
-                            alt={getImageAlt(product.thumbnail, product.title)}
-                            fill
-                            className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                            sizes="64px"
-                          />
-                        ) : null}
-                      </div>
+                      <MediaBox className="size-16 shrink-0">
+                        {({ onLoad, imgClassName }) =>
+                          src ? (
+                            <Image
+                              src={src}
+                              alt={getImageAlt(product.thumbnail, product.title)}
+                              fill
+                              className={`object-cover transition-transform duration-700 group-hover:scale-[1.03] ${imgClassName}`}
+                              sizes="64px"
+                              onLoad={onLoad}
+                              onError={onLoad}
+                            />
+                          ) : null
+                        }
+                      </MediaBox>
                       <div className="min-w-0 flex-1">
                         <p className="tracking-tight truncate">{product.title}</p>
                         <p className="text-sm text-muted truncate">

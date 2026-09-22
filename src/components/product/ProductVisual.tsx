@@ -1,90 +1,116 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
-import { sharedImageTransition, SHARED_IMAGE_MS } from "@/lib/motion";
 import { cn } from "@/lib/utils/cn";
 import type { SanityImage } from "@/lib/sanity/types";
 
 type ProductVisualProps = {
   bottle?: SanityImage;
   backdrop?: SanityImage;
-  /** Fallback single image when layers missing */
   image?: SanityImage;
   alt: string;
   className?: string;
   priority?: boolean;
   large?: boolean;
-  /** Idle float animation for the bottle (deferred until shared morph settles) */
   animate?: boolean;
-  /** Shared-element id — same slug on card + detail */
-  layoutId?: string;
 };
 
+/**
+ * Native <img> (not next/image) so morph overlay + page share the same cached URL.
+ * next/image optimizer URLs caused a ~1s blank after the clone unmounted.
+ */
 export function ProductVisual({
   bottle,
   backdrop,
   image,
   alt,
   className,
-  priority,
   large,
   animate = true,
-  layoutId,
+  priority = false,
 }: ProductVisualProps) {
   const reduced = useReducedMotion();
-  const bottleSrc = getImageUrl(bottle ?? image, large ? 1600 : 1200);
-  const backdropSrc = getImageUrl(backdrop, large ? 1800 : 1400);
+  const bottleSrc = getImageUrl(bottle ?? image, 1600);
+  const backdropSrc = getImageUrl(backdrop, 1800);
   const layered = Boolean(bottleSrc && backdropSrc);
-  const singleSrc = bottleSrc || getImageUrl(image, large ? 1600 : 1200);
+  const singleSrc = bottleSrc || getImageUrl(image, 1600);
 
   const [floatReady, setFloatReady] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [layerReady, setLayerReady] = useState({
+    bottle: false,
+    backdrop: false,
+  });
+
   useEffect(() => {
-    if (!animate || reduced) {
+    setLoaded(false);
+    setLayerReady({ bottle: false, backdrop: false });
+  }, [bottleSrc, backdropSrc, singleSrc, layered]);
+
+  useEffect(() => {
+    if (!animate || reduced || !loaded) {
       setFloatReady(false);
       return;
     }
-    // Let shared-element morph finish before idle float
-    const delay = layoutId ? SHARED_IMAGE_MS + 80 : 0;
-    const timer = window.setTimeout(() => setFloatReady(true), delay);
+    const timer = window.setTimeout(() => setFloatReady(true), 80);
     return () => window.clearTimeout(timer);
-  }, [animate, layoutId, reduced]);
+  }, [animate, reduced, loaded]);
 
-  const shared = Boolean(layoutId) && !reduced;
+  useEffect(() => {
+    if (!layered) return;
+    if (layerReady.bottle && layerReady.backdrop) setLoaded(true);
+  }, [layered, layerReady]);
+
+  const markLayer = useCallback((key: "bottle" | "backdrop") => {
+    setLayerReady((prev) => (prev[key] ? prev : { ...prev, [key]: true }));
+  }, []);
 
   return (
-    <motion.div
-      layoutId={shared ? layoutId : undefined}
-      transition={shared ? sharedImageTransition : undefined}
+    <div
       className={cn(
-        "kesu-product-stage relative overflow-hidden aspect-[4/5]",
+        "kesu-product-stage relative overflow-hidden aspect-[4/5] bg-surface ring-1 ring-border/70",
         className,
       )}
       style={{ borderRadius: 0 }}
+      aria-busy={!loaded}
     >
+      {/* Waiting box — stays until media is ready */}
+      {!loaded ? (
+        <div className="kesu-image-shimmer absolute inset-0 z-[1]" aria-hidden />
+      ) : null}
+
       {layered ? (
         <>
           <div className="absolute inset-0" aria-hidden>
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={backdropSrc}
               alt=""
-              fill
-              priority={priority}
-              quality={92}
-              sizes={
-                large
-                  ? "(max-width: 768px) 100vw, 55vw"
-                  : "(max-width: 768px) 100vw, 33vw"
-              }
-              className="object-cover scale-[1.08]"
+              className={cn(
+                "absolute inset-0 h-full w-full object-cover scale-[1.08] transition-opacity duration-500 ease-[var(--ease-premium)]",
+                loaded ? "opacity-100" : "opacity-0",
+              )}
               draggable={false}
+              decoding={priority ? "sync" : "async"}
+              loading={priority ? "eager" : "lazy"}
+              fetchPriority={priority ? "high" : "low"}
+              onLoad={() => markLayer("backdrop")}
+              onError={() => markLayer("backdrop")}
+              ref={(node) => {
+                if (node?.complete && node.naturalWidth > 0) {
+                  markLayer("backdrop");
+                }
+              }}
             />
           </div>
 
           <motion.div
-            className="absolute inset-0 flex items-center justify-center p-[8%] md:p-[10%]"
+            className={cn(
+              "absolute inset-0 flex items-center justify-center p-[8%] md:p-[10%] transition-opacity duration-500 ease-[var(--ease-premium)]",
+              loaded ? "opacity-100" : "opacity-0",
+            )}
             animate={
               floatReady
                 ? { y: [0, -10, 0], rotate: [0, 0.6, 0] }
@@ -106,39 +132,49 @@ export function ProductVisual({
             }
           >
             <div className="relative h-full w-full">
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={bottleSrc}
                 alt={getImageAlt(bottle ?? image, alt)}
-                fill
-                priority={priority}
-                quality={95}
-                sizes={
-                  large
-                    ? "(max-width: 768px) 80vw, 40vw"
-                    : "(max-width: 768px) 70vw, 28vw"
-                }
-                className="object-contain"
+                className="absolute inset-0 h-full w-full object-contain"
                 draggable={false}
+                decoding={priority ? "sync" : "async"}
+                loading={priority ? "eager" : "lazy"}
+                fetchPriority={priority ? "high" : "low"}
+                onLoad={() => markLayer("bottle")}
+                onError={() => markLayer("bottle")}
+                ref={(node) => {
+                  if (node?.complete && node.naturalWidth > 0) {
+                    markLayer("bottle");
+                  }
+                }}
               />
             </div>
           </motion.div>
         </>
       ) : singleSrc ? (
-        <Image
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
           src={singleSrc}
           alt={getImageAlt(image ?? bottle, alt)}
-          fill
-          priority={priority}
-          quality={92}
-          sizes={
-            large
-              ? "(max-width: 768px) 100vw, 55vw"
-              : "(max-width: 768px) 100vw, 33vw"
-          }
-          className="object-cover"
+          className={cn(
+            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ease-[var(--ease-premium)]",
+            loaded ? "opacity-100" : "opacity-0",
+          )}
           draggable={false}
+          decoding={priority ? "sync" : "async"}
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : "low"}
+          onLoad={(event) => {
+            const img = event.currentTarget;
+            if (img.complete && img.naturalWidth > 0) setLoaded(true);
+          }}
+          onError={() => setLoaded(true)}
+          ref={(node) => {
+            if (node?.complete && node.naturalWidth > 0) setLoaded(true);
+          }}
         />
       ) : null}
-    </motion.div>
+    </div>
   );
 }

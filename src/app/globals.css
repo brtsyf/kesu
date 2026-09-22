@@ -227,6 +227,45 @@
   /* Product stage — transparent; page atmosphere shows through */
   .kesu-product-stage {
     background: transparent;
+    transition: opacity 0.25s var(--ease-premium);
+  }
+
+  .kesu-image-shimmer {
+    background: linear-gradient(
+      110deg,
+      color-mix(in srgb, var(--accent-soft) 28%, var(--surface)) 0%,
+      color-mix(in srgb, var(--surface-elevated) 90%, white) 42%,
+      color-mix(in srgb, var(--accent-soft) 34%, var(--surface)) 78%
+    );
+    background-size: 220% 100%;
+    animation: kesu-image-shimmer 1.35s var(--ease-premium) infinite;
+  }
+
+  .kesu-related-products,
+  .kesu-gallery-thumbs {
+    transition: opacity 0.25s var(--ease-premium);
+  }
+
+  /* Sibling / related images ease out while the shared morph runs.
+     Opacity only (no visibility:hidden) so images keep loading underneath. */
+  body[data-kesu-morphing] .kesu-product-stage[data-kesu-morph-hide] {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  body[data-kesu-morphing] .kesu-related-products,
+  body[data-kesu-morphing] .kesu-gallery-thumbs {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}
+
+@keyframes kesu-image-shimmer {
+  0% {
+    background-position: 120% 0;
+  }
+  100% {
+    background-position: -40% 0;
   }
 }
 
