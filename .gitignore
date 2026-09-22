@@ -42,7 +42,6 @@ next-env.d.ts
 
 # local reference assets
 public/ref
-/public/images/
 
-# product/editorial assets (swap later)
-/public/images/
+# keep product images in repo for deploy
+# /public/images/

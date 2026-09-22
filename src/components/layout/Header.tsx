@@ -6,6 +6,7 @@ import { Menu, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import type { NavItem } from "@/lib/sanity/types";
 import { SearchOverlay } from "@/components/navigation/SearchOverlay";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 
 type HeaderProps = {
   logoText: string;
@@ -42,13 +43,12 @@ export function Header({ logoText, navigation }: HeaderProps) {
         )}
       >
         <div className="container-page flex h-[var(--header-height)] items-center justify-between gap-4">
-          <Link
-            href="/"
-            className="text-[0.8125rem] tracking-[0.28em] font-medium"
-            aria-label="Kesu ana sayfa"
-          >
-            {logoText}
-          </Link>
+          <BrandLogo
+            width={108}
+            priority
+            label={`${logoText} ana sayfa`}
+            className="relative -mt-0.5"
+          />
 
           <nav
             className="hidden lg:flex items-center gap-10 absolute left-1/2 -translate-x-1/2"

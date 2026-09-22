@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { SiteSettings } from "@/lib/sanity/types";
 import { Container } from "@/components/ui/Container";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 
 export function Footer({ settings }: { settings: SiteSettings }) {
   return (
@@ -8,9 +9,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
       <Container className="py-16 md:py-20">
         <div className="grid gap-12 md:grid-cols-3 md:gap-8">
           <div className="max-w-sm">
-            <p className="text-[0.8125rem] tracking-[0.28em] font-medium mb-5">
-              {settings.logoText}
-            </p>
+            <BrandLogo width={128} className="mb-6" />
             <p className="text-muted text-[0.95rem] leading-relaxed">
               {settings.footerContent}
             </p>

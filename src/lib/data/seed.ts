@@ -12,9 +12,42 @@ const img = (url: string, alt: string) => ({
   alt,
 });
 
+/** Catalog product photos (extracted from Kesu Katalog PDF) */
+const placeholders = {
+  lift: img("/images/products/six-lift.jpg", "Kesu Six Lift ampul"),
+  liftSplash: img("/images/products/six-lift-splash.jpg", "Kesu Six Lift görsel"),
+  aging: img("/images/products/anti-aging.jpg", "Kesu Anti-Aging ampul"),
+  agingSplash: img(
+    "/images/products/anti-aging-splash.jpg",
+    "Kesu Anti-Aging görsel",
+  ),
+  white: img("/images/products/white-effect.jpg", "Kesu White Effect ampul"),
+  whiteSplash: img(
+    "/images/products/white-effect-splash.jpg",
+    "Kesu White Effect görsel",
+  ),
+  eyes: img("/images/products/eyes.jpg", "Kesu Eyes ampul"),
+  eyesSplash: img("/images/products/eyes-splash.jpg", "Kesu Eyes görsel"),
+  hair: img("/images/products/hair.jpg", "Kesu Hair ampul"),
+  hairSplash: img("/images/products/hair-splash.jpg", "Kesu Hair görsel"),
+  editorial: {
+    hero: img("/images/products/six-lift.jpg", "Kesu profesyonel bakım"),
+    philosophy: img(
+      "/images/products/anti-aging.jpg",
+      "Klinik bakım atmosferi",
+    ),
+    benefit: img("/images/products/white-effect.jpg", "Cilt bakımı close-up"),
+    about1: img("/images/products/eyes.jpg", "Profesyonel bakım atmosferi"),
+    about2: img(
+      "/images/products/hair.jpg",
+      "Premium dermokozmetik atmosferi",
+    ),
+  },
+};
+
 export const siteSettings: SiteSettings = {
   siteName: "Kesu",
-  tagline: "Bilimsel bakım. Sessiz lüks.",
+  tagline: "Profesyonel estetik için Kore teknolojisi.",
   logoText: "KESU",
   navigation: [
     { label: "Ürünler", href: "/urunler" },
@@ -24,331 +57,367 @@ export const siteSettings: SiteSettings = {
   ],
   socialLinks: [
     { label: "Instagram", href: "https://instagram.com" },
-    { label: "Pinterest", href: "https://pinterest.com" },
+    { label: "Web", href: "https://www.kesu.com.tr" },
   ],
   contact: {
-    email: "hello@kesu.studio",
+    email: "info@kesu.com.tr",
     phone: "+90 212 000 00 00",
     whatsapp: "+90 532 000 00 00",
     address: "Nişantaşı, İstanbul",
   },
   footerContent:
-    "Kesu, cildin ritmine saygı duyan minimal formüller geliştirir. Az ürün, net sonuç.",
+    "Kesu; profesyonel estetik ve medikal uygulamalar için geliştirilmiş yenilikçi bir dermokozmetik markasıdır.",
   seo: {
-    metaTitle: "Kesu — Premium Bakım",
+    metaTitle: "Kesu — Profesyonel Dermokozmetik",
     metaDescription:
-      "Modern bakım rutini için minimal, bilimsel ve premium cilt bakım ürünleri.",
+      "Lifting, anti-aging, whitening, eyes ve hair mezoterapi solüsyonları. Kore teknolojisiyle klinik sonuç odaklı formüller.",
   },
 };
 
 export const categories: Category[] = [
   {
-    _id: "cat-serum",
-    title: "Serum",
-    slug: "serum",
-    description: "Yoğun bakım formülleri",
+    _id: "cat-lifting",
+    title: "Lifting",
+    slug: "lifting",
+    description: "Sıkılaşma ve lifting odaklı solüsyonlar",
   },
   {
-    _id: "cat-cleanser",
-    title: "Temizleyici",
-    slug: "temizleyici",
-    description: "Nazik günlük temizlik",
+    _id: "cat-anti-aging",
+    title: "Anti-Aging",
+    slug: "anti-aging",
+    description: "Kırışıklık ve yaşlanma karşıtı bakım",
   },
   {
-    _id: "cat-moisturizer",
-    title: "Nemlendirici",
-    slug: "nemlendirici",
-    description: "Dengeleyici nem bariyeri",
+    _id: "cat-whitening",
+    title: "Whitening",
+    slug: "whitening",
+    description: "Leke ve ton eşitleme",
   },
   {
-    _id: "cat-treatment",
-    title: "Tedavi",
-    slug: "tedavi",
-    description: "Hedefli çözümler",
+    _id: "cat-eyes",
+    title: "Eyes",
+    slug: "eyes",
+    description: "Göz çevresi bakımı",
+  },
+  {
+    _id: "cat-hair",
+    title: "Hair",
+    slug: "hair",
+    description: "Saç ve saç derisi güçlendirme",
   },
 ];
 
 export const products: Product[] = [
   {
-    _id: "prod-1",
-    title: "Daily Renewal Serum",
-    slug: "daily-renewal-serum",
-    shortDescription: "Dengeli ve taze bir cilt için günlük bakım.",
+    _id: "prod-six-lift",
+    title: "Kesu Six Lift",
+    slug: "kesu-six-lift",
+    shortDescription:
+      "Anında lifting ve sıkılaşma için mezoterapi solüsyonu. 10 ml × 5 ampul.",
     description:
-      "Daily Renewal Serum, cildin doğal yenilenme döngüsünü desteklemek için tasarlandı. Hafif dokusu hızla emilir; bariyer dostu içerikler gün boyu ferah bir denge hissi bırakır.",
-    thumbnail: img("https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=1600&q=80", "Daily Renewal Serum şişesi"),
-    images: [
-      img("https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=1600&q=80", "Daily Renewal Serum ürün görseli"),
-      img("https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=1600&q=80", "Serum doku detayı"),
-      img("https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=1600&q=80", "Serum uygulama görseli"),
-    ],
+      "Kesu Lifting Mezoterapi Solüsyonu; sarkma ve elastikiyet kaybı, ince kırışıklıklar, donuk ve yorgun cilt ile cilt tonu eşitsizliklerine yönelik geliştirilmiştir. Somon DNA ile hücre yenileyici bakım sunar; kolajen üretimini destekler, cilt tonunu dengeler ve parlaklık kazandırır.",
+    thumbnail: placeholders.lift,
+    images: [placeholders.lift, placeholders.liftSplash],
     category: categories[0],
     ingredients: [
-      "Niacinamide %5",
+      "Aqua",
       "Hyaluronic Acid",
-      "Panthenol",
-      "Centella Asiatica",
+      "Glutathione",
+      "Mannitol",
+      "Niacinamide",
+      "Arginine",
+      "Tranexamic Acid",
+      "Sodium Succinate",
+      "Aspartic Acid",
+      "Lysine",
+      "Cysteine",
+      "Glycine",
+      "Oligopeptide-3",
+      "L-Tryptophan",
+      "Glutamic Acid",
+      "Somon DNA",
     ],
     benefits: [
-      "Cilt bariyerini güçlendirir",
-      "Görünür dengelenme sağlar",
-      "Hafif ve yapışkan olmayan doku",
+      "Anında lifting ve sıkılaşma sağlar",
+      "Kolajen üretimini destekler",
+      "Cilt tonunu dengeler, parlaklık verir",
+      "Lekelerden arındırarak yaşlanmayı önlemeye yardımcı olur",
+      "Somon DNA ile hücre yenileyici bakım",
     ],
     usage:
-      "Temizlik sonrası sabah ve akşam 2-3 damla uygulayın. Nemlendiricinizin altına kullanın.",
+      "Profesyonel mezoterapi uygulamalarında kullanılır. Sarkma ve elastikiyet kaybı, ince kırışıklıklar, donuk/yorgun cilt ve ton eşitsizliklerinde tercih edilir. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
     featured: true,
     order: 1,
     seo: {
-      metaTitle: "Daily Renewal Serum | Kesu",
+      metaTitle: "Kesu Six Lift | Lifting Mezoterapi Solüsyonu",
       metaDescription:
-        "Advanced daily care for a balanced and refreshed skin. Niacinamide ve hyaluronic acid formülü.",
+        "10 ml × 5 ampul. Anında lifting, sıkılaşma ve Somon DNA destekli hücre yenileyici bakım.",
     },
   },
   {
-    _id: "prod-2",
-    title: "Calm Barrier Cream",
-    slug: "calm-barrier-cream",
-    shortDescription: "Hassas ciltler için yatıştırıcı nem bariyeri.",
+    _id: "prod-anti-aging",
+    title: "Kesu Anti-Aging",
+    slug: "kesu-anti-aging",
+    shortDescription:
+      "İnce çizgi ve kırışıklık görünümünü azaltan mezoterapi solüsyonu. 10 ml × 5 ampul.",
     description:
-      "Calm Barrier Cream, cildi sakinleştirirken nemi uzun süre tutar. Ceramide kompleksı ile desteklenen formül, günlük stres ve çevresel etkilere karşı koruyucu bir katman oluşturur.",
-    thumbnail: img("https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?auto=format&fit=crop&w=1600&q=80", "Calm Barrier Cream"),
-    images: [
-      img("https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?auto=format&fit=crop&w=1600&q=80", "Calm Barrier Cream ürün"),
-      img("https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?auto=format&fit=crop&w=1600&q=80", "Krem dokusu"),
-      img("https://images.unsplash.com/photo-1571875257727-256c39da42af?auto=format&fit=crop&w=1600&q=80", "Nemlendirici detay"),
+      "Kesu Anti-Aging Mezoterapi Solüsyonu; mimik çizgileri, statik kırışıklıklar, mat ve canlılığını yitirmiş cilt, yaşlanma kaynaklı elastikiyet kaybı ile göz çevresi kırışıklıkları ve cilt kuruluğuna yönelik formüle edilmiştir. Nem dengesini destekler, serbest radikallere karşı koruma sağlar ve yorgun cildi canlandırır.",
+    thumbnail: placeholders.aging,
+    images: [placeholders.aging, placeholders.agingSplash],
+    category: categories[1],
+    ingredients: [
+      "Hyaluronic Acid",
+      "Glutathione",
+      "Ascorbic Acid",
+      "Arginine",
+      "Aqua",
+      "Niacinamide",
+      "Acetyl Hexapeptide-8",
+      "Panthenol",
     ],
-    category: categories[2],
-    ingredients: ["Ceramide NP", "Squalane", "Allantoin", "Shea Butter"],
     benefits: [
-      "Uzun süreli nem",
-      "Kızarıklık görünümünü azaltır",
-      "Zengin ama boğmayan doku",
+      "İnce çizgi ve kırışıklıkların görünümünü azaltır",
+      "Cildin nem dengesini düzenler",
+      "Serbest radikallere karşı güçlü koruma sağlar",
+      "Cilt tonunu dengeler, parlaklık sağlar",
+      "Yorgun ve yaşlanmış cildi canlandırır",
     ],
     usage:
-      "Serum sonrası cilde masaj yaparak uygulayın. Sabah ve akşam kullanıma uygundur.",
+      "Profesyonel mezoterapi uygulamalarında kullanılır. Mimik/statik kırışıklıklar, mat cilt, elastikiyet kaybı ve göz çevresi kuruluğunda tercih edilir. Uygulama hekim veya yetkili uygulayıcı tarafından yapılır.",
     featured: true,
     order: 2,
+    seo: {
+      metaTitle: "Kesu Anti-Aging | Mezoterapi Solüsyonu",
+      metaDescription:
+        "10 ml × 5 ampul. Kırışıklık görünümünü azaltan, nem ve antioksidan destekli anti-aging solüsyon.",
+    },
   },
   {
-    _id: "prod-3",
-    title: "Gentle Amino Cleanser",
-    slug: "gentle-amino-cleanser",
-    shortDescription: "Amino asit bazlı, dengeli günlük temizlik.",
+    _id: "prod-white-effect",
+    title: "Kesu White Effect",
+    slug: "kesu-white-effect",
+    shortDescription:
+      "Leke ve hiperpigmentasyon görünümünü azaltan whitening solüsyonu. 10 ml × 5 ampul.",
     description:
-      "Gentle Amino Cleanser, cildin doğal yağ dengesini bozmadan arındırır. Düşük pH formülü ferah bir temizlik hissi bırakır.",
-    thumbnail: img("https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1600&q=80", "Gentle Amino Cleanser"),
-    images: [
-      img("https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1600&q=80", "Temizleyici ürün"),
-      img("https://images.unsplash.com/photo-1580870069867-74c57ee1bb07?auto=format&fit=crop&w=1600&q=80", "Temizlik rutini"),
+      "Kesu White Effect Mezoterapi Solüsyonu; güneş lekeleri, melazma, akne sonrası lekeler ile donuk cilt görünümüne yönelik geliştirilmiştir. Cilt tonunu eşitler, ışıltı kazandırır, serbest radikallere karşı koruma sunar ve retinol ile hücre yenilenmesini destekler. Yüz, boyun, el üstü ve dekolte bölgelerinde kullanılabilir.",
+    thumbnail: placeholders.white,
+    images: [placeholders.white, placeholders.whiteSplash],
+    category: categories[2],
+    ingredients: [
+      "Ascorbic Acid",
+      "Succinic Acid",
+      "Cyanocobalamin",
+      "Aqua",
+      "Hyaluronic Acid",
+      "Riboflavin",
+      "Retinol",
+      "Niacinamide",
+      "Mannitol",
+      "Arbutin",
+      "Rutin",
+      "Thiamine",
+      "Panthenol",
+      "Tranexamic Acid",
     ],
-    category: categories[1],
-    ingredients: ["Amino Acid Surfactants", "Glycerin", "Green Tea Extract"],
-    benefits: ["Nazik temizlik", "Bariyer dostu", "Sabah-akşam kullanım"],
+    benefits: [
+      "Cilt lekelerini ve hiperpigmentasyonu azaltmaya yardımcı olur",
+      "Cilt tonunu eşitler",
+      "Işıltılı ve parlak bir görünüm sağlar",
+      "Serbest radikallere karşı koruma sunar",
+      "Retinol ile hücre yenilenmesini destekler",
+    ],
     usage:
-      "Islak cilde az miktarda alın, köpürtün ve durulayın. Göz çevresinden kaçının.",
+      "Profesyonel mezoterapi uygulamalarında kullanılır. Solar lentigo, melazma, post-akne lekeleri ve donuk ciltte tercih edilir. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
     featured: true,
     order: 3,
+    seo: {
+      metaTitle: "Kesu White Effect | Whitening Mezoterapi Solüsyonu",
+      metaDescription:
+        "10 ml × 5 ampul. Leke, ton eşitleme ve parlaklık odaklı whitening solüsyonu.",
+    },
   },
   {
-    _id: "prod-4",
-    title: "Clarity Essence",
-    slug: "clarity-essence",
-    shortDescription: "Aydınlık görünüm için hafif essence.",
+    _id: "prod-eyes",
+    title: "Kesu Eyes",
+    slug: "kesu-eyes",
+    shortDescription:
+      "Göz çevresi ince çizgi, koyu halka ve yorgunluk görünümü için. 5 ml × 5 ampul.",
     description:
-      "Clarity Essence, cilde berrak ve dinlenmiş bir görünüm kazandırmak için formüle edildi. Katmanlanabilir yapısıyla serum öncesi kullanılır.",
-    thumbnail: img("https://images.unsplash.com/photo-1629198688000-71f23e745b6e?auto=format&fit=crop&w=1600&q=80", "Clarity Essence"),
-    images: [
-      img("https://images.unsplash.com/photo-1629198688000-71f23e745b6e?auto=format&fit=crop&w=1600&q=80", "Clarity Essence şişe"),
-      img("https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=1600&q=80", "Essence dokusu"),
+      "Kesu Eyes Mezoterapi Solüsyonu; göz altı torbaları, morluklar, ince çizgiler ve göz çevresi ton eşitsizliklerine yönelik özel formüle edilmiştir. İnce çizgilerin görünümünü azaltmaya yardımcı olur, koyu halka ve yorgunluk görünümünü hafifletir, aydınlatır, nemlendirir ve sıkılaştırıcı bir etki sunar.",
+    thumbnail: placeholders.eyes,
+    images: [placeholders.eyes, placeholders.eyesSplash],
+    category: categories[3],
+    ingredients: [
+      "Ascorbic Acid",
+      "Aqua",
+      "Hyaluronic Acid",
+      "Niacinamide",
+      "Riboflavin",
+      "Thiamine",
+      "Succinic Acid",
+      "Cyanocobalamin",
+      "Panthenol",
+      "Mannitol",
+      "L-Arginine",
+      "Glutathione",
+      "Acetyl Hexapeptide-8",
     ],
-    category: categories[0],
-    ingredients: ["Tranexamic Acid", "Licorice Root", "Betaine"],
-    benefits: ["Daha eşit ton görünümü", "Hafif essence dokusu", "Katmanlanabilir"],
-    usage: "Temizlik sonrası pamuk veya ellerle cilde uygulayın.",
+    benefits: [
+      "Göz çevresindeki ince çizgi ve kırışıklık görünümünü azaltır",
+      "Koyu halka ve yorgunluk görünümünü hafifletir",
+      "Cilt tonunu aydınlatır ve eşitler",
+      "Derinlemesine nemlendirir ve onarır",
+      "Göz çevresine canlılık kazandırır",
+    ],
+    usage:
+      "Profesyonel mezoterapi uygulamalarında, göz çevresi protokollerinde kullanılır. Uygulama yalnızca yetkili profesyoneller tarafından yapılmalıdır.",
     featured: false,
     order: 4,
+    seo: {
+      metaTitle: "Kesu Eyes | Göz Çevresi Mezoterapi Solüsyonu",
+      metaDescription:
+        "5 ml × 5 ampul. Göz çevresi ince çizgi, koyu halka ve yorgunluk görünümü için özel solüsyon.",
+    },
   },
   {
-    _id: "prod-5",
-    title: "Night Recovery Oil",
-    slug: "night-recovery-oil",
-    shortDescription: "Gece onarımı için hafif bakım yağı.",
+    _id: "prod-hair",
+    title: "Kesu Hair",
+    slug: "kesu-hair",
+    shortDescription:
+      "Saç dökülmesini azaltmaya ve kökleri beslemeye yardımcı solüsyon. 10 ml × 5 ampul.",
     description:
-      "Night Recovery Oil, gece boyunca cildi besler. Hızlı emilen bitkisel yağlar ile yumuşak bir bitiş bırakır.",
-    thumbnail: img("https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=1600&q=80", "Night Recovery Oil"),
-    images: [
-      img("https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=1600&q=80", "Gece yağı ürün"),
-      img("https://images.unsplash.com/photo-1601049676869-702ea24cfd58?auto=format&fit=crop&w=1600&q=80", "Gece bakımı"),
+      "Kesu Hair Mezoterapi Solüsyonu; androgenetik alopesi, kadın tipi yaygın dökülme, mevsimsel dökülmeler, zayıf/ince teller ile stres veya gebelik sonrası dökülmeye yönelik geliştirilmiştir. Saç köklerini besler, yeni saç oluşumunu destekler, telleri kalınlaştırmaya yardımcı olur ve dolaşımı artırarak saç derisini canlandırır. Tüm saç tiplerine uygundur.",
+    thumbnail: placeholders.hair,
+    images: [placeholders.hair, placeholders.hairSplash],
+    category: categories[4],
+    ingredients: [
+      "Aqua",
+      "Hyaluronic Acid",
+      "Niacinamide",
+      "Pantothenic Acid",
+      "Ascorbic Acid",
+      "Cyanocobalamin",
+      "Thiamine HCl",
+      "Glutamic Acid",
+      "Pyridoxine",
+      "Biotin",
+      "Glycine",
+      "Zinc",
+      "Tocopheryl Acetate",
     ],
-    category: categories[3],
-    ingredients: ["Squalane", "Rosehip Oil", "Vitamin E", "Jojoba"],
-    benefits: ["Gece onarımı", "İpeksi his", "Kuru alanları besler"],
-    usage: "Akşam rutininin son adımında 3-4 damla uygulayın.",
+    benefits: [
+      "Saç dökülmesini azaltmaya yardımcı olur",
+      "Saç köklerini besler ve canlandırır",
+      "Yeni saç oluşumunu destekler",
+      "Saç tellerini kalınlaştırmaya yardımcı olur",
+      "Dolaşımı artırarak saç derisini canlandırır",
+    ],
+    usage:
+      "Profesyonel saç mezoterapisi uygulamalarında kullanılır. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
     featured: false,
     order: 5,
-  },
-  {
-    _id: "prod-6",
-    title: "Soft Focus Mist",
-    slug: "soft-focus-mist",
-    shortDescription: "Gün içi tazelik için mineral sis.",
-    description:
-      "Soft Focus Mist, gün içinde cildi ferahlatır ve makyaj üzerine de kullanılabilir. Mineral dengesi ile yumuşak bir bitiş verir.",
-    thumbnail: img("https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&w=1600&q=80", "Soft Focus Mist"),
-    images: [
-      img("https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&w=1600&q=80", "Mist ürün görseli"),
-      img("https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=1600&q=80", "Sis detayı"),
-    ],
-    category: categories[3],
-    ingredients: ["Thermal Water", "Aloe Vera", "Glycerin"],
-    benefits: ["Anında ferahlık", "Makyaj üzeri kullanım", "Taşınabilir format"],
-    usage: "Gözleri kapatarak 20 cm mesafeden 2-3 püskürtme yapın.",
-    featured: false,
-    order: 6,
+    seo: {
+      metaTitle: "Kesu Hair | Saç Mezoterapi Solüsyonu",
+      metaDescription:
+        "10 ml × 5 ampul. Dökülme, kök besleme ve saç güçlendirme odaklı mezoterapi solüsyonu.",
+    },
   },
 ];
 
 export const homePage: HomePageContent = {
   hero: {
-    eyebrow: "Yeni koleksiyon",
-    headline: "Bakımın\nyeni nesil hali.",
+    eyebrow: "Profesyonel dermokozmetik",
+    headline: "Klinik sonuç.\nKesin formül.",
     description:
-      "Az adımlı, yüksek etkili formüller. Cildin ihtiyacını dinleyen, premium ve minimal bir rutin.",
+      "Lifting, anti-aging, whitening, eyes ve hair için Kore teknolojisiyle geliştirilmiş mezoterapi solüsyonları.",
     primaryCta: { label: "Ürünleri Keşfet", href: "/urunler" },
     secondaryCta: { label: "Marka Hikayesi", href: "/hakkimizda" },
-    image: img("https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1600&q=80", "Kesu bakım ürünü close-up"),
+    image: placeholders.editorial.hero,
   },
   featuredEyebrow: "Öne çıkanlar",
-  featuredTitle: "Rutininizin temel parçaları.",
+  featuredTitle: "Klinik rutinin temel solüsyonları.",
   featuredDescription:
-    "Her ürün tek başına güçlü; birlikte sade ve tutarlı bir bakım dili kurar.",
-  philosophyEyebrow: "Felsefe",
-  philosophyTitle: "Daha az ürün.\nDaha net sonuç.",
+    "Her formül net bir endikasyon için tasarlandı. Profesyonel uygulamada güçlü, anlaşılır ve sonuç odaklı.",
+  philosophyEyebrow: "Yaklaşım",
+  philosophyTitle: "Uzmanlarca tercih edilen\nperformans.",
   philosophyBody:
-    "Kesu, cilt bakımını bir performans gösterisine dönüştürmez. Formülleri sade tutar, içerikleri anlaşılır seçer ve her adımı bilinçli bırakır. Lüks; gürültüde değil, dokunuşta hissedilir.",
-  philosophyImage: img(
-    "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1600&q=80",
-    "Sakin cilt bakımı atmosferi",
-  ),
-  benefitsEyebrow: "Yaklaşım",
-  benefitsTitle: "Bilimsel sadelik.",
+    "Kesu ürünleri; doktorların ve kliniklerin beklentilerini karşılamak üzere, etkinliği kanıtlanmış Kore menşeli üretim süreçleriyle hazırlanır. Hedef nettir: uygulama sonuçlarını üst seviyeye taşımak.",
+  philosophyImage: placeholders.editorial.philosophy,
+  benefitsEyebrow: "Neden Kesu",
+  benefitsTitle: "Bilim. Güven. Sonuç.",
   benefits: [
     {
-      title: "Bariyer odaklı",
+      title: "Klinik endikasyon odaklı",
       description:
-        "Formüller, cildin koruyucu katmanını zayıflatmadan beslemeyi hedefler.",
+        "Lifting, anti-aging, leke, göz çevresi ve saç — her solüsyon spesifik bir ihtiyaca cevap verir.",
     },
     {
-      title: "Şeffaf içerik",
+      title: "Kore teknolojisi",
       description:
-        "Her ürünün ne işe yaradığını net anlatırız. Gereksiz karmaşa yok.",
+        "Etkinliği ve güvenilirliği dünya çapında bilinen ileri teknoloji üretim süreçleri.",
     },
     {
-      title: "Günlük konfor",
+      title: "Profesyonel güven",
       description:
-        "Hafif dokular, hızlı emilim ve gün boyu taşıması kolay bir his.",
+        "Estetisyen ve hekimler tarafından yıllardır tercih edilen, stabil ve yüksek performanslı formüller.",
     },
   ],
-  benefitImage: img("https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1600&q=80", "Cilt bakımı close-up"),
+  benefitImage: placeholders.editorial.benefit,
   testimonial: {
-    quote: "Gerçek bakım, cildin ihtiyacını dinlemekle başlar.",
-    name: "Elif A.",
-    product: "Daily Renewal Serum",
+    quote:
+      "Gerçek bakım, doğru formül ve doğru uygulama ile başlar.",
+    name: "Kesu Klinik Ağı",
+    product: "Profesyonel uygulamalar",
   },
   faqs: [
     {
-      question: "Kesu ürünleri hangi cilt tipleri için uygun?",
+      question: "Kesu ürünleri kimler için uygundur?",
       answer:
-        "Formüllerimiz çoğunlukla hassas ve karma ciltler düşünülerek geliştirildi. Ürün sayfalarındaki kullanım önerilerini takip etmenizi öneririz.",
+        "Kesu solüsyonları profesyonel estetik ve medikal uygulamalar için geliştirilmiştir. Uygulama, hekim veya yetkili uygulayıcı tarafından yapılmalıdır.",
     },
     {
-      question: "Rutinime nasıl başlamalıyım?",
+      question: "Hangi ürün gruplarınız var?",
       answer:
-        "Temizleyici, serum ve nemlendirici ile sade bir üçlü rutine başlayın. İhtiyaca göre essence veya gece yağı ekleyebilirsiniz.",
+        "Katalogda Six Lift, Anti-Aging, White Effect, Eyes ve Hair mezoterapi solüsyonları yer alır. Her biri farklı endikasyonlara yönelik formüle edilmiştir.",
     },
     {
-      question: "İçerikler test edilmiş midir?",
+      question: "Ürünler Kore menşeli midir?",
       answer:
-        "Kullandığımız aktifler dermatolojik literatürde bilinen, dengeli konsantrasyonlarda seçilir. Hayvanlar üzerinde test yapılmaz.",
+        "Evet. Formüllerimiz, etkinliği ve güvenilirliği dünya çapında bilinen Kore menşeli ileri teknoloji üretim süreçleriyle hazırlanır.",
     },
     {
-      question: "Ürünler hakkında nasıl bilgi alabilirim?",
+      question: "Bilgi veya iş birliği için nasıl ulaşabilirim?",
       answer:
-        "Bu site ürünleri tanıtmak için tasarlandı. Detaylı bilgi, örnek veya iş birliği için iletişim sayfasından bize ulaşabilirsiniz.",
+        "İletişim sayfasındaki adres ve WhatsApp hattımız üzerinden bize ulaşabilirsiniz.",
     },
   ],
-  ctaTitle: "Bakım rutininizi\nyeniden keşfedin.",
-  ctaDescription: "Sade bir koleksiyon. Net bir yön.",
-  ctaLabel: "Koleksiyona Git",
+  ctaTitle: "Koleksiyonu\nkeşfedin.",
+  ctaDescription: "Klinik sonuç için net formüller.",
+  ctaLabel: "Ürünlere Git",
   ctaHref: "/urunler",
 };
 
 export const aboutPage: AboutPageContent = {
   eyebrow: "Hakkımızda",
-  title: "Sakin bir bakım dili.",
+  title: "Profesyonel estetik için\ngüvenilir bir marka.",
   intro:
-    "Kesu, cilt bakımını abartısız bir zarafetle yeniden düşünmek için kuruldu. Amacımız daha fazla ürün satmak değil; daha doğru ürünlerle daha az gürültü yaratmak.",
+    "Kesu, profesyonel estetik ve medikal uygulamalar için geliştirilmiş lifting, botoks, anti-aging, hair ve eye care ürünleri sunmak amacıyla kurulmuş; yıllardır sektörde başarıyla kullanılan ve uzmanlar tarafından güvenle tercih edilen yenilikçi bir dermokozmetik markasıdır.",
   storyBlocks: [
     {
-      body: "Her formül, cildin doğal dengesine saygı duyan bir yaklaşımla geliştirilir. Aktifler seçilirken yalnızca etki değil, dokunuş ve günlük kullanım konforu da ölçülür.",
-      image: img(
-        "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1600&q=80",
-        "Doğal ışıkta model portresi",
-      ),
+      title: "Kore teknolojisi. Klinik sonuç.",
+      body: "Uzun yıllara dayanan deneyimimiz ve profesyonellerden aldığımız güçlü geri bildirimler doğrultusunda geliştirdiğimiz tüm ürünlerimiz, etkinliği ve güvenilirliği dünya çapında kanıtlanmış Kore menşeli ileri teknoloji üretim süreçleriyle hazırlanır. Cilt gençleştirme, sıkılaşma, leke karşıtı bakım, saç güçlendirme ve göz çevresi problemlerine yönelik çözümlerimiz; doktorların ve kliniklerin beklentilerini karşılamanın ötesine geçerek uygulama sonuçlarını üst seviyeye taşır.",
+      image: placeholders.editorial.about1,
     },
     {
-      title: "Laboratuvardan rafta",
-      body: "Araştırma, formülasyon ve ambalaj aynı dilde konuşur: temiz tipografi, yumuşak nötrler ve ürünü merkeze alan görsel anlatım.",
-    },
-    {
-      body: "Kesu’nun dijital deneyimi de aynı titizlikle tasarlandı — boşluk, tipografi ve fotoğraf, markanın asıl araçlarıdır.",
-      image: img("https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=1600&q=80", "Premium bakım atmosferi"),
+      body: "Bilimsel yaklaşımımız, müşteri memnuniyetini esas alan hizmet anlayışımız ve sürekli gelişen ürün portföyümüz sayesinde Kesu; estetik dünyasında kalitesi ve sonuç odaklı yaklaşımıyla takdir edilen güçlü bir marka konumuna gelmiştir.",
+      image: placeholders.editorial.about2,
       fullWidth: true,
     },
   ],
-  philosophyTitle: "Az ama öz.",
+  philosophyTitle: "Misyonumuz",
   philosophyBody:
-    "Bir ürün rafta yer almadan önce üç soruyu geçer: Gerçekten gerekli mi? Günlük hayatta konforlu mu? Anlatımı net mi? Evet değilse, koleksiyona girmez.",
+    "Yüksek performanslı, stabil ve güvenli formüller ile uygulayıcıların başarısını artırmak; profesyonel estetisyen ve doktorlar tarafından yıllardır bize duyulan güveni daha da güçlendirmek.",
 };
 
-export const blogPosts: BlogPost[] = [
-  {
-    _id: "blog-1",
-    title: "Üç adımlı sabah rutini",
-    slug: "uc-adimli-sabah-rutini",
-    excerpt:
-      "Temizlik, serum ve nem — sabah bakımını sade tutmanın nedeni ve nasıl uygulanacağı.",
-    content:
-      "Sabah rutini karmaşık olmak zorunda değil. Cildi nazikçe temizleyin, ihtiyaca uygun bir serum uygulayın ve nem bariyerini destekleyin. Bu üç adım, çoğu cilt için yeterli bir temel oluşturur.\n\nKesu’da her ürün bu sade akış için tasarlandı. Daha fazla adım eklemek çoğu zaman daha iyi sonuç demek değildir; tutarlılık daha değerlidir.",
-    coverImage: img("https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1600&q=80", "Sabah bakım rutini"),
-    category: "Rutin",
-    publishedAt: "2026-03-12",
-    author: "Kesu Editör",
-  },
-  {
-    _id: "blog-2",
-    title: "Niacinamide neden herkese göre?",
-    slug: "niacinamide-neden-herkese-gore",
-    excerpt:
-      "Görünür denge, bariyer desteği ve hafif doku — niacinamide’in günlük bakımdaki yeri.",
-    content:
-      "Niacinamide, bakım dünyasında hem popüler hem de iyi belgelenmiş bir aktif. Dengeli konsantrasyonlarda kullanıldığında cildin görünümünü yumuşatabilir ve bariyer fonksiyonunu destekleyebilir.\n\nDaily Renewal Serum formülümüzde %5 niacinamide, hyaluronic acid ve panthenol ile birlikte çalışır.",
-    coverImage: img("https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=1600&q=80", "Serum içerik görseli"),
-    category: "İçerikler",
-    publishedAt: "2026-02-20",
-    author: "Kesu Lab",
-  },
-  {
-    _id: "blog-3",
-    title: "Kışın bariyer bakımı",
-    slug: "kisin-bariyer-bakimi",
-    excerpt:
-      "Soğuk hava ve kapalı ortamlar cildi zorlar. Nem ve lipid dengesini korumanın yolları.",
-    content:
-      "Kış aylarında cilt daha fazla nem kaybedebilir. Temizlikte aşırı köpükten kaçının, serum sonrası iyi bir nemlendirici kullanın ve gece ihtiyaca göre yağ bazlı bir adım ekleyin.",
-    coverImage: img("https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=1600&q=80", "Kış bakım atmosferi"),
-    category: "Mevsim",
-    publishedAt: "2026-01-08",
-    author: "Kesu Editör",
-  },
-];
+/** Blog routes removed from nav; kept for CMS schema compatibility */
+export const blogPosts: BlogPost[] = [];
