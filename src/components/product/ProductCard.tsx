@@ -23,7 +23,7 @@ export function ProductCard({ product, className, large }: ProductCardProps) {
   return (
     <Link
       href={`/urunler/${product.slug}`}
-      scroll
+      scroll={false}
       className={cn("group block", className)}
       prefetch
     >

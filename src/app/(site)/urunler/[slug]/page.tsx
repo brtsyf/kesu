@@ -3,6 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductDetailInfo } from "@/components/product/ProductDetailInfo";
 import { ProductCard } from "@/components/product/ProductCard";
+import { ProductTransitionScroll } from "@/components/product/ProductTransitionScroll";
 import { Reveal } from "@/components/animation/Reveal";
 import { getImageUrl } from "@/lib/sanity/image";
 import { getProductBySlug, getProducts } from "@/lib/sanity/fetch";
@@ -65,6 +66,7 @@ export default async function ProductDetailPage({
 
   return (
     <>
+      <ProductTransitionScroll />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
