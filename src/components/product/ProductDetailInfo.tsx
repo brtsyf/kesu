@@ -21,23 +21,23 @@ export function ProductDetailInfo({ product }: { product: Product }) {
   return (
     <div className="lg:pt-4">
       {product.category ? (
-        <motion.p className="eyebrow mb-4" {...item(0.35, 12)}>
+        <motion.p className="eyebrow mb-4" {...item(0.55, 12)}>
           {product.category.title}
         </motion.p>
       ) : null}
       <motion.h1
         className="heading-display text-balance mb-4"
-        {...item(0.42, 20)}
+        {...item(0.62, 20)}
       >
         {product.title}
       </motion.h1>
       <motion.p
         className="text-muted text-lg mb-10 max-w-md leading-relaxed"
-        {...item(0.5, 15)}
+        {...item(0.72, 15)}
       >
         {product.shortDescription}
       </motion.p>
-      <motion.div {...item(0.58, 10)} className="mb-14">
+      <motion.div {...item(0.82, 10)} className="mb-14">
         <Button href="/iletisim">Bilgi Al</Button>
       </motion.div>
 
@@ -45,7 +45,7 @@ export function ProductDetailInfo({ product }: { product: Product }) {
         className="space-y-10 border-t border-border pt-10"
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.68, ease: premiumEase }}
+        transition={{ duration: 0.8, delay: 0.92, ease: premiumEase }}
       >
         <div>
           <h2 className="text-sm tracking-[0.14em] uppercase mb-3">Açıklama</h2>

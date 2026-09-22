@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
-import { sharedImageTransition } from "@/lib/motion";
+import { sharedImageTransition, SHARED_IMAGE_MS } from "@/lib/motion";
 import { cn } from "@/lib/utils/cn";
 import type { SanityImage } from "@/lib/sanity/types";
 
@@ -47,7 +47,7 @@ export function ProductVisual({
       return;
     }
     // Let shared-element morph finish before idle float
-    const delay = layoutId ? 950 : 0;
+    const delay = layoutId ? SHARED_IMAGE_MS + 80 : 0;
     const timer = window.setTimeout(() => setFloatReady(true), delay);
     return () => window.clearTimeout(timer);
   }, [animate, layoutId, reduced]);

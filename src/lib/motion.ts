@@ -2,14 +2,17 @@ export const premiumEase = [0.22, 1, 0.36, 1] as const;
 
 export const productImageLayoutId = (slug: string) => `product-image-${slug}`;
 
+/** Shared card → detail morph (mobile + desktop) */
+export const SHARED_IMAGE_MS = 1200;
+
 export const sharedImageTransition = {
   layout: {
-    duration: 0.85,
+    duration: SHARED_IMAGE_MS / 1000,
     ease: premiumEase,
   },
 };
 
 export const detailContentTransition = {
-  duration: 0.65,
+  duration: 0.8,
   ease: premiumEase,
 };
