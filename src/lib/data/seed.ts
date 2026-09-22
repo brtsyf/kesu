@@ -75,11 +75,11 @@ export const products: Product[] = [
     shortDescription: "Dengeli ve taze bir cilt için günlük bakım.",
     description:
       "Daily Renewal Serum, cildin doğal yenilenme döngüsünü desteklemek için tasarlandı. Hafif dokusu hızla emilir; bariyer dostu içerikler gün boyu ferah bir denge hissi bırakır.",
-    thumbnail: img("/images/products/serum-1.jpg", "Daily Renewal Serum şişesi"),
+    thumbnail: img("https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=1600&q=80", "Daily Renewal Serum şişesi"),
     images: [
-      img("/images/products/serum-1.jpg", "Daily Renewal Serum ürün görseli"),
-      img("/images/products/serum-2.jpg", "Serum doku detayı"),
-      img("/images/products/serum-3.jpg", "Serum uygulama görseli"),
+      img("https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=1600&q=80", "Daily Renewal Serum ürün görseli"),
+      img("https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=1600&q=80", "Serum doku detayı"),
+      img("https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=1600&q=80", "Serum uygulama görseli"),
     ],
     category: categories[0],
     ingredients: [
@@ -110,11 +110,11 @@ export const products: Product[] = [
     shortDescription: "Hassas ciltler için yatıştırıcı nem bariyeri.",
     description:
       "Calm Barrier Cream, cildi sakinleştirirken nemi uzun süre tutar. Ceramide kompleksı ile desteklenen formül, günlük stres ve çevresel etkilere karşı koruyucu bir katman oluşturur.",
-    thumbnail: img("/images/products/cream-1.jpg", "Calm Barrier Cream"),
+    thumbnail: img("https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?auto=format&fit=crop&w=1600&q=80", "Calm Barrier Cream"),
     images: [
-      img("/images/products/cream-1.jpg", "Calm Barrier Cream ürün"),
-      img("/images/products/cream-2.jpg", "Krem dokusu"),
-      img("/images/products/cream-3.jpg", "Nemlendirici detay"),
+      img("https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?auto=format&fit=crop&w=1600&q=80", "Calm Barrier Cream ürün"),
+      img("https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?auto=format&fit=crop&w=1600&q=80", "Krem dokusu"),
+      img("https://images.unsplash.com/photo-1571875257727-256c39da42af?auto=format&fit=crop&w=1600&q=80", "Nemlendirici detay"),
     ],
     category: categories[2],
     ingredients: ["Ceramide NP", "Squalane", "Allantoin", "Shea Butter"],
@@ -135,10 +135,10 @@ export const products: Product[] = [
     shortDescription: "Amino asit bazlı, dengeli günlük temizlik.",
     description:
       "Gentle Amino Cleanser, cildin doğal yağ dengesini bozmadan arındırır. Düşük pH formülü ferah bir temizlik hissi bırakır.",
-    thumbnail: img("/images/products/cleanser-1.jpg", "Gentle Amino Cleanser"),
+    thumbnail: img("https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1600&q=80", "Gentle Amino Cleanser"),
     images: [
-      img("/images/products/cleanser-1.jpg", "Temizleyici ürün"),
-      img("/images/products/cleanser-2.jpg", "Temizlik rutini"),
+      img("https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1600&q=80", "Temizleyici ürün"),
+      img("https://images.unsplash.com/photo-1580870069867-74c57ee1bb07?auto=format&fit=crop&w=1600&q=80", "Temizlik rutini"),
     ],
     category: categories[1],
     ingredients: ["Amino Acid Surfactants", "Glycerin", "Green Tea Extract"],
@@ -155,10 +155,10 @@ export const products: Product[] = [
     shortDescription: "Aydınlık görünüm için hafif essence.",
     description:
       "Clarity Essence, cilde berrak ve dinlenmiş bir görünüm kazandırmak için formüle edildi. Katmanlanabilir yapısıyla serum öncesi kullanılır.",
-    thumbnail: img("/images/products/essence-1.jpg", "Clarity Essence"),
+    thumbnail: img("https://images.unsplash.com/photo-1629198688000-71f23e745b6e?auto=format&fit=crop&w=1600&q=80", "Clarity Essence"),
     images: [
-      img("/images/products/essence-1.jpg", "Clarity Essence şişe"),
-      img("/images/products/serum-2.jpg", "Essence dokusu"),
+      img("https://images.unsplash.com/photo-1629198688000-71f23e745b6e?auto=format&fit=crop&w=1600&q=80", "Clarity Essence şişe"),
+      img("https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=1600&q=80", "Essence dokusu"),
     ],
     category: categories[0],
     ingredients: ["Tranexamic Acid", "Licorice Root", "Betaine"],
@@ -174,10 +174,10 @@ export const products: Product[] = [
     shortDescription: "Gece onarımı için hafif bakım yağı.",
     description:
       "Night Recovery Oil, gece boyunca cildi besler. Hızlı emilen bitkisel yağlar ile yumuşak bir bitiş bırakır.",
-    thumbnail: img("/images/products/oil-1.jpg", "Night Recovery Oil"),
+    thumbnail: img("https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=1600&q=80", "Night Recovery Oil"),
     images: [
-      img("/images/products/oil-1.jpg", "Gece yağı ürün"),
-      img("/images/products/treatment-1.jpg", "Gece bakımı"),
+      img("https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=1600&q=80", "Gece yağı ürün"),
+      img("https://images.unsplash.com/photo-1601049676869-702ea24cfd58?auto=format&fit=crop&w=1600&q=80", "Gece bakımı"),
     ],
     category: categories[3],
     ingredients: ["Squalane", "Rosehip Oil", "Vitamin E", "Jojoba"],
@@ -193,10 +193,10 @@ export const products: Product[] = [
     shortDescription: "Gün içi tazelik için mineral sis.",
     description:
       "Soft Focus Mist, gün içinde cildi ferahlatır ve makyaj üzerine de kullanılabilir. Mineral dengesi ile yumuşak bir bitiş verir.",
-    thumbnail: img("/images/products/mist-1.jpg", "Soft Focus Mist"),
+    thumbnail: img("https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&w=1600&q=80", "Soft Focus Mist"),
     images: [
-      img("/images/products/mist-1.jpg", "Mist ürün görseli"),
-      img("/images/products/mist-2.jpg", "Sis detayı"),
+      img("https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&w=1600&q=80", "Mist ürün görseli"),
+      img("https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=1600&q=80", "Sis detayı"),
     ],
     category: categories[3],
     ingredients: ["Thermal Water", "Aloe Vera", "Glycerin"],
@@ -215,7 +215,7 @@ export const homePage: HomePageContent = {
       "Az adımlı, yüksek etkili formüller. Cildin ihtiyacını dinleyen, premium ve minimal bir rutin.",
     primaryCta: { label: "Ürünleri Keşfet", href: "/urunler" },
     secondaryCta: { label: "Marka Hikayesi", href: "/hakkimizda" },
-    image: img("/images/editorial/hero.jpg", "Kesu bakım ürünü close-up"),
+    image: img("https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1600&q=80", "Kesu bakım ürünü close-up"),
   },
   featuredEyebrow: "Öne çıkanlar",
   featuredTitle: "Rutininizin temel parçaları.",
@@ -226,7 +226,7 @@ export const homePage: HomePageContent = {
   philosophyBody:
     "Kesu, cilt bakımını bir performans gösterisine dönüştürmez. Formülleri sade tutar, içerikleri anlaşılır seçer ve her adımı bilinçli bırakır. Lüks; gürültüde değil, dokunuşta hissedilir.",
   philosophyImage: img(
-    "/images/editorial/philosophy.jpg",
+    "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1600&q=80",
     "Sakin cilt bakımı atmosferi",
   ),
   benefitsEyebrow: "Yaklaşım",
@@ -248,7 +248,7 @@ export const homePage: HomePageContent = {
         "Hafif dokular, hızlı emilim ve gün boyu taşıması kolay bir his.",
     },
   ],
-  benefitImage: img("/images/editorial/benefit.jpg", "Cilt bakımı close-up"),
+  benefitImage: img("https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1600&q=80", "Cilt bakımı close-up"),
   testimonial: {
     quote: "Gerçek bakım, cildin ihtiyacını dinlemekle başlar.",
     name: "Elif A.",
@@ -291,7 +291,7 @@ export const aboutPage: AboutPageContent = {
     {
       body: "Her formül, cildin doğal dengesine saygı duyan bir yaklaşımla geliştirilir. Aktifler seçilirken yalnızca etki değil, dokunuş ve günlük kullanım konforu da ölçülür.",
       image: img(
-        "/images/editorial/about-1.jpg",
+        "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1600&q=80",
         "Doğal ışıkta model portresi",
       ),
     },
@@ -301,7 +301,7 @@ export const aboutPage: AboutPageContent = {
     },
     {
       body: "Kesu’nun dijital deneyimi de aynı titizlikle tasarlandı — boşluk, tipografi ve fotoğraf, markanın asıl araçlarıdır.",
-      image: img("/images/editorial/about-2.jpg", "Premium bakım atmosferi"),
+      image: img("https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=1600&q=80", "Premium bakım atmosferi"),
       fullWidth: true,
     },
   ],
@@ -319,7 +319,7 @@ export const blogPosts: BlogPost[] = [
       "Temizlik, serum ve nem — sabah bakımını sade tutmanın nedeni ve nasıl uygulanacağı.",
     content:
       "Sabah rutini karmaşık olmak zorunda değil. Cildi nazikçe temizleyin, ihtiyaca uygun bir serum uygulayın ve nem bariyerini destekleyin. Bu üç adım, çoğu cilt için yeterli bir temel oluşturur.\n\nKesu’da her ürün bu sade akış için tasarlandı. Daha fazla adım eklemek çoğu zaman daha iyi sonuç demek değildir; tutarlılık daha değerlidir.",
-    coverImage: img("/images/blog/routine.jpg", "Sabah bakım rutini"),
+    coverImage: img("https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1600&q=80", "Sabah bakım rutini"),
     category: "Rutin",
     publishedAt: "2026-03-12",
     author: "Kesu Editör",
@@ -332,7 +332,7 @@ export const blogPosts: BlogPost[] = [
       "Görünür denge, bariyer desteği ve hafif doku — niacinamide’in günlük bakımdaki yeri.",
     content:
       "Niacinamide, bakım dünyasında hem popüler hem de iyi belgelenmiş bir aktif. Dengeli konsantrasyonlarda kullanıldığında cildin görünümünü yumuşatabilir ve bariyer fonksiyonunu destekleyebilir.\n\nDaily Renewal Serum formülümüzde %5 niacinamide, hyaluronic acid ve panthenol ile birlikte çalışır.",
-    coverImage: img("/images/blog/niacinamide.jpg", "Serum içerik görseli"),
+    coverImage: img("https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=1600&q=80", "Serum içerik görseli"),
     category: "İçerikler",
     publishedAt: "2026-02-20",
     author: "Kesu Lab",
@@ -345,7 +345,7 @@ export const blogPosts: BlogPost[] = [
       "Soğuk hava ve kapalı ortamlar cildi zorlar. Nem ve lipid dengesini korumanın yolları.",
     content:
       "Kış aylarında cilt daha fazla nem kaybedebilir. Temizlikte aşırı köpükten kaçının, serum sonrası iyi bir nemlendirici kullanın ve gece ihtiyaca göre yağ bazlı bir adım ekleyin.",
-    coverImage: img("/images/blog/winter.jpg", "Kış bakım atmosferi"),
+    coverImage: img("https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=1600&q=80", "Kış bakım atmosferi"),
     category: "Mevsim",
     publishedAt: "2026-01-08",
     author: "Kesu Editör",
