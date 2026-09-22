@@ -83,7 +83,7 @@ export function Hero({ content }: { content: HeroContent }) {
             alt="Kesu ürün görseli"
             priority
             large
-            className="md:aspect-[5/6] lg:aspect-[4/5] xl:ml-8 shadow-[0_32px_80px_rgba(24,32,27,0.16)]"
+            className="md:aspect-[5/6] lg:aspect-[4/5] xl:ml-8"
           />
         </motion.div>
       </Container>

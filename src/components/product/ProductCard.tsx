@@ -36,7 +36,6 @@ export function ProductCard({ product, className, large }: ProductCardProps) {
           large={large}
           animate={false}
           layoutId={layoutId}
-          className="transition-[box-shadow] duration-700 ease-[var(--ease-premium)] group-hover:shadow-[0_24px_60px_rgba(24,32,27,0.18)]"
         />
       </div>
       <div className="flex items-start justify-between gap-4">
