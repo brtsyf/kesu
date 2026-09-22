@@ -140,3 +140,161 @@
     background-size: 100% 1px;
   }
 }
+
+/* Opening intro — liquid premium field */
+@keyframes kesu-liquid-morph {
+  0%,
+  100% {
+    border-radius: 58% 42% 38% 62% / 52% 48% 62% 38%;
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+  33% {
+    border-radius: 42% 58% 62% 38% / 48% 62% 38% 52%;
+    transform: translate3d(4%, -3%, 0) scale(1.06) rotate(8deg);
+  }
+  66% {
+    border-radius: 62% 38% 48% 52% / 38% 52% 48% 62%;
+    transform: translate3d(-5%, 4%, 0) scale(0.96) rotate(-6deg);
+  }
+}
+
+@keyframes kesu-liquid-drift {
+  0%,
+  100% {
+    transform: translate3d(-2%, 2%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(3%, -4%, 0) scale(1.08);
+  }
+}
+
+@keyframes kesu-sheen {
+  0% {
+    opacity: 0.25;
+    transform: translate3d(-20%, -10%, 0) rotate(12deg);
+  }
+  50% {
+    opacity: 0.45;
+  }
+  100% {
+    opacity: 0.25;
+    transform: translate3d(15%, 8%, 0) rotate(12deg);
+  }
+}
+
+.kesu-intro-blob {
+  position: absolute;
+  filter: blur(40px);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  will-change: transform, border-radius;
+  animation: kesu-liquid-morph 9s var(--ease-premium) infinite;
+}
+
+.kesu-intro-blob--a {
+  width: min(72vw, 34rem);
+  height: min(72vw, 34rem);
+  left: 50%;
+  top: 42%;
+  margin-left: -18rem;
+  margin-top: -16rem;
+  background: radial-gradient(
+    circle at 35% 35%,
+    color-mix(in srgb, var(--accent-soft) 70%, white),
+    color-mix(in srgb, var(--accent) 55%, transparent) 55%,
+    transparent 72%
+  );
+}
+
+.kesu-intro-blob--b {
+  width: min(55vw, 26rem);
+  height: min(55vw, 26rem);
+  right: 8%;
+  bottom: 12%;
+  background: radial-gradient(
+    circle at 60% 40%,
+    color-mix(in srgb, var(--accent) 45%, transparent),
+    transparent 70%
+  );
+  animation-duration: 11s;
+  animation-direction: reverse;
+  opacity: 0.4;
+}
+
+.kesu-intro-blob--c {
+  width: min(48vw, 22rem);
+  height: min(48vw, 22rem);
+  left: 6%;
+  top: 18%;
+  background: radial-gradient(
+    circle at 40% 60%,
+    color-mix(in srgb, #a8b89e 50%, transparent),
+    transparent 68%
+  );
+  animation-name: kesu-liquid-drift;
+  animation-duration: 8s;
+  opacity: 0.35;
+  filter: blur(48px);
+}
+
+.kesu-intro-sheen {
+  position: absolute;
+  inset: -20%;
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    color-mix(in srgb, white 8%, transparent) 48%,
+    transparent 62%
+  );
+  animation: kesu-sheen 5.5s var(--ease-premium) infinite;
+  pointer-events: none;
+}
+
+.kesu-intro-glass {
+  position: relative;
+  border-radius: 2rem;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, white 12%, transparent),
+    color-mix(in srgb, white 4%, transparent)
+  );
+  border: 1px solid color-mix(in srgb, white 16%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 12%, transparent),
+    0 24px 80px color-mix(in srgb, black 35%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 22%, transparent);
+  backdrop-filter: blur(22px) saturate(1.2);
+  -webkit-backdrop-filter: blur(22px) saturate(1.2);
+  overflow: hidden;
+}
+
+.kesu-intro-glass::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(
+    circle at 30% 20%,
+    color-mix(in srgb, var(--accent-soft) 28%, transparent),
+    transparent 55%
+  );
+  animation: kesu-liquid-drift 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.kesu-intro-drop {
+  width: 0.55rem;
+  height: 0.55rem;
+  background: color-mix(in srgb, var(--accent-soft) 85%, white);
+  border-radius: 60% 40% 55% 45% / 50% 55% 45% 50%;
+  box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 55%, transparent);
+  animation: kesu-liquid-morph 4.5s var(--ease-premium) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kesu-intro-blob,
+  .kesu-intro-sheen,
+  .kesu-intro-glass::before,
+  .kesu-intro-drop {
+    animation: none !important;
+  }
+}
