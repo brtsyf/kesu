@@ -52,7 +52,6 @@ export const siteSettings: SiteSettings = {
   navigation: [
     { label: "Ürünler", href: "/urunler" },
     { label: "Hakkımızda", href: "/hakkimizda" },
-    { label: "SSS", href: "/#sss" },
     { label: "İletişim", href: "/iletisim" },
   ],
   socialLinks: [
