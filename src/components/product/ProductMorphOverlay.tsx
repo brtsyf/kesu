@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { SHARED_IMAGE_MS, premiumEase } from "@/lib/motion";
+import { getProductCutout } from "@/lib/product-media";
 import { useProductMorph } from "@/components/product/ProductMorphContext";
 
 function preload(urls: (string | undefined)[]) {
@@ -99,11 +100,17 @@ export function ProductMorphOverlay() {
   if (!mounted || reduced || !active) return null;
 
   const from = active.from;
+  const cutout = Boolean(getProductCutout(active.slug));
+  const bottleSrc = active.bottleSrc || active.imageSrc;
 
   return createPortal(
     <motion.div
       key={`${active.direction}-${active.slug}`}
-      className="pointer-events-none fixed z-[200] overflow-hidden"
+      className={
+        cutout
+          ? "pointer-events-none fixed z-[200] overflow-visible"
+          : "pointer-events-none fixed z-[200] overflow-hidden"
+      }
       data-kesu-morph-overlay=""
       initial={{
         top: from.top,
@@ -132,7 +139,15 @@ export function ProductMorphOverlay() {
         willChange: "top, left, width, height, opacity",
       }}
     >
-      {active.backdropSrc && active.bottleSrc ? (
+      {cutout && bottleSrc ? (
+        /* eslint-disable-next-line @next/next/no-img-element */
+        <img
+          src={bottleSrc}
+          alt={active.alt}
+          className="h-full w-full object-contain object-center"
+          draggable={false}
+        />
+      ) : active.backdropSrc && active.bottleSrc ? (
         <>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -153,12 +168,12 @@ export function ProductMorphOverlay() {
             </div>
           </div>
         </>
-      ) : active.imageSrc ? (
-        // eslint-disable-next-line @next/next/no-img-element
+      ) : bottleSrc ? (
+        /* eslint-disable-next-line @next/next/no-img-element */
         <img
-          src={active.imageSrc}
+          src={bottleSrc}
           alt={active.alt}
-          className="absolute inset-0 h-full w-full object-cover"
+          className="h-full w-full object-cover"
           draggable={false}
         />
       ) : null}

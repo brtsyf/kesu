@@ -4,15 +4,30 @@ import { useState } from "react";
 import { cn } from "@/lib/utils/cn";
 import type { FaqItem } from "@/lib/sanity/types";
 
-function FaqItemRow({ item, index }: { item: FaqItem; index: number }) {
+function FaqItemRow({
+  item,
+  index,
+  tone = "default",
+}: {
+  item: FaqItem;
+  index: number;
+  tone?: "default" | "sage";
+}) {
   const [open, setOpen] = useState(false);
   const id = `faq-${index}`;
+  const sage = tone === "sage";
 
   return (
     <div
       className={cn(
-        "border-b border-border transition-colors",
-        open && "border-accent/30",
+        "border-b transition-colors",
+        sage
+          ? open
+            ? "border-white/35"
+            : "border-white/18"
+          : open
+            ? "border-accent/30"
+            : "border-border",
       )}
     >
       <h3>
@@ -22,14 +37,25 @@ function FaqItemRow({ item, index }: { item: FaqItem; index: number }) {
           aria-expanded={open}
           aria-controls={`${id}-panel`}
           onClick={() => setOpen((v) => !v)}
-          className="flex w-full items-center justify-between gap-6 py-6 text-left text-base md:text-lg tracking-tight transition-colors hover:text-accent-deep"
+          className={cn(
+            "flex w-full items-center justify-between gap-6 py-6 text-left text-base tracking-tight transition-colors md:text-lg",
+            sage
+              ? "text-[#f4f3ef] hover:text-white"
+              : "hover:text-accent-deep",
+          )}
         >
           <span>{item.question}</span>
           <span
             aria-hidden
             className={cn(
-              "text-accent transition-transform duration-500 ease-[var(--ease-premium)]",
-              open && "rotate-45 text-accent-deep",
+              "transition-transform duration-500 ease-[var(--ease-premium)]",
+              sage
+                ? open
+                  ? "rotate-45 text-white"
+                  : "text-[#f4f3ef]/70"
+                : open
+                  ? "rotate-45 text-accent-deep"
+                  : "text-accent",
             )}
           >
             +
@@ -46,7 +72,12 @@ function FaqItemRow({ item, index }: { item: FaqItem; index: number }) {
         )}
       >
         <div className="overflow-hidden">
-          <p className="pb-6 max-w-2xl text-muted text-[0.975rem] leading-relaxed">
+          <p
+            className={cn(
+              "max-w-2xl pb-6 text-[0.975rem] leading-relaxed",
+              sage ? "text-[#f4f3ef]/75" : "text-muted",
+            )}
+          >
             {item.answer}
           </p>
         </div>
@@ -55,11 +86,22 @@ function FaqItemRow({ item, index }: { item: FaqItem; index: number }) {
   );
 }
 
-export function FaqAccordion({ items }: { items: FaqItem[] }) {
+export function FaqAccordion({
+  items,
+  tone = "default",
+}: {
+  items: FaqItem[];
+  tone?: "default" | "sage";
+}) {
   return (
     <div>
       {items.map((item, index) => (
-        <FaqItemRow key={item.question} item={item} index={index} />
+        <FaqItemRow
+          key={item.question}
+          item={item}
+          index={index}
+          tone={tone}
+        />
       ))}
     </div>
   );

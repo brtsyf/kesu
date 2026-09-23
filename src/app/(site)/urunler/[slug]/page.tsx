@@ -1,9 +1,12 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductDetailInfo } from "@/components/product/ProductDetailInfo";
+import { ProductDetailStory } from "@/components/product/ProductDetailStory";
 import { ProductCard } from "@/components/product/ProductCard";
 import { ProductTransitionScroll } from "@/components/product/ProductTransitionScroll";
+import { CtaSection } from "@/components/sections/CtaSection";
 import { Reveal } from "@/components/animation/Reveal";
 import { getImageUrl } from "@/lib/sanity/image";
 import { getProductBySlug, getProducts } from "@/lib/sanity/fetch";
@@ -65,16 +68,44 @@ export default async function ProductDetailPage({
         : [];
 
   return (
-    <>
+    <div className="bg-[#fafaf7]">
       <ProductTransitionScroll />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <section className="pt-[calc(var(--header-height)+3rem)] pb-20 md:pb-28">
+      <section className="pt-[calc(var(--header-height)+2rem)] pb-16 md:pb-24">
         <Container>
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
-            <div className="lg:col-span-6">
+          <Reveal y={12}>
+            <nav
+              aria-label="Sayfa konumu"
+              className="mb-10 flex flex-wrap items-center gap-2 text-[0.86rem] text-[#9a958c] md:mb-14"
+            >
+              <Link
+                href="/"
+                className="transition-colors hover:text-[#141414]"
+              >
+                Ana sayfa
+              </Link>
+              <span>/</span>
+              <Link
+                href="/urunler"
+                className="transition-colors hover:text-[#141414]"
+              >
+                Koleksiyon
+              </Link>
+              <span>/</span>
+              <span className="text-[#6b6860]">
+                {product.category?.title ?? product.title}
+              </span>
+            </nav>
+          </Reveal>
+
+          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14 xl:gap-20">
+            <div className="lg:col-span-5">
+              <ProductDetailInfo product={product} />
+            </div>
+            <div className="lg:col-span-7">
               <ProductGallery
                 images={gallery}
                 title={product.title}
@@ -83,28 +114,45 @@ export default async function ProductDetailPage({
                 backdrop={product.backdrop}
               />
             </div>
-            <div className="lg:col-span-6">
-              <ProductDetailInfo product={product} />
-            </div>
           </div>
         </Container>
       </section>
 
+      <ProductDetailStory product={product} />
+
       {relatedFallback.length ? (
-        <section className="kesu-related-products pb-24 md:pb-32 border-t border-border pt-20">
+        <section className="kesu-related-products bg-[#fafaf7] pb-20 md:pb-28">
           <Container>
             <Reveal>
-              <p className="eyebrow mb-5">İlgili ürünler</p>
-              <h2 className="heading-display mb-12">Birlikte düşünün.</h2>
+              <div className="mb-12 grid gap-6 lg:mb-16 lg:grid-cols-12 lg:items-end">
+                <h2 className="heading-section text-balance lg:col-span-7">
+                  <span className="block">Birlikte</span>
+                  <span className="block">düşünün.</span>
+                </h2>
+                <p className="max-w-md text-[0.98rem] leading-relaxed text-[#7a776e] lg:col-span-5 lg:justify-self-end">
+                  Aynı özenle formüle edilmiş diğer Kesu solüsyonları.
+                </p>
+              </div>
             </Reveal>
             <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-              {relatedFallback.map((p) => (
-                <ProductCard key={p._id} product={p} />
+              {relatedFallback.map((p, index) => (
+                <Reveal key={p._id} delay={index * 0.05} className="h-full">
+                  <ProductCard product={p} />
+                </Reveal>
               ))}
             </div>
           </Container>
         </section>
       ) : null}
-    </>
+
+      <CtaSection
+        title="Birlikte değerlendirelim."
+        description="Hekim ve profesyonel iş birliği hakkında bize ulaşın."
+        label="Kesu ile iletişime geçin"
+        href="/iletisim"
+        secondaryLabel="Tüm koleksiyona dön"
+        secondaryHref="/urunler"
+      />
+    </div>
   );
 }

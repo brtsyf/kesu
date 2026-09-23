@@ -15,7 +15,7 @@
   --ring: #7d8f72;
   --mist: color-mix(in srgb, var(--accent-soft) 38%, transparent);
   --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
-  --header-height: 4.5rem;
+  --header-height: 5.25rem;
 }
 
 @theme inline {
@@ -43,7 +43,12 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
+  }
+
+  html.lenis,
+  html.lenis-smooth {
+    scroll-behavior: auto;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -114,10 +119,19 @@
   }
 
   .heading-hero {
-    font-size: clamp(3.5rem, 8vw, 8rem);
-    line-height: 0.95;
-    letter-spacing: -0.04em;
-    font-weight: 500;
+    color: #141414;
+    font-size: clamp(3.25rem, 7.4vw, 6.6rem);
+    line-height: 1.2;
+    letter-spacing: -0.042em;
+    font-weight: 600;
+    text-shadow: none;
+  }
+
+  .container-hero {
+    width: 100%;
+    max-width: 104rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.75rem, 6.2vw, 6rem);
   }
 
   .heading-section {

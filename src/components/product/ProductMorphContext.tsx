@@ -42,6 +42,8 @@ export type MorphCache = {
   detailRect: MorphRect;
   /** List scrollY when the card was clicked — restore on reverse */
   listScrollY: number;
+  /** Path where the card was clicked (`/` or `/urunler`) — only restore scroll there */
+  listPath?: string;
   ts: number;
 };
 
@@ -92,6 +94,7 @@ export function cacheForwardEntry(input: {
   imageSrc?: string;
   cardRect: MorphRect;
   listScrollY: number;
+  listPath?: string;
 }) {
   writeMorphCache({
     ...input,
@@ -265,8 +268,10 @@ export function useProductMorphOptional() {
 export { SHARED_IMAGE_MS };
 
 export function hideOtherProductStages(except?: HTMLElement | null) {
+  const keep =
+    except?.closest?.(".kesu-product-stage") ?? except ?? null;
   document.querySelectorAll<HTMLElement>(".kesu-product-stage").forEach((el) => {
-    if (except && el === except) return;
+    if (keep && el === keep) return;
     // Never hide the flying morph clone — reverse remount was zeroing it mid-flight
     if (el.hasAttribute("data-kesu-morph-overlay")) return;
     el.setAttribute("data-kesu-morph-hide", "");

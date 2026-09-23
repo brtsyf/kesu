@@ -9,6 +9,7 @@ import { ProductDetailExitMorph } from "@/components/product/ProductDetailExitMo
 import { useProductMorphOptional } from "@/components/product/ProductMorphContext";
 import { MediaBox } from "@/components/ui/MediaBox";
 import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
+import { getProductCutout, getProductTint } from "@/lib/product-media";
 import type { SanityImage } from "@/lib/sanity/types";
 
 function GalleryThumb({
@@ -69,18 +70,27 @@ export function ProductGallery({
 }) {
   const morph = useProductMorphOptional();
   const reduced = useReducedMotion();
-  const gallery = images.length ? images : [];
+  const cutout = getProductCutout(slug);
+  const cutoutImage = cutout ? { url: cutout, alt: title } : undefined;
+  const gallery = cutoutImage
+    ? [cutoutImage]
+    : images.length
+      ? images
+      : [];
   const [active, setActive] = useState(0);
-  const hasLayers = Boolean(bottle && backdrop);
+  const [hovered, setHovered] = useState(false);
+  const cutoutBottle = cutoutImage ?? bottle;
+  const hasLayers = Boolean(cutoutBottle && backdrop && !cutout);
   const showLayered = hasLayers && active === 0;
+  const showCutout = Boolean(cutout);
   const current = gallery[active] ?? gallery[0];
   const morphing = Boolean(morph?.isActiveSlug(slug));
 
-  const bottleSrc = getImageUrl(bottle ?? current, 1600);
-  const backdropSrc = getImageUrl(backdrop, 1800);
-  const imageSrc = getImageUrl(current, 1600);
+  const bottleSrc = cutout || getImageUrl(cutoutBottle ?? current, 1600);
+  const backdropSrc = cutout ? undefined : getImageUrl(backdrop, 1800);
+  const imageSrc = bottleSrc || getImageUrl(current, 1600);
 
-  if (!gallery.length && !hasLayers) {
+  if (!gallery.length && !hasLayers && !cutout) {
     return (
       <div className="aspect-[4/5] bg-surface ring-1 ring-border/70 flex items-center justify-center text-muted text-sm">
         Görsel yakında
@@ -89,7 +99,7 @@ export function ProductGallery({
   }
 
   return (
-    <div className="lg:sticky lg:top-28 space-y-4">
+    <div className="space-y-4">
       <ProductDetailExitMorph
         slug={slug}
         alt={title}
@@ -97,27 +107,51 @@ export function ProductGallery({
         backdropSrc={backdropSrc || undefined}
         imageSrc={imageSrc || undefined}
       />
-      <ProductMorphTarget slug={slug}>
-        {showLayered ? (
-          <ProductVisual
-            bottle={bottle}
-            backdrop={backdrop}
-            alt={title}
-            priority
-            large
-            animate={!morphing && !reduced}
-          />
-        ) : (
-          <ProductVisual
-            image={current}
-            alt={title}
-            priority
-            large
-            animate={false}
-          />
-        )}
-      </ProductMorphTarget>
-      {gallery.length > 1 ? (
+      {showCutout ? (
+        <div
+          className="overflow-hidden rounded-[2.25rem] md:rounded-[2.75rem]"
+          style={{ backgroundColor: getProductTint(slug) }}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+        >
+          <div className="flex min-h-[26rem] items-center justify-center px-[6%] py-10 sm:min-h-[30rem] md:min-h-[36rem] lg:min-h-[40rem]">
+            <ProductMorphTarget slug={slug}>
+              <ProductVisual
+                bottle={cutoutBottle}
+                alt={title}
+                priority
+                large
+                editorial
+                hovered={hovered && !morphing}
+                animate={!morphing && !reduced}
+                variant="card"
+              />
+            </ProductMorphTarget>
+          </div>
+        </div>
+      ) : (
+        <ProductMorphTarget slug={slug}>
+          {showLayered ? (
+            <ProductVisual
+              bottle={bottle}
+              backdrop={backdrop}
+              alt={title}
+              priority
+              large
+              animate={!morphing && !reduced}
+            />
+          ) : (
+            <ProductVisual
+              image={current}
+              alt={title}
+              priority
+              large
+              animate={false}
+            />
+          )}
+        </ProductMorphTarget>
+      )}
+      {!cutout && gallery.length > 1 ? (
         <div className="kesu-gallery-thumbs grid grid-cols-4 gap-3">
           {gallery.map((image, index) => {
             const thumb = getImageUrl(image, 300);

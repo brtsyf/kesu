@@ -16,33 +16,33 @@ const img = (url: string, alt: string) => ({
 const placeholders = {
   lift: img("/images/products/six-lift.jpg", "Kesu Six Lift ampul"),
   liftBottle: img(
-    "/images/products/six-lift-bottle.webp",
+    "/images/products/six-lift-hero.png",
     "Kesu Six Lift ampul",
   ),
   liftBg: img("/images/products/six-lift-bg.webp", "Kesu Six Lift arka plan"),
-  aging: img("/images/products/anti-aging.jpg", "Kesu Anti-Aging ampul"),
+  aging: img("/images/products/anti-aging.png", "Kesu Anti-Aging ampul"),
   agingBottle: img(
-    "/images/products/anti-aging-bottle.webp",
+    "/images/products/anti-aging.png",
     "Kesu Anti-Aging ampul",
   ),
   agingBg: img(
     "/images/products/anti-aging-bg.webp",
     "Kesu Anti-Aging arka plan",
   ),
-  white: img("/images/products/white-effect.jpg", "Kesu White Effect ampul"),
+  white: img("/images/products/white-effect.png", "Kesu White Effect ampul"),
   whiteBottle: img(
-    "/images/products/white-effect-bottle.webp",
+    "/images/products/white-effect.png",
     "Kesu White Effect ampul",
   ),
   whiteBg: img(
     "/images/products/white-effect-bg.webp",
     "Kesu White Effect arka plan",
   ),
-  eyes: img("/images/products/eyes.jpg", "Kesu Eyes ampul"),
-  eyesBottle: img("/images/products/eyes-bottle.webp", "Kesu Eyes ampul"),
+  eyes: img("/images/products/eyes.png", "Kesu Eyes ampul"),
+  eyesBottle: img("/images/products/eyes.png", "Kesu Eyes ampul"),
   eyesBg: img("/images/products/eyes-bg.webp", "Kesu Eyes arka plan"),
-  hair: img("/images/products/hair.jpg", "Kesu Hair ampul"),
-  hairBottle: img("/images/products/hair-bottle.webp", "Kesu Hair ampul"),
+  hair: img("/images/products/hair.png", "Kesu Hair ampul"),
+  hairBottle: img("/images/products/hair.png", "Kesu Hair ampul"),
   hairBg: img("/images/products/hair-bg.webp", "Kesu Hair arka plan"),
   editorial: {
     hero: img(
@@ -132,10 +132,9 @@ export const products: Product[] = [
       "Anında lifting ve sıkılaşma için mezoterapi solüsyonu. 10 ml × 5 ampul.",
     description:
       "Kesu Lifting Mezoterapi Solüsyonu; sarkma ve elastikiyet kaybı, ince kırışıklıklar, donuk ve yorgun cilt ile cilt tonu eşitsizliklerine yönelik geliştirilmiştir. Somon DNA ile hücre yenileyici bakım sunar; kolajen üretimini destekler, cilt tonunu dengeler ve parlaklık kazandırır.",
-    thumbnail: placeholders.lift,
+    thumbnail: placeholders.liftBottle,
     bottle: placeholders.liftBottle,
-    backdrop: placeholders.liftBg,
-    images: [placeholders.liftBottle, placeholders.liftBg, placeholders.lift],
+    images: [placeholders.liftBottle],
     category: categories[0],
     ingredients: [
       "Aqua",
@@ -166,6 +165,9 @@ export const products: Product[] = [
       "Profesyonel mezoterapi uygulamalarında kullanılır. Sarkma ve elastikiyet kaybı, ince kırışıklıklar, donuk/yorgun cilt ve ton eşitsizliklerinde tercih edilir. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
     featured: true,
     order: 1,
+    volume: "5 × 10 ml",
+    tagline: "Sıkılık & elastikiyet",
+    cardTint: "#eef1ec",
     seo: {
       metaTitle: "Kesu Six Lift | Lifting Mezoterapi Solüsyonu",
       metaDescription:
@@ -180,14 +182,9 @@ export const products: Product[] = [
       "İnce çizgi ve kırışıklık görünümünü azaltan mezoterapi solüsyonu. 10 ml × 5 ampul.",
     description:
       "Kesu Anti-Aging Mezoterapi Solüsyonu; mimik çizgileri, statik kırışıklıklar, mat ve canlılığını yitirmiş cilt, yaşlanma kaynaklı elastikiyet kaybı ile göz çevresi kırışıklıkları ve cilt kuruluğuna yönelik formüle edilmiştir. Nem dengesini destekler, serbest radikallere karşı koruma sağlar ve yorgun cildi canlandırır.",
-    thumbnail: placeholders.aging,
+    thumbnail: placeholders.agingBottle,
     bottle: placeholders.agingBottle,
-    backdrop: placeholders.agingBg,
-    images: [
-      placeholders.agingBottle,
-      placeholders.agingBg,
-      placeholders.aging,
-    ],
+    images: [placeholders.agingBottle],
     category: categories[1],
     ingredients: [
       "Hyaluronic Acid",
@@ -210,6 +207,9 @@ export const products: Product[] = [
       "Profesyonel mezoterapi uygulamalarında kullanılır. Mimik/statik kırışıklıklar, mat cilt, elastikiyet kaybı ve göz çevresi kuruluğunda tercih edilir. Uygulama hekim veya yetkili uygulayıcı tarafından yapılır.",
     featured: true,
     order: 2,
+    volume: "5 × 10 ml",
+    tagline: "Nem & canlılık",
+    cardTint: "#f6eeed",
     seo: {
       metaTitle: "Kesu Anti-Aging | Mezoterapi Solüsyonu",
       metaDescription:
@@ -224,14 +224,9 @@ export const products: Product[] = [
       "Leke ve hiperpigmentasyon görünümünü azaltan whitening solüsyonu. 10 ml × 5 ampul.",
     description:
       "Kesu White Effect Mezoterapi Solüsyonu; güneş lekeleri, melazma, akne sonrası lekeler ile donuk cilt görünümüne yönelik geliştirilmiştir. Cilt tonunu eşitler, ışıltı kazandırır, serbest radikallere karşı koruma sunar ve retinol ile hücre yenilenmesini destekler. Yüz, boyun, el üstü ve dekolte bölgelerinde kullanılabilir.",
-    thumbnail: placeholders.white,
+    thumbnail: placeholders.whiteBottle,
     bottle: placeholders.whiteBottle,
-    backdrop: placeholders.whiteBg,
-    images: [
-      placeholders.whiteBottle,
-      placeholders.whiteBg,
-      placeholders.white,
-    ],
+    images: [placeholders.whiteBottle],
     category: categories[2],
     ingredients: [
       "Ascorbic Acid",
@@ -260,6 +255,9 @@ export const products: Product[] = [
       "Profesyonel mezoterapi uygulamalarında kullanılır. Solar lentigo, melazma, post-akne lekeleri ve donuk ciltte tercih edilir. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
     featured: true,
     order: 3,
+    volume: "5 × 10 ml",
+    tagline: "Ton eşitliği & aydınlık",
+    cardTint: "#f5f2e8",
     seo: {
       metaTitle: "Kesu White Effect | Whitening Mezoterapi Solüsyonu",
       metaDescription:
@@ -274,10 +272,9 @@ export const products: Product[] = [
       "Göz çevresi ince çizgi, koyu halka ve yorgunluk görünümü için. 5 ml × 5 ampul.",
     description:
       "Kesu Eyes Mezoterapi Solüsyonu; göz altı torbaları, morluklar, ince çizgiler ve göz çevresi ton eşitsizliklerine yönelik özel formüle edilmiştir. İnce çizgilerin görünümünü azaltmaya yardımcı olur, koyu halka ve yorgunluk görünümünü hafifletir, aydınlatır, nemlendirir ve sıkılaştırıcı bir etki sunar.",
-    thumbnail: placeholders.eyes,
+    thumbnail: placeholders.eyesBottle,
     bottle: placeholders.eyesBottle,
-    backdrop: placeholders.eyesBg,
-    images: [placeholders.eyesBottle, placeholders.eyesBg, placeholders.eyes],
+    images: [placeholders.eyesBottle],
     category: categories[3],
     ingredients: [
       "Ascorbic Acid",
@@ -303,8 +300,11 @@ export const products: Product[] = [
     ],
     usage:
       "Profesyonel mezoterapi uygulamalarında, göz çevresi protokollerinde kullanılır. Uygulama yalnızca yetkili profesyoneller tarafından yapılmalıdır.",
-    featured: false,
+    featured: true,
     order: 4,
+    volume: "5 × 5 ml",
+    tagline: "Göz çevresi canlandırma",
+    cardTint: "#f1f0f5",
     seo: {
       metaTitle: "Kesu Eyes | Göz Çevresi Mezoterapi Solüsyonu",
       metaDescription:
@@ -319,10 +319,9 @@ export const products: Product[] = [
       "Saç dökülmesini azaltmaya ve kökleri beslemeye yardımcı solüsyon. 10 ml × 5 ampul.",
     description:
       "Kesu Hair Mezoterapi Solüsyonu; androgenetik alopesi, kadın tipi yaygın dökülme, mevsimsel dökülmeler, zayıf/ince teller ile stres veya gebelik sonrası dökülmeye yönelik geliştirilmiştir. Saç köklerini besler, yeni saç oluşumunu destekler, telleri kalınlaştırmaya yardımcı olur ve dolaşımı artırarak saç derisini canlandırır. Tüm saç tiplerine uygundur.",
-    thumbnail: placeholders.hair,
+    thumbnail: placeholders.hairBottle,
     bottle: placeholders.hairBottle,
-    backdrop: placeholders.hairBg,
-    images: [placeholders.hairBottle, placeholders.hairBg, placeholders.hair],
+    images: [placeholders.hairBottle],
     category: categories[4],
     ingredients: [
       "Aqua",
@@ -348,8 +347,11 @@ export const products: Product[] = [
     ],
     usage:
       "Profesyonel saç mezoterapisi uygulamalarında kullanılır. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
-    featured: false,
+    featured: true,
     order: 5,
+    volume: "5 × 10 ml",
+    tagline: "Saç kökü bakımı",
+    cardTint: "#f3eee8",
     seo: {
       metaTitle: "Kesu Hair | Saç Mezoterapi Solüsyonu",
       metaDescription:
@@ -361,17 +363,20 @@ export const products: Product[] = [
 export const homePage: HomePageContent = {
   hero: {
     eyebrow: "Profesyonel dermokozmetik",
-    headline: "Klinik sonuç.\nKesin formül.",
+    headline: "Inspired by\nKorean\nBeauty.",
     description:
-      "Lifting, anti-aging, whitening, eyes ve hair için Kore teknolojisiyle geliştirilmiş mezoterapi solüsyonları.",
+      "Kore güzellik yaklaşımından ilham alan profesyonel bakım. Cildinize, ihtiyaçlarınıza ve doğal ifadenize odaklanan bir dünya.",
     primaryCta: { label: "Ürünleri Keşfet", href: "/urunler" },
-    secondaryCta: { label: "Marka Hikayesi", href: "/hakkimizda" },
     image: placeholders.editorial.hero,
+    bottle: img("/images/products/six-lift-bottle.png", "Kesu Six Lift ampul"),
+    caption: "Lifting",
+    captionSub: "Sıkılık, Elastikiyet, Canlılık",
+    captionHref: "/urunler/kesu-six-lift",
   },
   featuredEyebrow: "Öne çıkanlar",
-  featuredTitle: "Klinik rutinin temel solüsyonları.",
+  featuredTitle: "Farklı ihtiyaçlar.\nAynı özen.",
   featuredDescription:
-    "Her formül net bir endikasyon için tasarlandı. Profesyonel uygulamada güçlü, anlaşılır ve sonuç odaklı.",
+    "Her cildin ihtiyacı farklı. Nemden sıkılığa, leke görünümünden ışıltıya — her formül net bir endikasyona odaklanır.",
   philosophyEyebrow: "Yaklaşım",
   philosophyTitle: "Uzmanlarca tercih edilen\nperformans.",
   philosophyBody:
@@ -425,10 +430,10 @@ export const homePage: HomePageContent = {
         "İletişim sayfasındaki adres ve WhatsApp hattımız üzerinden bize ulaşabilirsiniz.",
     },
   ],
-  ctaTitle: "Koleksiyonu\nkeşfedin.",
-  ctaDescription: "Klinik sonuç için net formüller.",
-  ctaLabel: "Ürünlere Git",
-  ctaHref: "/urunler",
+  ctaTitle: "Birlikte değerlendirelim.",
+  ctaDescription: "Hekim ve profesyonel iş birliği hakkında bize ulaşın.",
+  ctaLabel: "Kesu ile iletişime geçin",
+  ctaHref: "/iletisim",
 };
 
 export const aboutPage: AboutPageContent = {

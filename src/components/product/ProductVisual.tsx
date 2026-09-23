@@ -15,6 +15,10 @@ type ProductVisualProps = {
   priority?: boolean;
   large?: boolean;
   animate?: boolean;
+  hovered?: boolean;
+  snap?: boolean;
+  editorial?: boolean;
+  variant?: "stage" | "card";
 };
 
 /**
@@ -29,13 +33,18 @@ export function ProductVisual({
   className,
   large,
   animate = true,
+  hovered,
+  snap = false,
+  editorial = false,
   priority = false,
+  variant = "stage",
 }: ProductVisualProps) {
   const reduced = useReducedMotion();
-  const bottleSrc = getImageUrl(bottle ?? image, 1600);
-  const backdropSrc = getImageUrl(backdrop, 1800);
+  const isCard = variant === "card";
+  const bottleSrc = getImageUrl(bottle ?? (isCard ? undefined : image), 1600);
+  const backdropSrc = isCard ? undefined : getImageUrl(backdrop, 1800);
   const layered = Boolean(bottleSrc && backdropSrc);
-  const singleSrc = bottleSrc || getImageUrl(image, 1600);
+  const singleSrc = bottleSrc || (isCard ? undefined : getImageUrl(image, 1600));
 
   const [floatReady, setFloatReady] = useState(false);
   const [loaded, setLoaded] = useState(false);
@@ -47,6 +56,12 @@ export function ProductVisual({
   useEffect(() => {
     setLoaded(false);
     setLayerReady({ bottle: false, backdrop: false });
+    if (!singleSrc) return;
+    const preload = new window.Image();
+    preload.src = singleSrc;
+    if (preload.complete && preload.naturalWidth > 0) {
+      setLoaded(true);
+    }
   }, [bottleSrc, backdropSrc, singleSrc, layered]);
 
   useEffect(() => {
@@ -66,6 +81,66 @@ export function ProductVisual({
   const markLayer = useCallback((key: "bottle" | "backdrop") => {
     setLayerReady((prev) => (prev[key] ? prev : { ...prev, [key]: true }));
   }, []);
+
+  if (isCard) {
+    return (
+      <div
+        className={cn(
+          "kesu-product-stage relative mx-auto flex h-full w-full items-center justify-center",
+          className,
+        )}
+        aria-busy={Boolean(singleSrc) && !loaded}
+      >
+        {singleSrc && !loaded ? (
+          <div className="kesu-image-shimmer absolute inset-0 z-[1] rounded-2xl" aria-hidden />
+        ) : null}
+
+        {singleSrc ? (
+          <motion.img
+            src={singleSrc}
+            alt={getImageAlt(bottle ?? image, alt)}
+            className={cn(
+              "kesu-product-cutout mx-auto w-auto origin-[50%_70%] object-contain object-center",
+              editorial
+                ? "h-[26rem] md:h-[34rem] lg:h-[38rem]"
+                : large
+                  ? "h-[26rem] md:h-[32rem]"
+                  : "h-[19.5rem]",
+              loaded ? "opacity-100" : "opacity-0",
+            )}
+            initial={
+              large
+                ? { scale: 1.06, rotate: 0, x: 0, y: 0 }
+                : { scale: 1.18, rotate: 0, x: 0, y: 0 }
+            }
+            animate={
+              hovered && !reduced && !snap
+                ? large
+                  ? { rotate: -8, x: 12, y: -8, scale: 1.1 }
+                  : { rotate: -10, x: 14, y: -10, scale: 1.22 }
+                : large
+                  ? { scale: 1.06, rotate: 0, x: 0, y: 0 }
+                  : { scale: 1.18, rotate: 0, x: 0, y: 0 }
+            }
+            transition={
+              snap
+                ? { type: false as const, duration: 0 }
+                : { type: "spring", stiffness: 240, damping: 18, mass: 0.8 }
+            }
+            draggable={false}
+            decoding={priority ? "sync" : "async"}
+            loading={priority ? "eager" : "lazy"}
+            fetchPriority={priority ? "high" : "low"}
+            onLoad={() => setLoaded(true)}
+            onError={() => setLoaded(true)}
+            ref={(node) => {
+              if (node?.complete && node.naturalWidth > 0) setLoaded(true);
+            }}
+          />
+        ) : null}
+      </div>
+    );
+  }
 
   return (
     <div

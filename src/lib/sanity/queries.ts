@@ -58,8 +58,9 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
 export const homePageQuery = `*[_type == "homePage"][0] {
   hero{
     eyebrow, headline, description,
-    primaryCta, secondaryCta,
-    image{..., "url": asset->url, alt}
+    primaryCta, secondaryCta, caption, captionSub, captionHref,
+    image{..., "url": asset->url, alt},
+    bottle{..., "url": asset->url, alt}
   },
   featuredEyebrow, featuredTitle, featuredDescription,
   philosophyEyebrow, philosophyTitle, philosophyBody,

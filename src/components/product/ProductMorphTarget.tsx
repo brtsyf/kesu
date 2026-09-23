@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef } from "react";
 import { useReducedMotion } from "framer-motion";
 import { useProductMorphOptional } from "@/components/product/ProductMorphContext";
+import { measureProductVisual } from "@/lib/product-media";
 
 /** Forward morph: scroll + report detail hero as destination. */
 export function ProductMorphTarget({
@@ -40,12 +41,16 @@ export function ProductMorphTarget({
 
     const measure = () => {
       if (locked.current) return;
+      window.scrollTo(0, 0);
+      html.scrollTop = 0;
+      document.body.scrollTop = 0;
       const el = ref.current;
       if (!el) return;
-      const stage =
-        el.querySelector<HTMLElement>(".kesu-product-stage") ?? el;
-      const r = stage.getBoundingClientRect();
+      const measured = measureProductVisual(el);
+      const r = measured?.rect ?? el.getBoundingClientRect();
       if (r.width < 8 || r.height < 8) return;
+      // First dest wins in context — don't lock an off-screen rect
+      if (r.top < -8) return;
       locked.current = true;
       morph.setDestination({
         top: r.top,
@@ -57,8 +62,14 @@ export function ProductMorphTarget({
 
     measure();
     const raf = window.requestAnimationFrame(measure);
+    const raf2 = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(measure);
+    });
 
-    return () => window.cancelAnimationFrame(raf);
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.cancelAnimationFrame(raf2);
+    };
   }, [isForwardDest, morph, reduced]);
 
   return (

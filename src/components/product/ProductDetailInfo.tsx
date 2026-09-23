@@ -1,144 +1,153 @@
 "use client";
 
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
-import { Button } from "@/components/ui/Button";
-import { detailContentTransition, premiumEase } from "@/lib/motion";
+import { detailContentTransition } from "@/lib/motion";
 import type { Product } from "@/lib/sanity/types";
+
+const DETAIL_COPY: Record<
+  string,
+  { eyebrow: string; lead: string; intro: string }
+> = {
+  "kesu-six-lift": {
+    eyebrow: "Sıkılık & elastikiyet bakımı",
+    lead: "Sıkılık, cildin doğal ifadesinde başlar.",
+    intro:
+      "Sarkma, elastikiyet kaybı ve yorgun görünüme yönelik lifting solüsyonu. Somon DNA destekli formül, daha toparlanmış bir cilt ifadesi için geliştirilmiştir.",
+  },
+  "kesu-anti-aging": {
+    eyebrow: "Nem & canlılık bakımı",
+    lead: "Canlılık, derin nemle yeniden kurulur.",
+    intro:
+      "İnce çizgi, matlık ve nem kaybına odaklanan anti-aging solüsyonu. Cildi canlandırmaya, nem dengesini desteklemeye yardımcı olur.",
+  },
+  "kesu-white-effect": {
+    eyebrow: "Ton eşitliği & aydınlık bakımı",
+    lead: "Aydınlık, eşit bir tonda başlar.",
+    intro:
+      "Leke ve donuk görünüm için whitening solüsyonu. Cilt tonunu dengelemeye ve daha ışıklı bir ifade kazandırmaya yardımcı olur.",
+  },
+  "kesu-eyes": {
+    eyebrow: "Göz çevresi bakımı",
+    lead: "Özen, en hassas çizgide başlar.",
+    intro:
+      "Göz çevresi ince çizgi, koyu halka ve yorgunluk görünümüne yönelik özel solüsyon. Hassas bölge için nazik, odaklı bir bakım sunar.",
+  },
+  "kesu-hair": {
+    eyebrow: "Saç & saç derisi bakımı",
+    lead: "Bakım, saç tellerinin ötesinde başlar.",
+    intro:
+      "Saç ve saç derisini bir bütün olarak ele alan profesyonel yaklaşım. Zayıf ve ince saç tellerinin daha güçlü, dolgun görünümüne yönelik bakım sunar.",
+  },
+};
 
 const item = (delay: number, y = 18) => ({
   initial: { opacity: 0, y },
-  animate: { opacity: 1, y: 0 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.35 },
   transition: { ...detailContentTransition, delay },
 });
 
+function copyFor(product: Product) {
+  return (
+    DETAIL_COPY[product.slug] ?? {
+      eyebrow: product.tagline ?? product.category?.title ?? "Kesu",
+      lead: product.tagline ?? product.title,
+      intro: product.shortDescription,
+    }
+  );
+}
+
 export function ProductDetailInfo({ product }: { product: Product }) {
   const reduced = useReducedMotion();
+  const copy = copyFor(product);
+  const name = product.category?.title ?? product.title;
 
   if (reduced) {
-    return <ProductDetailInfoStatic product={product} />;
+    return (
+      <ProductDetailInfoBody product={product} copy={copy} name={name} />
+    );
   }
 
   return (
-    <div className="lg:pt-4">
-      {product.category ? (
-        <motion.p className="eyebrow mb-4" {...item(0.28, 12)}>
-          {product.category.title}
-        </motion.p>
-      ) : null}
-      <motion.h1
-        className="heading-display text-balance mb-4"
-        {...item(0.34, 20)}
+    <div className="max-w-xl lg:pt-4">
+      <motion.p
+        className="mb-5 text-[0.95rem] text-[#7a776e]"
+        {...item(0.22, 10)}
       >
-        {product.title}
+        {copy.eyebrow}
+      </motion.p>
+      <motion.h1
+        className="heading-section mb-6 text-[#141414]"
+        {...item(0.28, 18)}
+      >
+        {name}
       </motion.h1>
       <motion.p
-        className="text-muted text-lg mb-10 max-w-md leading-relaxed"
-        {...item(0.4, 15)}
+        className="mb-5 max-w-md text-[1.35rem] font-medium leading-snug tracking-[-0.03em] text-[#141414] md:text-[1.5rem]"
+        {...item(0.34, 14)}
       >
-        {product.shortDescription}
+        {copy.lead}
       </motion.p>
-      <motion.div {...item(0.46, 10)} className="mb-14">
-        <Button href="/iletisim">Bilgi Al</Button>
-      </motion.div>
-
-      <motion.div
-        className="space-y-10 border-t border-border pt-10"
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.52, ease: premiumEase }}
+      <motion.p
+        className="mb-8 max-w-md text-[0.98rem] leading-[1.75] text-[#6b6860]"
+        {...item(0.4, 12)}
       >
-        <div>
-          <h2 className="text-sm tracking-[0.14em] uppercase mb-3">Açıklama</h2>
-          <p className="text-muted leading-relaxed max-w-lg">
-            {product.description}
-          </p>
-        </div>
-        {product.benefits?.length ? (
-          <div>
-            <h2 className="text-sm tracking-[0.14em] uppercase mb-3">
-              Faydalar
-            </h2>
-            <ul className="space-y-2 text-muted">
-              {product.benefits.map((b) => (
-                <li key={b}>{b}</li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
-        {product.usage ? (
-          <div>
-            <h2 className="text-sm tracking-[0.14em] uppercase mb-3">
-              Kullanım
-            </h2>
-            <p className="text-muted leading-relaxed max-w-lg">{product.usage}</p>
-          </div>
-        ) : null}
-        {product.ingredients?.length ? (
-          <div>
-            <h2 className="text-sm tracking-[0.14em] uppercase mb-3">
-              İçerikler
-            </h2>
-            <p className="text-muted leading-relaxed max-w-lg">
-              {product.ingredients.join(" · ")}
-            </p>
-          </div>
-        ) : null}
+        {copy.intro}
+      </motion.p>
+      <motion.p
+        className="mb-10 text-[0.92rem] text-[#8a867c]"
+        {...item(0.44, 10)}
+      >
+        {product.volume ?? "5 × 10 ml"}
+        <span className="mx-2.5 text-[#d0cbc2]">|</span>
+        Profesyonel bakım koleksiyonu
+      </motion.p>
+      <motion.div {...item(0.5, 10)}>
+        <Link
+          href="/iletisim"
+          className="inline-flex items-center gap-2.5 rounded-full bg-[#24382f] px-6 py-[0.85rem] text-[0.9rem] text-white transition-colors duration-500 ease-[var(--ease-premium)] hover:bg-[#1b2c24]"
+        >
+          Ürün hakkında bilgi alın
+          <ArrowUpRight className="size-4" strokeWidth={1.7} />
+        </Link>
       </motion.div>
     </div>
   );
 }
 
-function ProductDetailInfoStatic({ product }: { product: Product }) {
+function ProductDetailInfoBody({
+  product,
+  copy,
+  name,
+}: {
+  product: Product;
+  copy: { eyebrow: string; lead: string; intro: string };
+  name: string;
+}) {
   return (
-    <div className="lg:pt-4">
-      {product.category ? (
-        <p className="eyebrow mb-4">{product.category.title}</p>
-      ) : null}
-      <h1 className="heading-display text-balance mb-4">{product.title}</h1>
-      <p className="text-muted text-lg mb-10 max-w-md leading-relaxed">
-        {product.shortDescription}
+    <div className="max-w-xl lg:pt-4">
+      <p className="mb-5 text-[0.95rem] text-[#7a776e]">{copy.eyebrow}</p>
+      <h1 className="heading-section mb-6 text-[#141414]">{name}</h1>
+      <p className="mb-5 max-w-md text-[1.35rem] font-medium leading-snug tracking-[-0.03em] text-[#141414] md:text-[1.5rem]">
+        {copy.lead}
       </p>
-      <Button href="/iletisim" className="mb-14">
-        Bilgi Al
-      </Button>
-      <div className="space-y-10 border-t border-border pt-10">
-        <div>
-          <h2 className="text-sm tracking-[0.14em] uppercase mb-3">Açıklama</h2>
-          <p className="text-muted leading-relaxed max-w-lg">
-            {product.description}
-          </p>
-        </div>
-        {product.benefits?.length ? (
-          <div>
-            <h2 className="text-sm tracking-[0.14em] uppercase mb-3">
-              Faydalar
-            </h2>
-            <ul className="space-y-2 text-muted">
-              {product.benefits.map((b) => (
-                <li key={b}>{b}</li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
-        {product.usage ? (
-          <div>
-            <h2 className="text-sm tracking-[0.14em] uppercase mb-3">
-              Kullanım
-            </h2>
-            <p className="text-muted leading-relaxed max-w-lg">{product.usage}</p>
-          </div>
-        ) : null}
-        {product.ingredients?.length ? (
-          <div>
-            <h2 className="text-sm tracking-[0.14em] uppercase mb-3">
-              İçerikler
-            </h2>
-            <p className="text-muted leading-relaxed max-w-lg">
-              {product.ingredients.join(" · ")}
-            </p>
-          </div>
-        ) : null}
-      </div>
+      <p className="mb-8 max-w-md text-[0.98rem] leading-[1.75] text-[#6b6860]">
+        {copy.intro}
+      </p>
+      <p className="mb-10 text-[0.92rem] text-[#8a867c]">
+        {product.volume ?? "5 × 10 ml"}
+        <span className="mx-2.5 text-[#d0cbc2]">|</span>
+        Profesyonel bakım koleksiyonu
+      </p>
+      <Link
+        href="/iletisim"
+        className="inline-flex items-center gap-2.5 rounded-full bg-[#24382f] px-6 py-[0.85rem] text-[0.9rem] text-white transition-colors duration-500 ease-[var(--ease-premium)] hover:bg-[#1b2c24]"
+      >
+        Ürün hakkında bilgi alın
+        <ArrowUpRight className="size-4" strokeWidth={1.7} />
+      </Link>
     </div>
   );
 }

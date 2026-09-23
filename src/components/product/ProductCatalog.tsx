@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { Reveal } from "@/components/animation/Reveal";
 import { ProductCard } from "@/components/product/ProductCard";
 import type { Category, Product } from "@/lib/sanity/types";
 import { cn } from "@/lib/utils/cn";
@@ -71,8 +72,10 @@ export function ProductCatalog({
         </p>
       ) : (
         <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((product) => (
-            <ProductCard key={product._id} product={product} />
+          {filtered.map((product, index) => (
+            <Reveal key={product._id} delay={Math.min(index, 5) * 0.04} className="h-full">
+              <ProductCard product={product} />
+            </Reveal>
           ))}
         </div>
       )}

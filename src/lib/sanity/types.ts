@@ -47,6 +47,9 @@ export type Product = {
   usage: string;
   featured?: boolean;
   order?: number;
+  volume?: string;
+  tagline?: string;
+  cardTint?: string;
   seo?: SeoFields;
 };
 
@@ -72,6 +75,9 @@ export type HeroContent = {
   image: SanityImage;
   bottle?: SanityImage;
   backdrop?: SanityImage;
+  caption?: string;
+  captionSub?: string;
+  captionHref?: string;
 };
 
 export type Testimonial = {

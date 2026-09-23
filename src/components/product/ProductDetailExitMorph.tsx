@@ -9,6 +9,7 @@ import {
   hideOtherProductStages,
   useProductMorph,
 } from "@/components/product/ProductMorphContext";
+import { measureProductVisual } from "@/lib/product-media";
 
 type ExitProps = {
   slug: string;
@@ -19,20 +20,12 @@ type ExitProps = {
 };
 
 function measureHero() {
-  const stage = document.querySelector<HTMLElement>(
-    "[data-kesu-detail-hero] .kesu-product-stage",
-  );
-  if (!stage) return null;
-  const r = stage.getBoundingClientRect();
-  if (r.width < 8 || r.height < 8) return null;
+  const root = document.querySelector("[data-kesu-detail-hero]");
+  const measured = measureProductVisual(root);
+  if (!measured) return null;
   return {
-    stage,
-    from: {
-      top: r.top,
-      left: r.left,
-      width: r.width,
-      height: r.height,
-    },
+    stage: measured.stage,
+    from: measured.rect,
   };
 }
 

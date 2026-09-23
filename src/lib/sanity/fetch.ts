@@ -6,6 +6,7 @@ import {
   products as seedProducts,
   siteSettings as seedSettings,
 } from "@/lib/data/seed";
+import { applyProductCutout } from "@/lib/product-media";
 import type {
   AboutPageContent,
   BlogPost,
@@ -47,7 +48,17 @@ export async function getSiteSettings(): Promise<SiteSettings> {
 
 export async function getHomePage(): Promise<HomePageContent> {
   const data = await fetchSanity<HomePageContent>(homePageQuery);
-  return data ?? seedHome;
+  if (!data) return seedHome;
+  return {
+    ...seedHome,
+    ...data,
+    hero: {
+      ...data.hero,
+      ...seedHome.hero,
+      image: data.hero?.image ?? seedHome.hero.image,
+      bottle: seedHome.hero.bottle,
+    },
+  };
 }
 
 export async function getAboutPage(): Promise<AboutPageContent> {
@@ -57,19 +68,21 @@ export async function getAboutPage(): Promise<AboutPageContent> {
 
 export async function getProducts(): Promise<Product[]> {
   const data = await fetchSanity<Product[]>(productsQuery);
-  return data?.length ? data : seedProducts;
+  return (data?.length ? data : seedProducts).map(applyProductCutout);
 }
 
 export async function getFeaturedProducts(): Promise<Product[]> {
   const data = await fetchSanity<Product[]>(featuredProductsQuery);
-  if (data?.length) return data;
-  return seedProducts.filter((p) => p.featured).slice(0, 3);
+  const products = data?.length
+    ? data
+    : seedProducts.filter((p) => p.featured).slice(0, 3);
+  return products.map(applyProductCutout);
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   const data = await fetchSanity<Product>(productBySlugQuery, { slug });
-  if (data) return data;
-  return seedProducts.find((p) => p.slug === slug) ?? null;
+  const product = data ?? seedProducts.find((p) => p.slug === slug) ?? null;
+  return product ? applyProductCutout(product) : null;
 }
 
 export async function getCategories(): Promise<Category[]> {
