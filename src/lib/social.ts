@@ -37,7 +37,7 @@ export function socialLinksFromSettings(input?: {
   };
   socialLinks?: SocialLink[] | null;
 }): SocialLink[] {
-  const fromFields: SocialLink[] = [
+  const candidates: SocialLink[] = [
     {
       platform: "instagram",
       label: "Instagram",
@@ -58,7 +58,8 @@ export function socialLinksFromSettings(input?: {
       label: "YouTube",
       href: input?.social?.youtube ?? "",
     },
-  ].filter((link) => Boolean(link.href));
+  ];
+  const fromFields = candidates.filter((link) => Boolean(link.href));
 
   if (fromFields.length) return fromFields;
   return mergeSocialLinks([], input?.socialLinks);
