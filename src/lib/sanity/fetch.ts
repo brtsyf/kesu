@@ -70,15 +70,30 @@ function withSeedFields(product: Product): Product {
     volume: product.volume ?? seed.volume,
     tagline: product.tagline ?? seed.tagline,
     cardTint: product.cardTint ?? seed.cardTint,
+    shortDescription:
+      product.shortDescription &&
+      product.shortDescription !== "Ürün metni yakında eklenecek."
+        ? product.shortDescription
+        : seed.shortDescription,
+    description: product.description || seed.description,
     ingredients: product.ingredients?.length ? product.ingredients : seed.ingredients,
     benefits: product.benefits?.length ? product.benefits : seed.benefits,
     usage: product.usage || seed.usage,
   };
 }
 
+function mergeBySlug<T extends { slug: string }>(remote: T[] | null, seed: T[]): T[] {
+  if (!remote?.length) return seed;
+  const have = new Set(remote.map((item) => item.slug));
+  return [...remote, ...seed.filter((item) => !have.has(item.slug))];
+}
+
 export async function getProducts(): Promise<Product[]> {
   const data = await fetchSanity<Product[]>(productsQuery);
-  return (data?.length ? data : seedProducts).map(withSeedFields).map(applyProductCutout);
+  return mergeBySlug(data, seedProducts)
+    .map(withSeedFields)
+    .map(applyProductCutout)
+    .sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
@@ -89,7 +104,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 
 export async function getCategories(): Promise<Category[]> {
   const data = await fetchSanity<Category[]>(categoriesQuery);
-  return data?.length ? data : seedCategories;
+  return mergeBySlug(data, seedCategories);
 }
 
 export async function searchProducts(term: string): Promise<Product[]> {

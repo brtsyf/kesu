@@ -32,6 +32,7 @@ export async function generateMetadata({
     path: `/urunler/${product.slug}`,
     seo: product.seo,
     image: getImageUrl(product.thumbnail, 1200),
+    absolute: true,
   });
 }
 
@@ -69,7 +70,11 @@ export default async function ProductDetailPage({
       : product.thumbnail
         ? [product.thumbnail]
         : [];
-  const stillLife = getProductStillLife(product.slug, product.images);
+  const stillLife = getProductStillLife(
+    product.slug,
+    product.images,
+    `${product.title} stüdyo`,
+  );
 
   return (
     <div className="bg-[#fafaf7]">

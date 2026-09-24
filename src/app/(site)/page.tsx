@@ -6,26 +6,43 @@ import { FaqSection } from "@/components/sections/FaqSection";
 import { CtaSection } from "@/components/sections/CtaSection";
 import { homePage } from "@/lib/data/seed";
 import { getProducts, getSiteSettings } from "@/lib/sanity/fetch";
-import { buildMetadata } from "@/lib/seo";
+import {
+  SEO,
+  buildMetadata,
+  organizationJsonLd,
+  websiteJsonLd,
+} from "@/lib/seo";
 
 export async function generateMetadata() {
   const settings = await getSiteSettings();
   return buildMetadata({
-    title: settings.seo?.metaTitle ?? `${settings.siteName} — Premium Bakım`,
-    description:
-      settings.seo?.metaDescription ??
-      "Minimal ve bilimsel cilt bakım ürünleri.",
+    title: settings.seo?.metaTitle ?? SEO.home.title,
+    description: settings.seo?.metaDescription ?? SEO.home.description,
     path: "/",
     seo: settings.seo,
+    absolute: true,
   });
 }
 
 export default async function HomePage() {
   const products = await getProducts();
+  const settings = await getSiteSettings();
   const home = homePage;
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(organizationJsonLd(settings)),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(websiteJsonLd()),
+        }}
+      />
       <Hero content={home.hero} />
       <div className="relative z-10">
         <FeaturedProducts

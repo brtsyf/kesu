@@ -4,12 +4,11 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/animation/Reveal";
 import { getSiteSettings } from "@/lib/sanity/fetch";
 import { SocialLinks } from "@/components/ui/SocialLinks";
-import { buildMetadata } from "@/lib/seo";
+import { SEO, buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "İletişim | Kesu",
-  description:
-    "Ürün bilgisi ve profesyonel iş birliği için Kesu ile iletişime geçin.",
+  title: SEO.contact.title,
+  description: SEO.contact.description,
   path: "/iletisim",
 });
 

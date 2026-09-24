@@ -3,12 +3,11 @@ import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/animation/Reveal";
 import { aboutPage } from "@/lib/data/seed";
-import { buildMetadata } from "@/lib/seo";
+import { SEO, buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Hakkımızda | Kesu",
-  description:
-    "Kesu, profesyonel estetik ve medikal uygulamalar için geliştirilmiş lifting, botoks, anti-aging, hair ve eye care ürünleri sunmak amacıyla kurulmuş yenilikçi bir dermokozmetik markasıdır.",
+  title: SEO.about.title,
+  description: SEO.about.description,
   path: "/hakkimizda",
 });
 

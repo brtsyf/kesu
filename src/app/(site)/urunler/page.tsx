@@ -2,11 +2,11 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/animation/Reveal";
 import { ProductCatalog } from "@/components/product/ProductCatalog";
 import { getCategories, getProducts } from "@/lib/sanity/fetch";
-import { buildMetadata } from "@/lib/seo";
+import { SEO, buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Ürünler | Kesu",
-  description: "Kesu bakım koleksiyonunu keşfedin.",
+  title: SEO.products.title,
+  description: SEO.products.description,
   path: "/urunler",
 });
 

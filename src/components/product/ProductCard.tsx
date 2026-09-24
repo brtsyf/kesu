@@ -45,10 +45,12 @@ export function ProductCard({ product, className, large }: ProductCardProps) {
   );
 
   const cutout = getProductCutout(product.slug);
-  const cardBottle = cutout
-    ? { url: cutout, alt: product.title }
+  const sanityBottle =
+    getImageUrl(product.bottle, 1600) || getImageUrl(product.thumbnail, 1600);
+  const bottleSrc = sanityBottle || cutout || undefined;
+  const cardBottle = bottleSrc
+    ? { url: bottleSrc, alt: product.title }
     : undefined;
-  const bottleSrc = cutout || getImageUrl(product.bottle, 1600);
   const imageSrc = bottleSrc;
 
   // Reverse: restore list scroll, lock it, measure once — then overlay runs full tween
@@ -221,9 +223,11 @@ export function ProductCard({ product, className, large }: ProductCardProps) {
             <h3 className="text-[1.25rem] font-medium tracking-[-0.03em] text-[#141414]">
               {product.category?.title ?? product.title}
             </h3>
-            <p className="mt-1 text-[0.88rem] text-[#8a867c]">
-              {product.volume ?? "5 × 10 ml"}
-            </p>
+            {product.volume ? (
+              <p className="mt-1 text-[0.88rem] text-[#8a867c]">
+                {product.volume}
+              </p>
+            ) : null}
           </div>
           <span
             className="inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-[#d5d0c6] text-[#141414] transition-colors duration-400 ease-[var(--ease-premium)] group-hover:border-[#141414] group-hover:bg-[#141414] group-hover:text-white"

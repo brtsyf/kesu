@@ -1,4 +1,4 @@
-import { createReadStream } from "node:fs";
+import { createReadStream, existsSync } from "node:fs";
 import { basename, resolve } from "node:path";
 import { createClient } from "next-sanity";
 
@@ -35,6 +35,30 @@ const CATEGORIES = [
     slug: "hair",
     description: "Saç ve saç derisi güçlendirme",
   },
+  {
+    _id: "cat-acnera",
+    title: "Acnera",
+    slug: "acnera",
+    description: "Akne, yağlanma ve gözenek görünümü",
+  },
+  {
+    _id: "cat-bioca",
+    title: "BioCA",
+    slug: "bioca",
+    description: "Yüz, boyun, sıkılık ve elastikiyet",
+  },
+  {
+    _id: "cat-genishine",
+    title: "Genishine",
+    slug: "genishine",
+    description: "Genital bölge dış cilt bakımı ve ton eşitliği",
+  },
+  {
+    _id: "cat-salmon",
+    title: "Salmon DNA",
+    slug: "salmon",
+    description: "Cilt yenileme, nem ve elastikiyet",
+  },
 ];
 
 const PRODUCTS = [
@@ -44,7 +68,7 @@ const PRODUCTS = [
     slug: "kesu-six-lift",
     categoryId: "cat-lifting",
     thumbnail: "public/images/products/six-lift.png",
-    extras: ["public/images/products/six-lift-bottle-loci.png"],
+    extras: ["public/images/products/six-lift-loci.png"],
     shortDescription:
       "Anında lifting ve sıkılaşma için mezoterapi solüsyonu. 10 ml × 5 ampul.",
     description:
@@ -93,7 +117,7 @@ const PRODUCTS = [
     slug: "kesu-anti-aging",
     categoryId: "cat-anti-aging",
     thumbnail: "public/images/products/anti-aging.png",
-    extras: [],
+    extras: ["public/images/products/anti-aging-loci.png"],
     shortDescription:
       "İnce çizgi ve kırışıklık görünümünü azaltan mezoterapi solüsyonu. 10 ml × 5 ampul.",
     description:
@@ -134,7 +158,7 @@ const PRODUCTS = [
     slug: "kesu-white-effect",
     categoryId: "cat-whitening",
     thumbnail: "public/images/products/white-effect.png",
-    extras: [],
+    extras: ["public/images/products/white-effect-loci.png"],
     shortDescription:
       "Leke ve hiperpigmentasyon görünümünü azaltan whitening solüsyonu. 10 ml × 5 ampul.",
     description:
@@ -181,7 +205,7 @@ const PRODUCTS = [
     slug: "kesu-eyes",
     categoryId: "cat-eyes",
     thumbnail: "public/images/products/eyes.png",
-    extras: [],
+    extras: ["public/images/products/eyes-loci.png"],
     shortDescription:
       "Göz çevresi ince çizgi, koyu halka ve yorgunluk görünümü için. 5 ml × 5 ampul.",
     description:
@@ -227,7 +251,7 @@ const PRODUCTS = [
     slug: "kesu-hair",
     categoryId: "cat-hair",
     thumbnail: "public/images/products/hair.png",
-    extras: [],
+    extras: ["public/images/products/hair-loci.png"],
     shortDescription:
       "Saç dökülmesini azaltmaya ve kökleri beslemeye yardımcı solüsyon. 10 ml × 5 ampul.",
     description:
@@ -265,6 +289,130 @@ const PRODUCTS = [
       metaTitle: "Kesu Hair | Saç Mezoterapi Solüsyonu",
       metaDescription:
         "10 ml × 5 ampul. Dökülme, kök besleme ve saç güçlendirme odaklı mezoterapi solüsyonu.",
+    },
+  },
+  {
+    _id: "prod-acnera",
+    title: "Kesu Acnera",
+    slug: "kesu-acnera",
+    categoryId: "cat-acnera",
+    thumbnail: "public/images/products/acnera.png",
+    extras: ["public/images/products/acnera-loci.png"],
+    shortDescription:
+      "Akne, yağlanmaya eğilimli cilt ve gözenek görünümü için mezoterapi solüsyonu. 5 ml × 5 ampul.",
+    description:
+      "Kesu Acnera Mezoterapi Solüsyonu; akne ve aktif sivilce, yağlanmaya eğilimli cilt, gözenek görünümü ve sivilce sonrası oluşan cilt problemlerine yönelik geliştirilmiştir. Akne ve sivilce görünümünün azalmasına yardımcı olur, cildin sebum dengesini destekler, gözeneklerin daha sıkı görünmesine yardımcı olur ve cildin daha temiz ve dengeli görünmesini destekler.",
+    ingredients: [],
+    benefits: [
+      "Akne ve sivilce görünümünün azalmasına yardımcı olur.",
+      "Cildin sebum dengesini destekler.",
+      "Gözeneklerin daha sıkı görünmesine yardımcı olur.",
+      "Cildin daha temiz ve dengeli görünmesini destekler.",
+    ],
+    usage:
+      "Profesyonel mezoterapi uygulamalarında kullanılır. Akne ve aktif sivilce, yağlanmaya eğilimli cilt, gözenek görünümü ve sivilce sonrası oluşan cilt problemlerinde tercih edilir. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
+    volume: "5 × 5 ml",
+    tagline: "Akne & yağlanma",
+    cardTint: "#e8f0ef",
+    featured: true,
+    order: 6,
+    seo: {
+      metaTitle: "Kesu Acnera | Mezoterapi Solüsyonu",
+      metaDescription:
+        "5 ml × 5 ampul. Akne, yağlanma ve gözenek görünümüne yönelik Kesu Acnera. Sebum dengesini destekler.",
+    },
+  },
+  {
+    _id: "prod-bioca",
+    title: "Kesu BioCA",
+    slug: "kesu-bioca",
+    categoryId: "cat-bioca",
+    thumbnail: "public/images/products/bioca.png",
+    extras: ["public/images/products/bioca-loci.png"],
+    shortDescription:
+      "Yüz ve boyun için sıkılık ve toparlanma odaklı mezoterapi solüsyonu. 5 ml × 5 ampul.",
+    description:
+      "Kesu BioCA Mezoterapi Solüsyonu; yüz ve boyun bölgesi, ince çizgi ve kırışıklık görünümü, elastikiyet kaybı ve cilt sarkması görünümüne yönelik geliştirilmiştir. Cildin daha sıkı görünmesini destekler, yüz hatlarının daha toparlanmış görünmesine yardımcı olur, cilt elastikiyetini destekler ve daha pürüzsüz ve genç bir görünüm sağlar.",
+    ingredients: [],
+    benefits: [
+      "Cildin daha sıkı görünmesini destekler.",
+      "Yüz hatlarının daha toparlanmış görünmesine yardımcı olur.",
+      "Cilt elastikiyetini destekler.",
+      "Daha pürüzsüz ve genç bir görünüm sağlar.",
+    ],
+    usage:
+      "Profesyonel mezoterapi uygulamalarında kullanılır. Yüz ve boyun bölgesi, ince çizgi ve kırışıklık görünümü, elastikiyet kaybı ve cilt sarkması görünümünde tercih edilir. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
+    volume: "5 × 5 ml",
+    tagline: "Sıkılık & toparlanma",
+    cardTint: "#f6f1e6",
+    featured: true,
+    order: 7,
+    seo: {
+      metaTitle: "Kesu BioCA | Mezoterapi Solüsyonu",
+      metaDescription:
+        "5 ml × 5 ampul. Yüz ve boyun, ince çizgi ve sarkma görünümüne yönelik Kesu BioCA. Cildin daha sıkı görünmesini destekler.",
+    },
+  },
+  {
+    _id: "prod-genishine",
+    title: "Kesu Genishine",
+    slug: "kesu-genishine",
+    categoryId: "cat-genishine",
+    thumbnail: "public/images/products/genishine.png",
+    extras: ["public/images/products/genishine-loci.png"],
+    shortDescription:
+      "Genital bölge dış cilt bakımı ve renk eşitliği için mezoterapi solüsyonu. 10 ml × 5 ampul.",
+    description:
+      "Kesu Genishine Mezoterapi Solüsyonu; genital bölge dış cilt bakımı, bölgesel renk eşitsizlikleri, koyu görünüm bulunan bölgeler ve cilt tonu eşitsizliklerine yönelik geliştirilmiştir. Cilt tonunun daha eşit görünmesini destekler, daha aydınlık ve canlı bir görünüm sağlar, koyu görünümün azalmasına yardımcı olur ve cildin nemli ve bakımlı görünümünü destekler.",
+    ingredients: [],
+    benefits: [
+      "Cilt tonunun daha eşit görünmesini destekler.",
+      "Daha aydınlık ve canlı bir görünüm sağlar.",
+      "Koyu görünümün azalmasına yardımcı olur.",
+      "Cildin nemli ve bakımlı görünümünü destekler.",
+    ],
+    usage:
+      "Profesyonel mezoterapi uygulamalarında kullanılır. Genital bölge dış cilt bakımı, bölgesel renk eşitsizlikleri, koyu görünüm bulunan bölgeler ve cilt tonu eşitsizliklerinde tercih edilir. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
+    volume: "5 × 10 ml",
+    tagline: "Renk eşitliği & aydınlık",
+    cardTint: "#f5efed",
+    featured: true,
+    order: 8,
+    seo: {
+      metaTitle: "Kesu Genishine | Mezoterapi Solüsyonu",
+      metaDescription:
+        "10 ml × 5 ampul. Genital bölge dış cilt bakımı ve renk eşitliğine yönelik Kesu Genishine. Cilt tonunun daha eşit görünmesini destekler.",
+    },
+  },
+  {
+    _id: "prod-salmon",
+    title: "Kesu Salmon DNA",
+    slug: "kesu-salmon",
+    categoryId: "cat-salmon",
+    thumbnail: "public/images/products/salmon.png",
+    extras: ["public/images/products/salmon-loci.png"],
+    shortDescription:
+      "Cilt yenileme, nem ve elastikiyet için mezoterapi solüsyonu. 5 ml × 5 ampul.",
+    description:
+      "Kesu Salmon DNA Mezoterapi Solüsyonu; cilt yenileme ve bakım, elastikiyet kaybı, ince çizgi ve kırışıklık görünümü ile kuruluk ve nem kaybına yönelik geliştirilmiştir. Cildin nem dengesini destekler, daha canlı ve ışıltılı bir görünüm sağlar, cilt elastikiyetinin korunmasına yardımcı olur ve cilt yenilenmesini destekler.",
+    ingredients: [],
+    benefits: [
+      "Cildin nem dengesini destekler.",
+      "Daha canlı ve ışıltılı bir görünüm sağlar.",
+      "Cilt elastikiyetinin korunmasına yardımcı olur.",
+      "Cilt yenilenmesini destekler.",
+    ],
+    usage:
+      "Profesyonel mezoterapi uygulamalarında kullanılır. Cilt yenileme ve bakım, elastikiyet kaybı, ince çizgi ve kırışıklık görünümü ile kuruluk ve nem kaybında tercih edilir. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
+    volume: "5 × 5 ml",
+    tagline: "Yenileme & nem",
+    cardTint: "#f6eee6",
+    featured: true,
+    order: 9,
+    seo: {
+      metaTitle: "Kesu Salmon DNA | Mezoterapi Solüsyonu",
+      metaDescription:
+        "5 ml × 5 ampul. Cilt yenileme, nem ve elastikiyet odaklı Kesu Salmon DNA. Cildin nem dengesini destekler.",
     },
   },
 ];
@@ -318,6 +466,7 @@ async function seed() {
     const thumbnail = await uploadImage(product.thumbnail, product.title);
     const extras = [];
     for (const extra of product.extras) {
+      if (!existsSync(resolve(root, extra))) continue;
       extras.push(await uploadImage(extra, `${product.title} stüdyo`));
     }
 

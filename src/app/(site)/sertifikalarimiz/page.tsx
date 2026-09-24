@@ -4,12 +4,11 @@ import { CertificateGallery } from "@/components/sections/CertificateGallery";
 import { CtaSection } from "@/components/sections/CtaSection";
 import { certificatesPage } from "@/lib/data/seed";
 import { getCertificates } from "@/lib/sanity/fetch";
-import { buildMetadata } from "@/lib/seo";
+import { SEO, buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Sertifikalarımız | Kesu",
-  description:
-    "Kesu kalite ve üretim sertifikaları. Belgeleri inceleyin.",
+  title: SEO.certificates.title,
+  description: SEO.certificates.description,
   path: "/sertifikalarimiz",
 });
 

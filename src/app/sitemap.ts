@@ -5,7 +5,13 @@ import { absoluteUrl } from "@/lib/seo";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const products = await getProducts();
 
-  const staticRoutes = ["", "/urunler", "/hakkimizda", "/iletisim"].map(
+  const staticRoutes = [
+    "",
+    "/urunler",
+    "/hakkimizda",
+    "/sertifikalarimiz",
+    "/iletisim",
+  ].map(
     (path) => ({
       url: absoluteUrl(path || "/"),
       lastModified: new Date(),

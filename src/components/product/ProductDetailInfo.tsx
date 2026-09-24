@@ -38,6 +38,30 @@ const DETAIL_COPY: Record<
     intro:
       "Saç ve saç derisini bir bütün olarak ele alan profesyonel yaklaşım. Zayıf ve ince saç tellerinin daha güçlü, dolgun görünümüne yönelik bakım sunar.",
   },
+  "kesu-acnera": {
+    eyebrow: "Akne ve yağlanma bakımı",
+    lead: "Daha temiz ve dengeli bir görünüm.",
+    intro:
+      "Akne ve aktif sivilce, yağlanmaya eğilimli cilt, gözenek görünümü ve sivilce sonrası oluşan cilt problemlerine yönelik bakım.",
+  },
+  "kesu-bioca": {
+    eyebrow: "Yüz ve boyun bakımı",
+    lead: "Daha sıkı ve toparlanmış bir görünüm.",
+    intro:
+      "Yüz ve boyun bölgesi, ince çizgi ve kırışıklık görünümü, elastikiyet kaybı ve cilt sarkması görünümüne yönelik bakım.",
+  },
+  "kesu-genishine": {
+    eyebrow: "Genital bölge dış cilt bakımı",
+    lead: "Daha aydınlık ve eşit bir görünüm.",
+    intro:
+      "Genital bölge dış cilt bakımı, bölgesel renk eşitsizlikleri, koyu görünüm bulunan bölgeler ve cilt tonu eşitsizliklerine yönelik bakım.",
+  },
+  "kesu-salmon": {
+    eyebrow: "Cilt yenileme ve bakım",
+    lead: "Daha canlı ve ışıltılı bir görünüm.",
+    intro:
+      "Cilt yenileme ve bakım, elastikiyet kaybı, ince çizgi ve kırışıklık görünümü ile kuruluk ve nem kaybına yönelik bakım.",
+  },
 };
 
 const item = (delay: number, y = 18) => ({
@@ -94,12 +118,14 @@ export function ProductDetailInfo({ product }: { product: Product }) {
       >
         {copy.intro}
       </motion.p>
-      <motion.p
-        className="mb-8 max-w-lg text-[0.95rem] leading-[1.8] text-[#6b6860]"
-        {...item(0.44, 12)}
-      >
-        {product.description}
-      </motion.p>
+      {product.description ? (
+        <motion.p
+          className="mb-8 max-w-lg text-[0.95rem] leading-[1.8] text-[#6b6860]"
+          {...item(0.44, 12)}
+        >
+          {product.description}
+        </motion.p>
+      ) : null}
       {product.benefits.length ? (
         <motion.ul
           className="mb-8 max-w-md space-y-2.5"
@@ -120,8 +146,12 @@ export function ProductDetailInfo({ product }: { product: Product }) {
         className="text-[0.92rem] text-[#8a867c]"
         {...item(0.52, 10)}
       >
-        {product.volume ?? "5 × 10 ml"}
-        <span className="mx-2.5 text-[#d0cbc2]">|</span>
+        {product.volume ? (
+          <>
+            {product.volume}
+            <span className="mx-2.5 text-[#d0cbc2]">|</span>
+          </>
+        ) : null}
         Profesyonel bakım koleksiyonu
       </motion.p>
     </div>
@@ -147,9 +177,11 @@ function ProductDetailInfoBody({
       <p className="mb-6 max-w-md text-[0.98rem] leading-[1.75] text-[#6b6860]">
         {copy.intro}
       </p>
-      <p className="mb-8 max-w-lg text-[0.95rem] leading-[1.8] text-[#6b6860]">
-        {product.description}
-      </p>
+      {product.description ? (
+        <p className="mb-8 max-w-lg text-[0.95rem] leading-[1.8] text-[#6b6860]">
+          {product.description}
+        </p>
+      ) : null}
       {product.benefits.length ? (
         <ul className="mb-8 max-w-md space-y-2.5">
           {product.benefits.map((benefit) => (
@@ -164,8 +196,12 @@ function ProductDetailInfoBody({
         </ul>
       ) : null}
       <p className="text-[0.92rem] text-[#8a867c]">
-        {product.volume ?? "5 × 10 ml"}
-        <span className="mx-2.5 text-[#d0cbc2]">|</span>
+        {product.volume ? (
+          <>
+            {product.volume}
+            <span className="mx-2.5 text-[#d0cbc2]">|</span>
+          </>
+        ) : null}
         Profesyonel bakım koleksiyonu
       </p>
     </div>
