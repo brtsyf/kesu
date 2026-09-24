@@ -66,22 +66,3 @@ export function productJsonLd(product: {
   };
 }
 
-export function articleJsonLd(article: {
-  title: string;
-  description: string;
-  slug: string;
-  publishedAt: string;
-  author: string;
-  image?: string;
-}) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: article.title,
-    description: article.description,
-    image: article.image,
-    datePublished: article.publishedAt,
-    author: { "@type": "Person", name: article.author },
-    mainEntityOfPage: absoluteUrl(`/blog/${article.slug}`),
-  };
-}

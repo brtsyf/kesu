@@ -5,20 +5,21 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
-import type { NavItem } from "@/lib/sanity/types";
+import type { NavItem, SocialLink } from "@/lib/sanity/types";
 import { SearchOverlay } from "@/components/navigation/SearchOverlay";
 import { BrandLogo } from "@/components/brand/BrandLogo";
+import { SocialLinks } from "@/components/ui/SocialLinks";
 
 type HeaderProps = {
   logoText: string;
   navigation: NavItem[];
-  instagramHref?: string;
+  socialLinks?: SocialLink[];
 };
 
 export function Header({
   logoText,
   navigation,
-  instagramHref,
+  socialLinks = [],
 }: HeaderProps) {
   const pathname = usePathname();
   const isHome = pathname === "/";
@@ -51,7 +52,7 @@ export function Header({
     <>
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color] duration-500 ease-[var(--ease-premium)]",
+          "fixed inset-x-0 top-0 z-50 isolate transition-[background-color,border-color] duration-500 ease-[var(--ease-premium)]",
           solid
             ? "border-b border-black/[0.06] bg-[#f6f6f4]/92 backdrop-blur-md"
             : "border-b border-transparent bg-transparent",
@@ -94,28 +95,7 @@ export function Header({
             >
               <Search className="size-6" strokeWidth={1.5} />
             </button>
-            {instagramHref ? (
-              <a
-                href={instagramHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="inline-flex size-10 items-center justify-center text-[#1a1a1a]/45 transition-colors hover:text-[#1a1a1a]"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="size-[1.6rem]"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  aria-hidden
-                >
-                  <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
-                  <circle cx="12" cy="12" r="3.6" />
-                  <circle cx="17.2" cy="6.8" r="0.8" fill="currentColor" />
-                </svg>
-              </a>
-            ) : null}
+            <SocialLinks links={socialLinks} variant="header" />
             <button
               type="button"
               className="p-2 lg:hidden"
@@ -156,6 +136,11 @@ export function Header({
                 {item.label}
               </Link>
             ))}
+            <SocialLinks
+              links={socialLinks}
+              variant="header"
+              className="mt-6"
+            />
           </nav>
         </div>
       </header>

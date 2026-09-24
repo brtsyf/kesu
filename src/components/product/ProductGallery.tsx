@@ -151,7 +151,7 @@ export function ProductGallery({
           )}
         </ProductMorphTarget>
       )}
-      {!cutout && gallery.length > 1 ? (
+      {gallery.length > 1 ? (
         <div className="kesu-gallery-thumbs grid grid-cols-4 gap-3">
           {gallery.map((image, index) => {
             const thumb = getImageUrl(image, 300);

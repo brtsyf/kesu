@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { detailContentTransition } from "@/lib/motion";
 import type { Product } from "@/lib/sanity/types";
@@ -91,28 +89,41 @@ export function ProductDetailInfo({ product }: { product: Product }) {
         {copy.lead}
       </motion.p>
       <motion.p
-        className="mb-8 max-w-md text-[0.98rem] leading-[1.75] text-[#6b6860]"
+        className="mb-6 max-w-md text-[0.98rem] leading-[1.75] text-[#6b6860]"
         {...item(0.4, 12)}
       >
         {copy.intro}
       </motion.p>
       <motion.p
-        className="mb-10 text-[0.92rem] text-[#8a867c]"
-        {...item(0.44, 10)}
+        className="mb-8 max-w-lg text-[0.95rem] leading-[1.8] text-[#6b6860]"
+        {...item(0.44, 12)}
+      >
+        {product.description}
+      </motion.p>
+      {product.benefits.length ? (
+        <motion.ul
+          className="mb-8 max-w-md space-y-2.5"
+          {...item(0.48, 10)}
+        >
+          {product.benefits.map((benefit) => (
+            <li
+              key={benefit}
+              className="flex gap-2.5 text-[0.92rem] leading-snug text-[#5c5a53]"
+            >
+              <span className="mt-[0.55em] size-1 shrink-0 rounded-full bg-[#7d8f72]" />
+              {benefit}
+            </li>
+          ))}
+        </motion.ul>
+      ) : null}
+      <motion.p
+        className="text-[0.92rem] text-[#8a867c]"
+        {...item(0.52, 10)}
       >
         {product.volume ?? "5 × 10 ml"}
         <span className="mx-2.5 text-[#d0cbc2]">|</span>
         Profesyonel bakım koleksiyonu
       </motion.p>
-      <motion.div {...item(0.5, 10)}>
-        <Link
-          href="/iletisim"
-          className="inline-flex items-center gap-2.5 rounded-full bg-[#24382f] px-6 py-[0.85rem] text-[0.9rem] text-white transition-colors duration-500 ease-[var(--ease-premium)] hover:bg-[#1b2c24]"
-        >
-          Ürün hakkında bilgi alın
-          <ArrowUpRight className="size-4" strokeWidth={1.7} />
-        </Link>
-      </motion.div>
     </div>
   );
 }
@@ -133,21 +144,30 @@ function ProductDetailInfoBody({
       <p className="mb-5 max-w-md text-[1.35rem] font-medium leading-snug tracking-[-0.03em] text-[#141414] md:text-[1.5rem]">
         {copy.lead}
       </p>
-      <p className="mb-8 max-w-md text-[0.98rem] leading-[1.75] text-[#6b6860]">
+      <p className="mb-6 max-w-md text-[0.98rem] leading-[1.75] text-[#6b6860]">
         {copy.intro}
       </p>
-      <p className="mb-10 text-[0.92rem] text-[#8a867c]">
+      <p className="mb-8 max-w-lg text-[0.95rem] leading-[1.8] text-[#6b6860]">
+        {product.description}
+      </p>
+      {product.benefits.length ? (
+        <ul className="mb-8 max-w-md space-y-2.5">
+          {product.benefits.map((benefit) => (
+            <li
+              key={benefit}
+              className="flex gap-2.5 text-[0.92rem] leading-snug text-[#5c5a53]"
+            >
+              <span className="mt-[0.55em] size-1 shrink-0 rounded-full bg-[#7d8f72]" />
+              {benefit}
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      <p className="text-[0.92rem] text-[#8a867c]">
         {product.volume ?? "5 × 10 ml"}
         <span className="mx-2.5 text-[#d0cbc2]">|</span>
         Profesyonel bakım koleksiyonu
       </p>
-      <Link
-        href="/iletisim"
-        className="inline-flex items-center gap-2.5 rounded-full bg-[#24382f] px-6 py-[0.85rem] text-[0.9rem] text-white transition-colors duration-500 ease-[var(--ease-premium)] hover:bg-[#1b2c24]"
-      >
-        Ürün hakkında bilgi alın
-        <ArrowUpRight className="size-4" strokeWidth={1.7} />
-      </Link>
     </div>
   );
 }

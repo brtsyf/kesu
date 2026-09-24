@@ -4,7 +4,8 @@ import { NeedsSection } from "@/components/sections/NeedsSection";
 import { TestimonialSection } from "@/components/sections/Testimonial";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { CtaSection } from "@/components/sections/CtaSection";
-import { getHomePage, getProducts, getSiteSettings } from "@/lib/sanity/fetch";
+import { homePage } from "@/lib/data/seed";
+import { getProducts, getSiteSettings } from "@/lib/sanity/fetch";
 import { buildMetadata } from "@/lib/seo";
 
 export async function generateMetadata() {
@@ -20,10 +21,8 @@ export async function generateMetadata() {
 }
 
 export default async function HomePage() {
-  const [home, products] = await Promise.all([
-    getHomePage(),
-    getProducts(),
-  ]);
+  const products = await getProducts();
+  const home = homePage;
 
   return (
     <>

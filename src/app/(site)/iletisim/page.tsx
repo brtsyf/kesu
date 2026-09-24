@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/animation/Reveal";
 import { getSiteSettings } from "@/lib/sanity/fetch";
+import { SocialLinks } from "@/components/ui/SocialLinks";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -14,7 +15,7 @@ export const metadata = buildMetadata({
 
 const STILL_LIFE = [
   {
-    src: "/images/products/six-lift-hero.png",
+    src: "/images/products/six-lift.png",
     alt: "Kesu Six Lift ampul",
     className:
       "left-[8%] bottom-[2%] h-[90%] z-[2] md:left-[10%] md:h-[92%]",
@@ -33,30 +34,9 @@ const STILL_LIFE = [
   },
 ] as const;
 
-function resolveInstagram(
-  links: { label: string; href: string }[],
-): { href: string; handle?: string } | null {
-  const link = links.find((item) =>
-    /instagram/i.test(`${item.label} ${item.href}`),
-  );
-  if (!link?.href) return null;
-
-  let handle: string | undefined;
-  try {
-    const url = new URL(link.href);
-    const segment = url.pathname.split("/").filter(Boolean)[0];
-    if (segment) handle = `@${decodeURIComponent(segment)}`;
-  } catch {
-    /* href only */
-  }
-
-  return { href: link.href, handle };
-}
-
 export default async function ContactPage() {
   const settings = await getSiteSettings();
   const { address, whatsapp, email } = settings.contact;
-  const instagram = resolveInstagram(settings.socialLinks);
 
   return (
     <section className="bg-[#fafaf7] pt-[calc(var(--header-height)+3.5rem)] pb-24 md:pb-32">
@@ -123,18 +103,9 @@ export default async function ContactPage() {
               Konuşmayı başlatalım.
             </h2>
             <p className="mb-8 max-w-md text-[0.98rem] leading-relaxed text-[#7a776e]">
-              Resmî Instagram hesabımız üzerinden bize ulaşabilirsiniz.
+              Resmî sosyal hesaplarımız üzerinden bize ulaşabilirsiniz.
             </p>
-            {instagram ? (
-              <a
-                href={instagram.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 border-b border-[#141414]/20 pb-0.5 text-[0.95rem] text-[#141414] transition-colors duration-500 ease-[var(--ease-premium)] hover:border-[#141414]/50"
-              >
-                {instagram.handle ?? "Instagram"}
-              </a>
-            ) : null}
+            <SocialLinks links={settings.socialLinks} variant="page" />
           </Reveal>
         </div>
 
@@ -143,7 +114,7 @@ export default async function ContactPage() {
           className="mt-24 scroll-mt-28 border-t border-[#141414]/[0.08] pt-16 md:mt-32 md:pt-20"
         >
           <Reveal>
-            <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
               <div>
                 <p className="mb-3 text-[0.95rem] text-[#7a776e]">Adres</p>
                 <p className="text-lg leading-relaxed whitespace-pre-line text-[#141414]/90">
@@ -174,6 +145,13 @@ export default async function ContactPage() {
                   >
                     {email}
                   </a>
+                </div>
+              ) : null}
+
+              {settings.socialLinks.length ? (
+                <div>
+                  <p className="mb-3 text-[0.95rem] text-[#7a776e]">Sosyal</p>
+                  <SocialLinks links={settings.socialLinks} variant="footer" />
                 </div>
               ) : null}
             </div>

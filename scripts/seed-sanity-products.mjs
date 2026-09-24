@@ -1,107 +1,10 @@
-import type {
-  AboutPageContent,
-  Category,
-  CertificatesPageContent,
-  HomePageContent,
-  Product,
-  SiteSettings,
-} from "@/lib/sanity/types";
+import { createReadStream } from "node:fs";
+import { basename, resolve } from "node:path";
+import { createClient } from "next-sanity";
 
-const img = (url: string, alt: string) => ({
-  url,
-  alt,
-});
+const root = resolve(import.meta.dirname, "..");
 
-/** Catalog product photos — layered bottle + fixed liquid backdrop */
-const placeholders = {
-  lift: img("/images/products/six-lift.jpg", "Kesu Six Lift ampul"),
-  liftBottle: img("/images/products/six-lift.png", "Kesu Six Lift ampul"),
-  liftStill: img(
-    "/images/products/six-lift-bottle-loci.png",
-    "Kesu Six Lift stüdyo",
-  ),
-  liftBg: img("/images/products/six-lift-bg.webp", "Kesu Six Lift arka plan"),
-  aging: img("/images/products/anti-aging.png", "Kesu Anti-Aging ampul"),
-  agingBottle: img(
-    "/images/products/anti-aging.png",
-    "Kesu Anti-Aging ampul",
-  ),
-  agingBg: img(
-    "/images/products/anti-aging-bg.webp",
-    "Kesu Anti-Aging arka plan",
-  ),
-  white: img("/images/products/white-effect.png", "Kesu White Effect ampul"),
-  whiteBottle: img(
-    "/images/products/white-effect.png",
-    "Kesu White Effect ampul",
-  ),
-  whiteBg: img(
-    "/images/products/white-effect-bg.webp",
-    "Kesu White Effect arka plan",
-  ),
-  eyes: img("/images/products/eyes.png", "Kesu Eyes ampul"),
-  eyesBottle: img("/images/products/eyes.png", "Kesu Eyes ampul"),
-  eyesBg: img("/images/products/eyes-bg.webp", "Kesu Eyes arka plan"),
-  hair: img("/images/products/hair.png", "Kesu Hair ampul"),
-  hairBottle: img("/images/products/hair.png", "Kesu Hair ampul"),
-  hairBg: img("/images/products/hair-bg.webp", "Kesu Hair arka plan"),
-  editorial: {
-    hero: img(
-      "/images/editorial/hero-portrait.jpg",
-      "Kesu — doğal ışıltılı cilt bakımı",
-    ),
-  },
-};
-
-export const siteSettings: SiteSettings = {
-  siteName: "Kesu",
-  tagline: "Profesyonel estetik için Kore teknolojisi.",
-  logoText: "KESU",
-  navigation: [
-    { label: "Ürünler", href: "/urunler" },
-    { label: "Hakkımızda", href: "/hakkimizda" },
-    { label: "Sertifikalarımız", href: "/sertifikalarimiz" },
-    { label: "İletişim", href: "/iletisim" },
-  ],
-  socialLinks: [
-    {
-      platform: "instagram",
-      label: "Instagram",
-      href: "https://www.instagram.com",
-    },
-    {
-      platform: "linkedin",
-      label: "LinkedIn",
-      href: "https://www.linkedin.com",
-    },
-    {
-      platform: "tiktok",
-      label: "TikTok",
-      href: "https://www.tiktok.com",
-    },
-    {
-      platform: "youtube",
-      label: "YouTube",
-      href: "https://www.youtube.com",
-    },
-  ],
-  contact: {
-    email: "info@kesu.com.tr",
-    phone: "+90 212 000 00 00",
-    whatsapp: "+90 532 000 00 00",
-    address:
-      "Sümer Mah. Prof. Dr. Turan Güneş Cad.\nSahilpark B1 Blok No: 140/A\nZeytinburnu, İstanbul",
-  },
-  footerContent:
-    "Kesu; profesyonel estetik ve medikal uygulamalar için geliştirilmiş yenilikçi bir dermokozmetik markasıdır.",
-  seo: {
-    metaTitle: "Kesu — Profesyonel Dermokozmetik",
-    metaDescription:
-      "Lifting, anti-aging, whitening, eyes ve hair mezoterapi solüsyonları. Kore teknolojisiyle klinik sonuç odaklı formüller.",
-  },
-};
-
-export const categories: Category[] = [
+const CATEGORIES = [
   {
     _id: "cat-lifting",
     title: "Lifting",
@@ -134,19 +37,18 @@ export const categories: Category[] = [
   },
 ];
 
-export const products: Product[] = [
+const PRODUCTS = [
   {
     _id: "prod-six-lift",
     title: "Kesu Six Lift",
     slug: "kesu-six-lift",
+    categoryId: "cat-lifting",
+    thumbnail: "public/images/products/six-lift.png",
+    extras: ["public/images/products/six-lift-bottle-loci.png"],
     shortDescription:
       "Anında lifting ve sıkılaşma için mezoterapi solüsyonu. 10 ml × 5 ampul.",
     description:
       "Kesu Lifting Mezoterapi Solüsyonu; sarkma ve elastikiyet kaybı, ince kırışıklıklar, donuk ve yorgun cilt ile cilt tonu eşitsizliklerine yönelik geliştirilmiştir. Somon DNA ile hücre yenileyici bakım sunar; kolajen üretimini destekler, cilt tonunu dengeler ve parlaklık kazandırır.",
-    thumbnail: placeholders.liftBottle,
-    bottle: placeholders.liftBottle,
-    images: [placeholders.liftBottle, placeholders.liftStill],
-    category: categories[0],
     ingredients: [
       "Aqua",
       "Hyaluronic Acid",
@@ -174,11 +76,11 @@ export const products: Product[] = [
     ],
     usage:
       "Profesyonel mezoterapi uygulamalarında kullanılır. Sarkma ve elastikiyet kaybı, ince kırışıklıklar, donuk/yorgun cilt ve ton eşitsizliklerinde tercih edilir. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
-    featured: true,
-    order: 1,
     volume: "5 × 10 ml",
     tagline: "Sıkılık & elastikiyet",
     cardTint: "#eef1ec",
+    featured: true,
+    order: 1,
     seo: {
       metaTitle: "Kesu Six Lift | Lifting Mezoterapi Solüsyonu",
       metaDescription:
@@ -189,14 +91,13 @@ export const products: Product[] = [
     _id: "prod-anti-aging",
     title: "Kesu Anti-Aging",
     slug: "kesu-anti-aging",
+    categoryId: "cat-anti-aging",
+    thumbnail: "public/images/products/anti-aging.png",
+    extras: [],
     shortDescription:
       "İnce çizgi ve kırışıklık görünümünü azaltan mezoterapi solüsyonu. 10 ml × 5 ampul.",
     description:
       "Kesu Anti-Aging Mezoterapi Solüsyonu; mimik çizgileri, statik kırışıklıklar, mat ve canlılığını yitirmiş cilt, yaşlanma kaynaklı elastikiyet kaybı ile göz çevresi kırışıklıkları ve cilt kuruluğuna yönelik formüle edilmiştir. Nem dengesini destekler, serbest radikallere karşı koruma sağlar ve yorgun cildi canlandırır.",
-    thumbnail: placeholders.agingBottle,
-    bottle: placeholders.agingBottle,
-    images: [placeholders.agingBottle],
-    category: categories[1],
     ingredients: [
       "Hyaluronic Acid",
       "Glutathione",
@@ -216,11 +117,11 @@ export const products: Product[] = [
     ],
     usage:
       "Profesyonel mezoterapi uygulamalarında kullanılır. Mimik/statik kırışıklıklar, mat cilt, elastikiyet kaybı ve göz çevresi kuruluğunda tercih edilir. Uygulama hekim veya yetkili uygulayıcı tarafından yapılır.",
-    featured: true,
-    order: 2,
     volume: "5 × 10 ml",
     tagline: "Nem & canlılık",
     cardTint: "#f6eeed",
+    featured: true,
+    order: 2,
     seo: {
       metaTitle: "Kesu Anti-Aging | Mezoterapi Solüsyonu",
       metaDescription:
@@ -231,14 +132,13 @@ export const products: Product[] = [
     _id: "prod-white-effect",
     title: "Kesu White Effect",
     slug: "kesu-white-effect",
+    categoryId: "cat-whitening",
+    thumbnail: "public/images/products/white-effect.png",
+    extras: [],
     shortDescription:
       "Leke ve hiperpigmentasyon görünümünü azaltan whitening solüsyonu. 10 ml × 5 ampul.",
     description:
       "Kesu White Effect Mezoterapi Solüsyonu; güneş lekeleri, melazma, akne sonrası lekeler ile donuk cilt görünümüne yönelik geliştirilmiştir. Cilt tonunu eşitler, ışıltı kazandırır, serbest radikallere karşı koruma sunar ve retinol ile hücre yenilenmesini destekler. Yüz, boyun, el üstü ve dekolte bölgelerinde kullanılabilir.",
-    thumbnail: placeholders.whiteBottle,
-    bottle: placeholders.whiteBottle,
-    images: [placeholders.whiteBottle],
-    category: categories[2],
     ingredients: [
       "Ascorbic Acid",
       "Succinic Acid",
@@ -264,11 +164,11 @@ export const products: Product[] = [
     ],
     usage:
       "Profesyonel mezoterapi uygulamalarında kullanılır. Solar lentigo, melazma, post-akne lekeleri ve donuk ciltte tercih edilir. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
-    featured: true,
-    order: 3,
     volume: "5 × 10 ml",
     tagline: "Ton eşitliği & aydınlık",
     cardTint: "#f5f2e8",
+    featured: true,
+    order: 3,
     seo: {
       metaTitle: "Kesu White Effect | Whitening Mezoterapi Solüsyonu",
       metaDescription:
@@ -279,14 +179,13 @@ export const products: Product[] = [
     _id: "prod-eyes",
     title: "Kesu Eyes",
     slug: "kesu-eyes",
+    categoryId: "cat-eyes",
+    thumbnail: "public/images/products/eyes.png",
+    extras: [],
     shortDescription:
       "Göz çevresi ince çizgi, koyu halka ve yorgunluk görünümü için. 5 ml × 5 ampul.",
     description:
       "Kesu Eyes Mezoterapi Solüsyonu; göz altı torbaları, morluklar, ince çizgiler ve göz çevresi ton eşitsizliklerine yönelik özel formüle edilmiştir. İnce çizgilerin görünümünü azaltmaya yardımcı olur, koyu halka ve yorgunluk görünümünü hafifletir, aydınlatır, nemlendirir ve sıkılaştırıcı bir etki sunar.",
-    thumbnail: placeholders.eyesBottle,
-    bottle: placeholders.eyesBottle,
-    images: [placeholders.eyesBottle],
-    category: categories[3],
     ingredients: [
       "Ascorbic Acid",
       "Aqua",
@@ -311,11 +210,11 @@ export const products: Product[] = [
     ],
     usage:
       "Profesyonel mezoterapi uygulamalarında, göz çevresi protokollerinde kullanılır. Uygulama yalnızca yetkili profesyoneller tarafından yapılmalıdır.",
-    featured: true,
-    order: 4,
     volume: "5 × 5 ml",
     tagline: "Göz çevresi canlandırma",
     cardTint: "#f1f0f5",
+    featured: true,
+    order: 4,
     seo: {
       metaTitle: "Kesu Eyes | Göz Çevresi Mezoterapi Solüsyonu",
       metaDescription:
@@ -326,14 +225,13 @@ export const products: Product[] = [
     _id: "prod-hair",
     title: "Kesu Hair",
     slug: "kesu-hair",
+    categoryId: "cat-hair",
+    thumbnail: "public/images/products/hair.png",
+    extras: [],
     shortDescription:
       "Saç dökülmesini azaltmaya ve kökleri beslemeye yardımcı solüsyon. 10 ml × 5 ampul.",
     description:
       "Kesu Hair Mezoterapi Solüsyonu; androgenetik alopesi, kadın tipi yaygın dökülme, mevsimsel dökülmeler, zayıf/ince teller ile stres veya gebelik sonrası dökülmeye yönelik geliştirilmiştir. Saç köklerini besler, yeni saç oluşumunu destekler, telleri kalınlaştırmaya yardımcı olur ve dolaşımı artırarak saç derisini canlandırır. Tüm saç tiplerine uygundur.",
-    thumbnail: placeholders.hairBottle,
-    bottle: placeholders.hairBottle,
-    images: [placeholders.hairBottle],
-    category: categories[4],
     ingredients: [
       "Aqua",
       "Hyaluronic Acid",
@@ -358,11 +256,11 @@ export const products: Product[] = [
     ],
     usage:
       "Profesyonel saç mezoterapisi uygulamalarında kullanılır. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
-    featured: true,
-    order: 5,
     volume: "5 × 10 ml",
     tagline: "Saç kökü bakımı",
     cardTint: "#f3eee8",
+    featured: true,
+    order: 5,
     seo: {
       metaTitle: "Kesu Hair | Saç Mezoterapi Solüsyonu",
       metaDescription:
@@ -371,76 +269,84 @@ export const products: Product[] = [
   },
 ];
 
-export const homePage: HomePageContent = {
-  hero: {
-    eyebrow: "Profesyonel dermokozmetik",
-    headline: "Inspired by\nKorean\nBeauty.",
-    description:
-      "Kore güzellik yaklaşımından ilham alan profesyonel bakım. Cildinize, ihtiyaçlarınıza ve doğal ifadenize odaklanan bir dünya.",
-    primaryCta: { label: "Ürünleri Keşfet", href: "/urunler" },
-    image: placeholders.editorial.hero,
-    bottle: img("/images/products/six-lift-bottle.png", "Kesu Six Lift ampul"),
-    caption: "Lifting",
-    captionSub: "Sıkılık, Elastikiyet, Canlılık",
-    captionHref: "/urunler/kesu-six-lift",
-  },
-  featuredEyebrow: "Öne çıkanlar",
-  featuredTitle: "Farklı ihtiyaçlar.\nAynı özen.",
-  featuredDescription:
-    "Her cildin ihtiyacı farklı. Nemden sıkılığa, leke görünümünden ışıltıya — her formül net bir endikasyona odaklanır.",
-  testimonial: {
-    quote:
-      "Gerçek bakım, doğru formül ve doğru uygulama ile başlar.",
-    name: "Kesu Klinik Ağı",
-    product: "Profesyonel uygulamalar",
-  },
-  faqs: [
-    {
-      question: "Kesu ürünleri kimler için uygundur?",
-      answer:
-        "Kesu solüsyonları profesyonel estetik ve medikal uygulamalar için geliştirilmiştir. Uygulama, hekim veya yetkili uygulayıcı tarafından yapılmalıdır.",
-    },
-    {
-      question: "Hangi ürün gruplarınız var?",
-      answer:
-        "Katalogda Six Lift, Anti-Aging, White Effect, Eyes ve Hair mezoterapi solüsyonları yer alır. Her biri farklı endikasyonlara yönelik formüle edilmiştir.",
-    },
-    {
-      question: "Ürünler Kore menşeli midir?",
-      answer:
-        "Evet. Formüllerimiz, etkinliği ve güvenilirliği dünya çapında bilinen Kore menşeli ileri teknoloji üretim süreçleriyle hazırlanır.",
-    },
-    {
-      question: "Bilgi veya iş birliği için nasıl ulaşabilirim?",
-      answer:
-        "İletişim sayfasındaki adres ve WhatsApp hattımız üzerinden bize ulaşabilirsiniz.",
-    },
-  ],
-};
+const token =
+  process.env.SANITY_API_WRITE_TOKEN || process.env.SANITY_API_READ_TOKEN;
 
-export const aboutPage: AboutPageContent = {
-  eyebrow: "Hakkımızda",
-  title: "Profesyonel estetik için\ngüvenilir bir marka.",
-  intro:
-    "Kesu, profesyonel estetik ve medikal uygulamalar için geliştirilmiş lifting, botoks, anti-aging, hair ve eye care ürünleri sunmak amacıyla kurulmuş; yıllardır sektörde başarıyla kullanılan ve uzmanlar tarafından güvenle tercih edilen yenilikçi bir dermokozmetik markasıdır.",
-  storyBlocks: [
-    {
-      title: "Kore teknolojisi. Klinik sonuç.",
-      body: "Uzun yıllara dayanan deneyimimiz ve profesyonellerden aldığımız güçlü geri bildirimler doğrultusunda geliştirdiğimiz tüm ürünlerimiz, etkinliği ve güvenilirliği dünya çapında kanıtlanmış Kore menşeli ileri teknoloji üretim süreçleriyle hazırlanır. Cilt gençleştirme, sıkılaşma, leke karşıtı bakım, saç güçlendirme ve göz çevresi problemlerine yönelik çözümlerimiz; doktorların ve kliniklerin beklentilerini karşılamanın ötesine geçerek uygulama sonuçlarını üst seviyeye taşır.",
-    },
-    {
-      body: "Bilimsel yaklaşımımız, müşteri memnuniyetini esas alan hizmet anlayışımız ve sürekli gelişen ürün portföyümüz sayesinde Kesu; estetik dünyasında kalitesi ve sonuç odaklı yaklaşımıyla takdir edilen güçlü bir marka konumuna gelmiştir.",
-    },
-  ],
-  philosophyTitle: "Misyonumuz",
-  philosophyBody:
-    "Yüksek performanslı, stabil ve güvenli formüller ile uygulayıcıların başarısını artırmak; profesyonel estetisyen ve doktorlar tarafından yıllardır bize duyulan güveni daha da güçlendirmek.",
-};
+if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || !token) {
+  throw new Error("Sanity project id veya yazma tokenı yok.");
+}
 
-export const certificatesPage: CertificatesPageContent = {
-  eyebrow: "Sertifikalarımız",
-  title: "Güven, belgelenir.",
-  intro:
-    "Kesu ürünleri; kalite, üretim ve klinik uygunluk standartlarını karşılayan belgelerle desteklenir. Sertifika görsellerini buradan inceleyebilirsiniz.",
-  certificates: [],
-};
+const client = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
+  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2025-01-01",
+  token,
+  useCdn: false,
+});
+
+const imageCache = new Map();
+
+async function uploadImage(relPath, alt) {
+  const cached = imageCache.get(relPath);
+  if (cached) return { ...cached, alt };
+  const filePath = resolve(root, relPath);
+  const asset = await client.assets.upload("image", createReadStream(filePath), {
+    filename: basename(filePath),
+  });
+  const image = {
+    _type: "image",
+    asset: { _type: "reference", _ref: asset._id },
+    alt,
+  };
+  imageCache.set(relPath, image);
+  return { ...image, alt };
+}
+
+async function seed() {
+  for (const category of CATEGORIES) {
+    await client.createOrReplace({
+      _id: category._id,
+      _type: "category",
+      title: category.title,
+      slug: { _type: "slug", current: category.slug },
+      description: category.description,
+    });
+    console.log(`kategori: ${category.title}`);
+  }
+
+  for (const product of PRODUCTS) {
+    const thumbnail = await uploadImage(product.thumbnail, product.title);
+    const extras = [];
+    for (const extra of product.extras) {
+      extras.push(await uploadImage(extra, `${product.title} stüdyo`));
+    }
+
+    await client.createOrReplace({
+      _id: product._id,
+      _type: "product",
+      title: product.title,
+      slug: { _type: "slug", current: product.slug },
+      shortDescription: product.shortDescription,
+      description: product.description,
+      thumbnail,
+      images: extras.map((image, index) => ({
+        ...image,
+        _key: `img-${index + 1}`,
+      })),
+      category: { _type: "reference", _ref: product.categoryId },
+      ingredients: product.ingredients,
+      benefits: product.benefits,
+      usage: product.usage,
+      volume: product.volume,
+      tagline: product.tagline,
+      cardTint: product.cardTint,
+      featured: product.featured,
+      order: product.order,
+      seo: product.seo,
+    });
+    console.log(`ürün: ${product.title}`);
+  }
+}
+
+await seed();
+console.log("tamam");

@@ -2,7 +2,7 @@ import type { Product, SanityImage } from "@/lib/sanity/types";
 
 /** Transparent cutouts used on cards + morph. */
 export const PRODUCT_CUTOUTS: Record<string, string> = {
-  "kesu-six-lift": "/images/products/six-lift-hero.png",
+  "kesu-six-lift": "/images/products/six-lift.png",
   "kesu-anti-aging": "/images/products/anti-aging.png",
   "kesu-white-effect": "/images/products/white-effect.png",
   "kesu-eyes": "/images/products/eyes.png",
@@ -26,6 +26,14 @@ export function getProductCutout(slug: string): string | undefined {
   return PRODUCT_CUTOUTS[slug];
 }
 
+export function getProductStillLife(
+  slug: string,
+  images: SanityImage[] = [],
+): SanityImage | undefined {
+  const cutout = getProductCutout(slug);
+  return images.find((image) => image.url && image.url !== cutout);
+}
+
 export function getProductTint(slug: string, categorySlug?: string): string {
   return (
     PRODUCT_CARD_TINTS[slug] ??
@@ -44,12 +52,13 @@ function cutoutImage(slug: string, alt: string): SanityImage | undefined {
 export function applyProductCutout<T extends Product>(product: T): T {
   const image = cutoutImage(product.slug, product.title);
   if (!image) return product;
+  const extras = (product.images ?? []).filter((item) => item.url !== image.url);
   return {
     ...product,
     thumbnail: image,
     bottle: image,
     backdrop: undefined,
-    images: [image],
+    images: [image, ...extras],
   };
 }
 

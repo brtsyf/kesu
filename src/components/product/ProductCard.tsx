@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLayoutEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
+import { useLenis } from "lenis/react";
 import { ArrowUpRight } from "lucide-react";
 import { useReducedMotion } from "framer-motion";
 import { ProductVisual } from "@/components/product/ProductVisual";
@@ -31,6 +32,7 @@ type ProductCardProps = {
 export function ProductCard({ product, className, large }: ProductCardProps) {
   const router = useRouter();
   const { active, start, setDestination, shouldHideSlug } = useProductMorph();
+  const lenis = useLenis();
   const reduced = useReducedMotion();
   const visualRef = useRef<HTMLDivElement>(null);
   const refined = useRef(false);
@@ -72,31 +74,32 @@ export function ProductCard({ product, className, large }: ProductCardProps) {
       /* ignore */
     }
 
-    if (sameList) {
-      window.scrollTo(0, cached.listScrollY);
-      html.scrollTop = cached.listScrollY;
-      document.body.scrollTop = cached.listScrollY;
-    } else {
+    const snapScroll = (y?: number) => {
+      if (typeof y === "number") {
+        lenis?.scrollTo(y, { immediate: true });
+        window.scrollTo(0, y);
+        html.scrollTop = y;
+        document.body.scrollTop = y;
+        return;
+      }
       visualRef.current?.scrollIntoView({
         block: "center",
         behavior: "instant",
       });
-    }
-
-    const pinY = window.scrollY;
-    const restoreScroll = () => {
-      window.scrollTo(0, pinY);
-      html.scrollTop = pinY;
-      document.body.scrollTop = pinY;
     };
 
-    if (!refined.current) {
+    if (sameList) snapScroll(cached.listScrollY);
+    else snapScroll();
+
+    const pinY = sameList ? cached.listScrollY : window.scrollY;
+    const restoreScroll = () => snapScroll(pinY);
+
+    const publish = () => {
+      if (refined.current) return;
+      snapScroll(pinY);
       const measured = measureProductVisual(visualRef.current);
       const keep = measured?.stage ?? visualRef.current;
-      if (!keep) {
-        html.style.scrollBehavior = prevBehavior;
-        return;
-      }
+      if (!keep) return;
       hideOtherProductStages(keep);
       const r = measured?.rect ?? keep.getBoundingClientRect();
       if (r.width >= 8 && r.height >= 8 && r.top > -8) {
@@ -108,13 +111,18 @@ export function ProductCard({ product, className, large }: ProductCardProps) {
           height: r.height,
         });
       }
-    }
+    };
 
-    // Keep scroll pinned so the measured card rect stays valid for the whole morph
+    // Wait 2 frames so Reveal/Lenis settle at the real card position
+    const raf1 = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(publish);
+    });
+
     const onScroll = () => restoreScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
+      window.cancelAnimationFrame(raf1);
       window.removeEventListener("scroll", onScroll);
       html.style.scrollBehavior = prevBehavior;
       try {
@@ -123,7 +131,7 @@ export function ProductCard({ product, className, large }: ProductCardProps) {
         /* ignore */
       }
     };
-  }, [isReverseDest, product.slug, reduced, setDestination]);
+  }, [isReverseDest, lenis, product.slug, reduced, setDestination]);
 
   return (
     <Link
@@ -177,7 +185,7 @@ export function ProductCard({ product, className, large }: ProductCardProps) {
       }}
     >
       <div
-        className="overflow-visible rounded-[1.75rem] px-7 pb-6 pt-12"
+        className="overflow-visible rounded-[1.75rem] px-7 pb-8 pt-12"
         style={{
           backgroundColor:
             product.cardTint ??
@@ -224,16 +232,16 @@ export function ProductCard({ product, className, large }: ProductCardProps) {
             <ArrowUpRight className="size-3.5" strokeWidth={1.6} />
           </span>
         </div>
+
+        {product.tagline ? (
+          <p className="mt-4 text-[0.9rem] text-[#8a867c]">{product.tagline}</p>
+        ) : null}
+
+        <span className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#d5d0c6]/80 px-4 py-[0.55rem] text-[0.8rem] text-[#141414] transition-colors duration-400 group-hover:border-[#141414]/35">
+          {product.category?.title ?? "Ürün"} ürününü keşfet
+          <ArrowUpRight className="size-3.5" strokeWidth={1.6} />
+        </span>
       </div>
-
-      {product.tagline ? (
-        <p className="mt-5 text-[0.9rem] text-[#8a867c]">{product.tagline}</p>
-      ) : null}
-
-      <span className="mt-3 inline-flex items-center gap-2 rounded-full border border-[#e0dcd3] px-4 py-[0.55rem] text-[0.8rem] text-[#141414] transition-colors duration-400 group-hover:border-[#141414]/35">
-        {product.category?.title ?? "Ürün"} ürününü keşfet
-        <ArrowUpRight className="size-3.5" strokeWidth={1.6} />
-      </span>
     </Link>
   );
 }

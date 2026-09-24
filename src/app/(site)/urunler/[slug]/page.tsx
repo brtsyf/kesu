@@ -10,7 +10,10 @@ import { CtaSection } from "@/components/sections/CtaSection";
 import { Reveal } from "@/components/animation/Reveal";
 import { getImageUrl } from "@/lib/sanity/image";
 import { getProductBySlug, getProducts } from "@/lib/sanity/fetch";
+import { getProductStillLife } from "@/lib/product-media";
 import { buildMetadata, productJsonLd } from "@/lib/seo";
+
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const products = await getProducts();
@@ -66,6 +69,7 @@ export default async function ProductDetailPage({
       : product.thumbnail
         ? [product.thumbnail]
         : [];
+  const stillLife = getProductStillLife(product.slug, product.images);
 
   return (
     <div className="bg-[#fafaf7]">
@@ -101,7 +105,7 @@ export default async function ProductDetailPage({
             </nav>
           </Reveal>
 
-          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14 xl:gap-20">
+          <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-14 xl:gap-20">
             <div className="lg:col-span-5">
               <ProductDetailInfo product={product} />
             </div>
@@ -118,7 +122,7 @@ export default async function ProductDetailPage({
         </Container>
       </section>
 
-      <ProductDetailStory product={product} />
+      <ProductDetailStory product={product} stillLife={stillLife} />
 
       {relatedFallback.length ? (
         <section className="kesu-related-products bg-[#fafaf7] pb-20 md:pb-28">

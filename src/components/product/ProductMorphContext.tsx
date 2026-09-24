@@ -11,6 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import { usePathname } from "next/navigation";
+import { useLenis } from "lenis/react";
 import { SHARED_IMAGE_MS } from "@/lib/motion";
 
 export type MorphRect = {
@@ -166,6 +167,9 @@ export function ProductMorphProvider({ children }: { children: ReactNode }) {
   const [active, setActive] = useState<ProductMorphPayload | null>(null);
   const [destination, setDestinationState] = useState<MorphRect | null>(null);
   const [handoff, setHandoff] = useState(false);
+  const lenis = useLenis();
+  const lenisRef = useRef(lenis);
+  lenisRef.current = lenis;
 
   const start = useCallback(
     (
@@ -176,6 +180,7 @@ export function ProductMorphProvider({ children }: { children: ReactNode }) {
       setActive(payload);
       setDestinationState(options?.destination ?? null);
       document.body.setAttribute("data-kesu-morphing", "1");
+      lenisRef.current?.stop();
 
       // Warm the exact URLs the destination page will paint
       [payload.bottleSrc, payload.backdropSrc, payload.imageSrc].forEach(
@@ -206,6 +211,7 @@ export function ProductMorphProvider({ children }: { children: ReactNode }) {
     document
       .querySelectorAll("[data-kesu-morph-hide]")
       .forEach((el) => el.removeAttribute("data-kesu-morph-hide"));
+    lenisRef.current?.start();
   }, []);
 
   const beginHandoff = useCallback(() => {

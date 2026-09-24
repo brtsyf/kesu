@@ -33,8 +33,6 @@ export type Product = {
   slug: string;
   shortDescription: string;
   description: string;
-  price?: number;
-  comparePrice?: number;
   images: SanityImage[];
   thumbnail: SanityImage;
   /** Cutout / soft-masked bottle layer */
@@ -53,25 +51,11 @@ export type Product = {
   seo?: SeoFields;
 };
 
-export type BlogPost = {
-  _id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  content: string;
-  coverImage: SanityImage;
-  category?: string;
-  publishedAt: string;
-  author: string;
-  seo?: SeoFields;
-};
-
 export type HeroContent = {
   eyebrow: string;
   headline: string;
   description: string;
   primaryCta: { label: string; href: string };
-  secondaryCta?: { label: string; href: string };
   image: SanityImage;
   bottle?: SanityImage;
   backdrop?: SanityImage;
@@ -91,12 +75,26 @@ export type FaqItem = {
   answer: string;
 };
 
+export type SocialPlatform = "instagram" | "linkedin" | "tiktok" | "youtube";
+
+export type SocialLink = {
+  platform?: SocialPlatform;
+  label: string;
+  href: string;
+};
+
 export type SiteSettings = {
   siteName: string;
   tagline: string;
   logoText: string;
   navigation: NavItem[];
-  socialLinks: { label: string; href: string }[];
+  social?: {
+    instagram?: string;
+    linkedin?: string;
+    tiktok?: string;
+    youtube?: string;
+  };
+  socialLinks: SocialLink[];
   contact: {
     email: string;
     phone: string;
@@ -112,20 +110,8 @@ export type HomePageContent = {
   featuredEyebrow: string;
   featuredTitle: string;
   featuredDescription: string;
-  philosophyEyebrow: string;
-  philosophyTitle: string;
-  philosophyBody: string;
-  philosophyImage: SanityImage;
-  benefitsEyebrow: string;
-  benefitsTitle: string;
-  benefits: { title: string; description: string }[];
-  benefitImage: SanityImage;
   testimonial: Testimonial;
   faqs: FaqItem[];
-  ctaTitle: string;
-  ctaDescription: string;
-  ctaLabel: string;
-  ctaHref: string;
 };
 
 export type AboutPageContent = {
@@ -135,9 +121,20 @@ export type AboutPageContent = {
   storyBlocks: {
     title?: string;
     body: string;
-    image?: SanityImage;
-    fullWidth?: boolean;
   }[];
   philosophyTitle: string;
   philosophyBody: string;
+};
+
+export type CertificateItem = {
+  title?: string;
+  image: SanityImage;
+};
+
+export type CertificatesPageContent = {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  certificates: CertificateItem[];
+  seo?: SeoFields;
 };

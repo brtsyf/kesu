@@ -21,11 +21,7 @@ export default async function SiteLayout({
       <Header
         logoText={settings.logoText}
         navigation={settings.navigation}
-        instagramHref={
-          settings.socialLinks.find((link) =>
-            /instagram/i.test(link.label + link.href),
-          )?.href
-        }
+        socialLinks={settings.socialLinks}
       />
       <main className="flex-1">{children}</main>
       <Footer settings={settings} />

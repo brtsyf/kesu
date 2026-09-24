@@ -102,32 +102,30 @@ export function ProductMorphOverlay() {
   const from = active.from;
   const cutout = Boolean(getProductCutout(active.slug));
   const bottleSrc = active.bottleSrc || active.imageSrc;
+  const headerH =
+    document.querySelector("header")?.getBoundingClientRect().height ?? 84;
+  const belowNav = (rect: { top: number; left: number; width: number; height: number }) => ({
+    top: rect.top - headerH,
+    left: rect.left,
+    width: rect.width,
+    height: rect.height,
+  });
 
   return createPortal(
+    <div
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-40 overflow-hidden"
+      style={{ top: "var(--header-height)" }}
+    >
     <motion.div
       key={`${active.direction}-${active.slug}`}
       className={
         cutout
-          ? "pointer-events-none fixed z-[200] overflow-visible"
-          : "pointer-events-none fixed z-[200] overflow-hidden"
+          ? "pointer-events-none absolute overflow-visible"
+          : "pointer-events-none absolute overflow-hidden"
       }
       data-kesu-morph-overlay=""
-      initial={{
-        top: from.top,
-        left: from.left,
-        width: from.width,
-        height: from.height,
-      }}
-      animate={
-        destination
-          ? {
-              top: destination.top,
-              left: destination.left,
-              width: destination.width,
-              height: destination.height,
-            }
-          : false
-      }
+      initial={belowNav(from)}
+      animate={destination ? belowNav(destination) : false}
       transition={{
         duration: SHARED_IMAGE_MS / 1000,
         ease: premiumEase,
@@ -177,7 +175,8 @@ export function ProductMorphOverlay() {
           draggable={false}
         />
       ) : null}
-    </motion.div>,
+    </motion.div>
+    </div>,
     document.body,
   );
 }

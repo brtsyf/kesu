@@ -3,18 +3,18 @@ import { defineField, defineType } from "sanity";
 export const seoFields = [
   defineField({
     name: "metaTitle",
-    title: "Meta Title",
+    title: "SEO başlığı",
     type: "string",
   }),
   defineField({
     name: "metaDescription",
-    title: "Meta Description",
+    title: "SEO açıklaması",
     type: "text",
     rows: 3,
   }),
   defineField({
     name: "ogImage",
-    title: "OG Image",
+    title: "Paylaşım görseli",
     type: "image",
     options: { hotspot: true },
   }),
@@ -22,44 +22,71 @@ export const seoFields = [
 
 export const category = defineType({
   name: "category",
-  title: "Category",
+  title: "Kategori",
   type: "document",
   fields: [
-    defineField({ name: "title", type: "string", validation: (r) => r.required() }),
+    defineField({
+      name: "title",
+      title: "Başlık",
+      type: "string",
+      validation: (r) => r.required(),
+    }),
     defineField({
       name: "slug",
+      title: "URL",
       type: "slug",
       options: { source: "title" },
       validation: (r) => r.required(),
     }),
-    defineField({ name: "description", type: "text", rows: 2 }),
+    defineField({
+      name: "description",
+      title: "Açıklama",
+      type: "text",
+      rows: 2,
+    }),
   ],
 });
 
 export const product = defineType({
   name: "product",
-  title: "Product",
+  title: "Ürün",
   type: "document",
   fields: [
-    defineField({ name: "title", type: "string", validation: (r) => r.required() }),
+    defineField({
+      name: "title",
+      title: "Ürün adı",
+      type: "string",
+      validation: (r) => r.required(),
+    }),
     defineField({
       name: "slug",
+      title: "URL",
       type: "slug",
       options: { source: "title" },
       validation: (r) => r.required(),
     }),
-    defineField({ name: "shortDescription", type: "text", rows: 2 }),
-    defineField({ name: "description", type: "text", rows: 6 }),
-    defineField({ name: "price", type: "number", description: "Opsiyonel — vitrin sitesinde gösterilmez" }),
-    defineField({ name: "comparePrice", type: "number" }),
+    defineField({
+      name: "shortDescription",
+      title: "Kısa açıklama",
+      type: "text",
+      rows: 2,
+    }),
+    defineField({
+      name: "description",
+      title: "Açıklama",
+      type: "text",
+      rows: 6,
+    }),
     defineField({
       name: "thumbnail",
+      title: "Kapak görseli",
       type: "image",
       options: { hotspot: true },
       fields: [defineField({ name: "alt", type: "string", title: "Alt text" })],
     }),
     defineField({
       name: "images",
+      title: "Ek görseller",
       type: "array",
       of: [
         {
@@ -71,275 +98,153 @@ export const product = defineType({
     }),
     defineField({
       name: "category",
+      title: "Kategori",
       type: "reference",
       to: [{ type: "category" }],
     }),
     defineField({
       name: "ingredients",
+      title: "İçerikler",
       type: "array",
       of: [{ type: "string" }],
     }),
     defineField({
       name: "benefits",
+      title: "Faydalar",
       type: "array",
       of: [{ type: "string" }],
     }),
-    defineField({ name: "usage", type: "text", rows: 3 }),
-    defineField({ name: "featured", type: "boolean", initialValue: false }),
-    defineField({ name: "order", type: "number", initialValue: 0 }),
+    defineField({
+      name: "usage",
+      title: "Kullanım",
+      type: "text",
+      rows: 3,
+    }),
+    defineField({
+      name: "volume",
+      title: "Hacim",
+      type: "string",
+      description: "Örnek: 5 × 10 ml",
+    }),
+    defineField({
+      name: "tagline",
+      title: "Kısa slogan",
+      type: "string",
+    }),
+    defineField({
+      name: "cardTint",
+      title: "Kart rengi",
+      type: "string",
+      description: "Örnek: #eef1ec",
+    }),
+    defineField({
+      name: "featured",
+      title: "Öne çıkan",
+      type: "boolean",
+      initialValue: false,
+    }),
+    defineField({
+      name: "order",
+      title: "Sıra",
+      type: "number",
+      initialValue: 0,
+    }),
     defineField({
       name: "seo",
+      title: "SEO",
       type: "object",
       fields: seoFields,
     }),
   ],
   orderings: [
     {
-      title: "Order",
+      title: "Sıra",
       name: "orderAsc",
       by: [{ field: "order", direction: "asc" }],
     },
   ],
 });
 
-export const blogPost = defineType({
-  name: "blogPost",
-  title: "Blog Post",
+export const socialMedia = defineType({
+  name: "socialMedia",
+  title: "Sosyal medya",
   type: "document",
   fields: [
-    defineField({ name: "title", type: "string", validation: (r) => r.required() }),
     defineField({
-      name: "slug",
-      type: "slug",
-      options: { source: "title" },
-      validation: (r) => r.required(),
+      name: "instagram",
+      title: "Instagram",
+      type: "url",
+      description: "Örnek: https://www.instagram.com/kesu",
     }),
-    defineField({ name: "excerpt", type: "text", rows: 3 }),
-    defineField({ name: "content", type: "text", rows: 12 }),
     defineField({
-      name: "coverImage",
+      name: "linkedin",
+      title: "LinkedIn",
+      type: "url",
+      description: "Örnek: https://www.linkedin.com/company/kesu",
+    }),
+    defineField({
+      name: "tiktok",
+      title: "TikTok",
+      type: "url",
+      description: "Örnek: https://www.tiktok.com/@kesu",
+    }),
+    defineField({
+      name: "youtube",
+      title: "YouTube",
+      type: "url",
+      description: "Örnek: https://www.youtube.com/@kesu",
+    }),
+  ],
+  preview: {
+    prepare: () => ({ title: "Sosyal medya hesapları" }),
+  },
+});
+
+export const certificate = defineType({
+  name: "certificate",
+  title: "Sertifika",
+  type: "document",
+  fields: [
+    defineField({
+      name: "title",
+      title: "Başlık",
+      type: "string",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "image",
+      title: "Görsel",
       type: "image",
       options: { hotspot: true },
-      fields: [defineField({ name: "alt", type: "string" })],
+      fields: [defineField({ name: "alt", type: "string", title: "Alt text" })],
+      validation: (rule) => rule.required(),
     }),
-    defineField({ name: "category", type: "string" }),
-    defineField({ name: "publishedAt", type: "datetime" }),
-    defineField({ name: "author", type: "string" }),
-    defineField({ name: "seo", type: "object", fields: seoFields }),
+    defineField({
+      name: "order",
+      title: "Sıra",
+      type: "number",
+      initialValue: 0,
+    }),
   ],
-});
-
-export const siteSettings = defineType({
-  name: "siteSettings",
-  title: "Site Settings",
-  type: "document",
-  fields: [
-    defineField({ name: "siteName", type: "string" }),
-    defineField({ name: "tagline", type: "string" }),
-    defineField({ name: "logoText", type: "string" }),
-    defineField({
-      name: "navigation",
-      type: "array",
-      of: [
-        {
-          type: "object",
-          fields: [
-            defineField({ name: "label", type: "string" }),
-            defineField({ name: "href", type: "string" }),
-          ],
-        },
-      ],
-    }),
-    defineField({
-      name: "socialLinks",
-      type: "array",
-      of: [
-        {
-          type: "object",
-          fields: [
-            defineField({ name: "label", type: "string" }),
-            defineField({ name: "href", type: "string" }),
-          ],
-        },
-      ],
-    }),
-    defineField({
-      name: "contact",
-      type: "object",
-      fields: [
-        defineField({ name: "email", type: "string" }),
-        defineField({ name: "phone", type: "string" }),
-        defineField({ name: "whatsapp", type: "string", title: "WhatsApp" }),
-        defineField({ name: "address", type: "string" }),
-      ],
-    }),
-    defineField({ name: "footerContent", type: "text", rows: 3 }),
-    defineField({ name: "seo", type: "object", fields: seoFields }),
+  orderings: [
+    {
+      title: "Sıra",
+      name: "orderAsc",
+      by: [{ field: "order", direction: "asc" }],
+    },
   ],
-});
-
-export const homePage = defineType({
-  name: "homePage",
-  title: "Home Page",
-  type: "document",
-  fields: [
-    defineField({
-      name: "hero",
-      type: "object",
-      fields: [
-        defineField({ name: "eyebrow", type: "string" }),
-        defineField({ name: "headline", type: "text", rows: 3 }),
-        defineField({ name: "description", type: "text", rows: 3 }),
-        defineField({
-          name: "primaryCta",
-          type: "object",
-          fields: [
-            defineField({ name: "label", type: "string" }),
-            defineField({ name: "href", type: "string" }),
-          ],
-        }),
-        defineField({
-          name: "secondaryCta",
-          type: "object",
-          fields: [
-            defineField({ name: "label", type: "string" }),
-            defineField({ name: "href", type: "string" }),
-          ],
-        }),
-        defineField({
-          name: "image",
-          type: "image",
-          options: { hotspot: true },
-          fields: [defineField({ name: "alt", type: "string" })],
-        }),
-        defineField({
-          name: "bottle",
-          type: "image",
-          options: { hotspot: true },
-          fields: [defineField({ name: "alt", type: "string" })],
-        }),
-        defineField({ name: "caption", type: "string" }),
-        defineField({ name: "captionSub", type: "string" }),
-        defineField({ name: "captionHref", type: "string" }),
-      ],
+  preview: {
+    select: { title: "title", media: "image" },
+    prepare: ({ title, media }) => ({
+      title: title || "Sertifika",
+      media,
     }),
-    defineField({ name: "featuredEyebrow", type: "string" }),
-    defineField({ name: "featuredTitle", type: "string" }),
-    defineField({ name: "featuredDescription", type: "text" }),
-    defineField({ name: "philosophyEyebrow", type: "string" }),
-    defineField({ name: "philosophyTitle", type: "text" }),
-    defineField({ name: "philosophyBody", type: "text" }),
-    defineField({
-      name: "philosophyImage",
-      type: "image",
-      options: { hotspot: true },
-      fields: [defineField({ name: "alt", type: "string" })],
-    }),
-    defineField({ name: "benefitsEyebrow", type: "string" }),
-    defineField({ name: "benefitsTitle", type: "string" }),
-    defineField({
-      name: "benefits",
-      type: "array",
-      of: [
-        {
-          type: "object",
-          fields: [
-            defineField({ name: "title", type: "string" }),
-            defineField({ name: "description", type: "text" }),
-          ],
-        },
-      ],
-    }),
-    defineField({
-      name: "benefitImage",
-      type: "image",
-      options: { hotspot: true },
-      fields: [defineField({ name: "alt", type: "string" })],
-    }),
-    defineField({
-      name: "testimonial",
-      type: "object",
-      fields: [
-        defineField({ name: "quote", type: "text" }),
-        defineField({ name: "name", type: "string" }),
-        defineField({ name: "product", type: "string" }),
-      ],
-    }),
-    defineField({
-      name: "faqs",
-      type: "array",
-      of: [
-        {
-          type: "object",
-          fields: [
-            defineField({ name: "question", type: "string" }),
-            defineField({ name: "answer", type: "text" }),
-          ],
-        },
-      ],
-    }),
-    defineField({ name: "ctaTitle", type: "text" }),
-    defineField({ name: "ctaDescription", type: "string" }),
-    defineField({ name: "ctaLabel", type: "string" }),
-    defineField({ name: "ctaHref", type: "string" }),
-  ],
-});
-
-export const aboutPage = defineType({
-  name: "aboutPage",
-  title: "About Page",
-  type: "document",
-  fields: [
-    defineField({ name: "eyebrow", type: "string" }),
-    defineField({ name: "title", type: "string" }),
-    defineField({ name: "intro", type: "text" }),
-    defineField({
-      name: "storyBlocks",
-      type: "array",
-      of: [
-        {
-          type: "object",
-          fields: [
-            defineField({ name: "title", type: "string" }),
-            defineField({ name: "body", type: "text" }),
-            defineField({
-              name: "image",
-              type: "image",
-              options: { hotspot: true },
-              fields: [defineField({ name: "alt", type: "string" })],
-            }),
-            defineField({ name: "fullWidth", type: "boolean" }),
-          ],
-        },
-      ],
-    }),
-    defineField({ name: "philosophyTitle", type: "string" }),
-    defineField({ name: "philosophyBody", type: "text" }),
-  ],
-});
-
-export const page = defineType({
-  name: "page",
-  title: "Page",
-  type: "document",
-  fields: [
-    defineField({ name: "title", type: "string" }),
-    defineField({
-      name: "slug",
-      type: "slug",
-      options: { source: "title" },
-    }),
-    defineField({ name: "body", type: "text" }),
-    defineField({ name: "seo", type: "object", fields: seoFields }),
-  ],
+  },
 });
 
 export const schemaTypes = [
   product,
   category,
-  blogPost,
-  page,
-  homePage,
-  aboutPage,
-  siteSettings,
+  certificate,
+  socialMedia,
 ];

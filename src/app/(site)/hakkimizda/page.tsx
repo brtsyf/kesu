@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/animation/Reveal";
-import { getAboutPage } from "@/lib/sanity/fetch";
+import { aboutPage } from "@/lib/data/seed";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -27,8 +27,8 @@ const VALUES = [
   },
 ];
 
-export default async function AboutPage() {
-  const page = await getAboutPage();
+export default function AboutPage() {
+  const page = aboutPage;
   const titleLines = page.title.split("\n");
 
   const block0 = page.storyBlocks[0];

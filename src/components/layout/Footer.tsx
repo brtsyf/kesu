@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { SiteSettings } from "@/lib/sanity/types";
 import { Container } from "@/components/ui/Container";
 import { BrandLogo } from "@/components/brand/BrandLogo";
+import { SocialLinks } from "@/components/ui/SocialLinks";
 
 export function Footer({ settings }: { settings: SiteSettings }) {
   return (
@@ -28,7 +29,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
           </nav>
 
           <div className="flex flex-col gap-3 text-[0.95rem] text-muted">
-            <p>{settings.contact.address}</p>
+            <p className="whitespace-pre-line">{settings.contact.address}</p>
             {settings.contact.whatsapp ? (
               <a
                 href={`https://wa.me/${settings.contact.whatsapp.replace(/\D/g, "")}`}
@@ -39,19 +40,11 @@ export function Footer({ settings }: { settings: SiteSettings }) {
                 WhatsApp · {settings.contact.whatsapp}
               </a>
             ) : null}
-            <div className="flex gap-5 pt-3">
-              {settings.socialLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[0.75rem] tracking-[0.14em] uppercase link-underline"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
+            <SocialLinks
+              links={settings.socialLinks}
+              variant="footer"
+              className="pt-3"
+            />
           </div>
         </div>
 

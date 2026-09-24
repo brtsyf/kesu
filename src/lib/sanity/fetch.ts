@@ -1,32 +1,25 @@
 import {
-  aboutPage as seedAbout,
-  blogPosts as seedBlog,
   categories as seedCategories,
-  homePage as seedHome,
   products as seedProducts,
   siteSettings as seedSettings,
 } from "@/lib/data/seed";
 import { applyProductCutout } from "@/lib/product-media";
+import { socialLinksFromSettings } from "@/lib/social";
 import type {
-  AboutPageContent,
-  BlogPost,
   Category,
-  HomePageContent,
+  CertificateItem,
   Product,
   SiteSettings,
 } from "./types";
 import { sanityClient } from "./client";
 import { hasSanityConfig } from "./env";
 import {
-  aboutPageQuery,
-  blogPostBySlugQuery,
-  blogPostsQuery,
   categoriesQuery,
-  featuredProductsQuery,
-  homePageQuery,
+  certificatesQuery,
+  legacyCertificatesQuery,
   productBySlugQuery,
   productsQuery,
-  siteSettingsQuery,
+  socialMediaQuery,
 } from "./queries";
 
 async function fetchSanity<T>(
@@ -35,70 +28,68 @@ async function fetchSanity<T>(
 ): Promise<T | null> {
   if (!hasSanityConfig || !sanityClient) return null;
   try {
-    return await sanityClient.fetch<T>(query, params);
+    return await sanityClient.fetch<T>(query, params, {
+      cache: "force-cache",
+      next: { tags: ["sanity"] },
+    });
   } catch {
     return null;
   }
 }
 
 export async function getSiteSettings(): Promise<SiteSettings> {
-  const data = await fetchSanity<SiteSettings>(siteSettingsQuery);
-  return data ?? seedSettings;
-}
-
-export async function getHomePage(): Promise<HomePageContent> {
-  const data = await fetchSanity<HomePageContent>(homePageQuery);
-  if (!data) return seedHome;
+  const socialDoc = await fetchSanity<{
+    instagram?: string;
+    linkedin?: string;
+    tiktok?: string;
+    youtube?: string;
+  }>(socialMediaQuery);
+  const socialLinks = socialLinksFromSettings({ social: socialDoc ?? undefined });
   return {
-    ...seedHome,
-    ...data,
-    hero: {
-      ...data.hero,
-      ...seedHome.hero,
-      image: data.hero?.image ?? seedHome.hero.image,
-      bottle: seedHome.hero.bottle,
-    },
+    ...seedSettings,
+    socialLinks: socialLinks.length ? socialLinks : seedSettings.socialLinks,
   };
 }
 
-export async function getAboutPage(): Promise<AboutPageContent> {
-  const data = await fetchSanity<AboutPageContent>(aboutPageQuery);
-  return data ?? seedAbout;
+export async function getCertificates(): Promise<CertificateItem[]> {
+  const [docs, legacy] = await Promise.all([
+    fetchSanity<CertificateItem[]>(certificatesQuery),
+    fetchSanity<{ certificates?: CertificateItem[] }>(legacyCertificatesQuery),
+  ]);
+  const fromDocs = docs?.filter((item) => item.image) ?? [];
+  if (fromDocs.length) return fromDocs;
+  return legacy?.certificates?.filter((item) => item.image) ?? [];
+}
+
+function withSeedFields(product: Product): Product {
+  const seed = seedProducts.find((item) => item.slug === product.slug);
+  if (!seed) return product;
+  return {
+    ...seed,
+    ...product,
+    volume: product.volume ?? seed.volume,
+    tagline: product.tagline ?? seed.tagline,
+    cardTint: product.cardTint ?? seed.cardTint,
+    ingredients: product.ingredients?.length ? product.ingredients : seed.ingredients,
+    benefits: product.benefits?.length ? product.benefits : seed.benefits,
+    usage: product.usage || seed.usage,
+  };
 }
 
 export async function getProducts(): Promise<Product[]> {
   const data = await fetchSanity<Product[]>(productsQuery);
-  return (data?.length ? data : seedProducts).map(applyProductCutout);
-}
-
-export async function getFeaturedProducts(): Promise<Product[]> {
-  const data = await fetchSanity<Product[]>(featuredProductsQuery);
-  const products = data?.length
-    ? data
-    : seedProducts.filter((p) => p.featured).slice(0, 3);
-  return products.map(applyProductCutout);
+  return (data?.length ? data : seedProducts).map(withSeedFields).map(applyProductCutout);
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   const data = await fetchSanity<Product>(productBySlugQuery, { slug });
   const product = data ?? seedProducts.find((p) => p.slug === slug) ?? null;
-  return product ? applyProductCutout(product) : null;
+  return product ? applyProductCutout(withSeedFields(product)) : null;
 }
 
 export async function getCategories(): Promise<Category[]> {
   const data = await fetchSanity<Category[]>(categoriesQuery);
   return data?.length ? data : seedCategories;
-}
-
-export async function getBlogPosts(): Promise<BlogPost[]> {
-  const data = await fetchSanity<BlogPost[]>(blogPostsQuery);
-  return data?.length ? data : seedBlog;
-}
-
-export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
-  const data = await fetchSanity<BlogPost>(blogPostBySlugQuery, { slug });
-  if (data) return data;
-  return seedBlog.find((p) => p.slug === slug) ?? null;
 }
 
 export async function searchProducts(term: string): Promise<Product[]> {
