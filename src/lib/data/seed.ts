@@ -55,7 +55,7 @@ const placeholders = {
 
 export const siteSettings: SiteSettings = {
   siteName: "Kesu",
-  tagline: "Profesyonel estetik için Kore teknolojisi.",
+  tagline: "Kore güzellik yaklaşımından esinlenen profesyonel estetik.",
   logoText: "KESU",
   navigation: [
     { label: "Ürünler", href: "/urunler" },
@@ -97,7 +97,7 @@ export const siteSettings: SiteSettings = {
   seo: {
     metaTitle: "Kesu — Profesyonel Dermokozmetik",
     metaDescription:
-      "Lifting, anti-aging, whitening, eyes ve hair mezoterapi solüsyonları. Kore teknolojisiyle klinik sonuç odaklı formüller.",
+      "Lifting, anti-aging, whitening, eyes ve hair mezoterapi solüsyonları. Kore güzellik yaklaşımından esinlenen, klinik sonuç odaklı formüller.",
   },
 };
 
@@ -406,9 +406,9 @@ export const homePage: HomePageContent = {
         "Katalogda Six Lift, Anti-Aging, White Effect, Eyes ve Hair mezoterapi solüsyonları yer alır. Her biri farklı endikasyonlara yönelik formüle edilmiştir.",
     },
     {
-      question: "Ürünler Kore menşeli midir?",
+      question: "Kesu’nun Kore ile ilişkisi nedir?",
       answer:
-        "Evet. Formüllerimiz, etkinliği ve güvenilirliği dünya çapında bilinen Kore menşeli ileri teknoloji üretim süreçleriyle hazırlanır.",
+        "Ürünler Kore menşeli değildir. Formüllerimiz, Kore güzellik yaklaşımından esinlenerek profesyonel estetik uygulamaları için geliştirilir.",
     },
     {
       question: "Bilgi veya iş birliği için nasıl ulaşabilirim?",
@@ -422,19 +422,18 @@ export const aboutPage: AboutPageContent = {
   eyebrow: "Hakkımızda",
   title: "Profesyonel estetik için\ngüvenilir bir marka.",
   intro:
-    "Kesu, profesyonel estetik ve medikal uygulamalar için geliştirilmiş lifting, botoks, anti-aging, hair ve eye care ürünleri sunmak amacıyla kurulmuş; yıllardır sektörde başarıyla kullanılan ve uzmanlar tarafından güvenle tercih edilen yenilikçi bir dermokozmetik markasıdır.",
+    "Kesu, profesyonel estetik ve medikal uygulamalar için geliştirilmiş lifting, botoks, anti-aging, hair ve eye care ürünleri sunmak amacıyla kurulmuş, yıllardır sektörde başarıyla kullanılan ve uzmanlar tarafından güvenle tercih edilen yenilikçi bir dermokozmetik markasıdır.",
   storyBlocks: [
     {
-      title: "Kore teknolojisi. Klinik sonuç.",
       body: "Uzun yıllara dayanan deneyimimiz ve profesyonellerden aldığımız güçlü geri bildirimler doğrultusunda geliştirdiğimiz tüm ürünlerimiz, etkinliği ve güvenilirliği dünya çapında kanıtlanmış Kore menşeli ileri teknoloji üretim süreçleriyle hazırlanır. Cilt gençleştirme, sıkılaşma, leke karşıtı bakım, saç güçlendirme ve göz çevresi problemlerine yönelik çözümlerimiz; doktorların ve kliniklerin beklentilerini karşılamanın ötesine geçerek uygulama sonuçlarını üst seviyeye taşır.",
     },
     {
-      body: "Bilimsel yaklaşımımız, müşteri memnuniyetini esas alan hizmet anlayışımız ve sürekli gelişen ürün portföyümüz sayesinde Kesu; estetik dünyasında kalitesi ve sonuç odaklı yaklaşımıyla takdir edilen güçlü bir marka konumuna gelmiştir.",
+      body: "Bilimsel yaklaşımımız, müşteri memnuniyetini esas alan hizmet anlayışımız ve sürekli gelişen ürün portföyümüz sayesinde Kesu, estetik dünyasında kalitesi ve sonuç odaklı yaklaşımıyla takdir edilen güçlü bir marka konumuna gelmiştir.",
     },
   ],
   philosophyTitle: "Misyonumuz",
   philosophyBody:
-    "Yüksek performanslı, stabil ve güvenli formüller ile uygulayıcıların başarısını artırmak; profesyonel estetisyen ve doktorlar tarafından yıllardır bize duyulan güveni daha da güçlendirmek.",
+    "Kesu olarak misyonumuz; yüksek performanslı, stabil ve güvenli formüller ile uygulayıcıların başarısını artırmak, profesyonel estetisyen ve doktorlar tarafından yıllardır bize duyulan güveni daha da güçlendirmektir.",
 };
 
 export const certificatesPage: CertificatesPageContent = {

@@ -16,7 +16,7 @@ export default async function SiteLayout({
       <IntroScreen
         brand={settings.logoText}
         line={"Klinik sonuç.\nKesin formül."}
-        subline="Profesyonel estetik için Kore teknolojisi."
+        subline="Kore güzellik yaklaşımından esinlenen profesyonel estetik."
       />
       <Header
         logoText={settings.logoText}

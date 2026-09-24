@@ -8,30 +8,14 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Hakkımızda | Kesu",
   description:
-    "Kesu; profesyonel estetik ve medikal uygulamalar için Kore teknolojisiyle geliştirilmiş yenilikçi bir dermokozmetik markasıdır.",
+    "Kesu, profesyonel estetik ve medikal uygulamalar için geliştirilmiş lifting, botoks, anti-aging, hair ve eye care ürünleri sunmak amacıyla kurulmuş yenilikçi bir dermokozmetik markasıdır.",
   path: "/hakkimizda",
 });
-
-const VALUES = [
-  {
-    label: "Kore teknolojisi",
-    body: "Formüllerimiz, dünya çapında etkinliği kanıtlanmış Kore menşeli üretim süreçleriyle hazırlanır.",
-  },
-  {
-    label: "Klinik doğruluk",
-    body: "Her ürün, net bir endikasyona ve ölçülebilir bir sonuca odaklanır. Genel bakım söylemi yoktur.",
-  },
-  {
-    label: "Uzman güveni",
-    body: "Doktorlar ve klinikler tarafından yıllardır tercih edilen, saha kanıtlı bir portföy.",
-  },
-];
 
 export default function AboutPage() {
   const page = aboutPage;
   const titleLines = page.title.split("\n");
-
-  const block0 = page.storyBlocks[0];
+  const [story, closing] = page.storyBlocks;
 
   return (
     <main>
@@ -69,39 +53,14 @@ export default function AboutPage() {
       {/* ── STORY ───────────────────────────────────────────────── */}
       <section className="bg-[#fafaf7] py-28 md:py-36">
         <Container>
-          <div className="mx-auto max-w-3xl space-y-12">
-            {block0 && (
+          <div className="mx-auto max-w-3xl">
+            {story && (
               <Reveal>
-                {block0.title && (
-                  <h2 className="heading-display mb-6 text-[#141414]">
-                    {block0.title}
-                  </h2>
-                )}
                 <p className="text-[1.05rem] leading-[1.85] text-[#6b6860]">
-                  {block0.body}
+                  {story.body}
                 </p>
               </Reveal>
             )}
-
-            <Reveal delay={0.06}>
-              <div className="h-px w-16 bg-[#7d8f72]/40" />
-            </Reveal>
-
-            {/* Values */}
-            <div className="space-y-8">
-              {VALUES.map((v, i) => (
-                <Reveal key={v.label} delay={0.04 * i}>
-                  <div>
-                    <p className="mb-2 text-[0.8rem] font-medium tracking-[0.14em] uppercase text-[#7d8f72]">
-                      {v.label}
-                    </p>
-                    <p className="text-[0.98rem] leading-[1.75] text-[#6b6860]">
-                      {v.body}
-                    </p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
           </div>
         </Container>
       </section>
@@ -125,6 +84,18 @@ export default function AboutPage() {
           </div>
         </Container>
       </section>
+
+      {closing ? (
+        <section className="bg-[#fafaf7] py-28 md:py-36">
+          <Container>
+            <Reveal>
+              <p className="mx-auto max-w-3xl text-[1.05rem] leading-[1.85] text-[#6b6860]">
+                {closing.body}
+              </p>
+            </Reveal>
+          </Container>
+        </section>
+      ) : null}
 
       {/* ── CTA ─────────────────────────────────────────────────── */}
       <section className="bg-[#fafaf7] py-28 md:py-36">

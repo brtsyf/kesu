@@ -20,7 +20,11 @@ export function KoreanBeautyHeadline({ lines }: KoreanBeautyHeadlineProps) {
     return (
       <>
         {lines.map((line, index) => (
-          <span key={`${line}-${index}`} className="block text-[#141414]">
+          <span
+            key={`${line}-${index}`}
+            lang="en"
+            className="block text-[#141414]"
+          >
             {line}
           </span>
         ))}
@@ -31,7 +35,7 @@ export function KoreanBeautyHeadline({ lines }: KoreanBeautyHeadlineProps) {
   return (
     <>
       {lines.map((line, index) => (
-        <span key={`${line}-${index}`} className="block">
+        <span key={`${line}-${index}`} className="block" lang="en">
           <motion.span
             className="block origin-left text-[#141414]"
             initial={{

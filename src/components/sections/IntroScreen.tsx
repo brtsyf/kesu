@@ -19,7 +19,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 export function IntroScreen({
   brand = "KESU",
   line = "Klinik sonuç.\nKesin formül.",
-  subline = "Profesyonel estetik için Kore teknolojisi.",
+  subline = "Kore güzellik yaklaşımından esinlenen profesyonel estetik.",
 }: IntroScreenProps) {
   const reduced = useReducedMotion();
   const [visible, setVisible] = useState(false);

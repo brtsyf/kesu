@@ -194,7 +194,7 @@ function HeroMobileFull({
       {/* ── Text + CTA pinned to bottom ── */}
       <div className="relative z-10 flex min-h-[calc(100svh-var(--header-height))] flex-col justify-end px-6 pb-12 pt-8">
         {/* Headline — white text, same wipe animation */}
-        <h1 className="heading-hero mb-4">
+        <h1 className="heading-hero mb-4" lang="en">
           {lines.map((line, i) =>
             reduced ? (
               <span key={i} className="block text-white">
@@ -309,7 +309,7 @@ export function Hero({ content }: { content: HeroContent }) {
         <div className="container-hero relative hidden lg:block">
           <div className="grid items-start gap-8 pt-8 pb-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-8 lg:min-h-[calc(100svh-var(--header-height))]">
             <div className="relative z-20 max-w-[42rem] pt-4">
-              <h1 className="heading-hero mb-8">
+              <h1 className="heading-hero mb-8" lang="en">
                 <KoreanBeautyHeadline lines={lines} />
               </h1>
 

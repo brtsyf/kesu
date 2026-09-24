@@ -21,13 +21,9 @@ export default async function ProductsPage() {
       <Container>
         <Reveal>
           <p className="eyebrow mb-5">Koleksiyon</p>
-          <h1 className="heading-section text-balance mb-5 max-w-3xl">
+          <h1 className="heading-section text-balance mb-14 max-w-3xl md:mb-20">
             Ürünler
           </h1>
-          <p className="text-muted max-w-xl mb-14 md:mb-20 leading-relaxed">
-            Lifting, anti-aging, whitening, eyes ve hair — profesyonel
-            mezoterapi solüsyonları.
-          </p>
         </Reveal>
         <ProductCatalog products={products} categories={categories} />
       </Container>

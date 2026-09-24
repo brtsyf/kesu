@@ -5,6 +5,7 @@ import { Reveal } from "@/components/animation/Reveal";
 import { ProductCard } from "@/components/product/ProductCard";
 import type { Category, Product } from "@/lib/sanity/types";
 import { cn } from "@/lib/utils/cn";
+import { isLatinAscii } from "@/lib/utils/latin";
 
 type ProductCatalogProps = {
   products: Product[];
@@ -98,14 +99,16 @@ function FilterChip({
       role="tab"
       aria-selected={active}
       onClick={onClick}
+      lang={isLatinAscii(label) ? "en" : undefined}
       className={cn(
-        "text-[0.75rem] tracking-[0.14em] uppercase pb-1 border-b transition-colors duration-500",
+        "text-[0.75rem] tracking-[0.14em] pb-1 border-b transition-colors duration-500",
+        isLatinAscii(label) ? "normal-case" : "uppercase",
         active
           ? "border-foreground text-foreground"
           : "border-transparent text-muted hover:text-foreground",
       )}
     >
-      {label}
+      {isLatinAscii(label) ? label.toLocaleUpperCase("en-US") : label}
     </button>
   );
 }
