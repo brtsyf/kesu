@@ -27,15 +27,23 @@ type VisualProps = {
   bottleSrc: string;
   bottleAlt: string;
   reduced: boolean | null;
+  compactBottle?: boolean;
 };
 
-function OrbitRing({ half }: { half: "top" | "bottom" }) {
+function OrbitRing({
+  half,
+  wide = false,
+}: {
+  half: "top" | "bottom";
+  wide?: boolean;
+}) {
   return (
     <svg
       aria-hidden
       viewBox="0 0 200 80"
       className={cn(
-        "pointer-events-none absolute left-1/2 top-[56%] w-[110%] -translate-x-1/2 -translate-y-1/2 -rotate-[18deg]",
+        "pointer-events-none absolute left-1/2 top-[56%] -translate-x-1/2 -translate-y-1/2 -rotate-[18deg]",
+        wide ? "w-[242%]" : "w-[110%]",
         half === "top"
           ? "z-0 [clip-path:inset(0_0_49%_0)]"
           : "z-[2] [clip-path:inset(51%_0_0_0)]",
@@ -60,7 +68,8 @@ function HeroBottle({
   reduced,
   className,
   tight = false,
-}: Pick<VisualProps, "bottleSrc" | "bottleAlt" | "reduced"> & {
+  compactBottle = false,
+}: Pick<VisualProps, "bottleSrc" | "bottleAlt" | "reduced" | "compactBottle"> & {
   className: string;
   tight?: boolean;
 }) {
@@ -79,7 +88,7 @@ function HeroBottle({
       }
     >
       <div className={cn("relative", tight && "origin-top scale-[1.72]")}>
-        <OrbitRing half="top" />
+        <OrbitRing half="top" wide={compactBottle} />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={bottleSrc}
@@ -89,7 +98,7 @@ function HeroBottle({
           className="relative z-[1] h-auto w-full -rotate-[9deg] drop-shadow-[0_22px_36px_rgba(20,20,18,0.16)]"
           decoding="async"
         />
-        <OrbitRing half="bottom" />
+        <OrbitRing half="bottom" wide={compactBottle} />
       </div>
     </motion.div>
   );
@@ -113,7 +122,11 @@ function HeroVisualDesktop(props: VisualProps) {
       </div>
       <HeroBottle
         {...props}
-        className="-left-[48%] bottom-[-10%] w-[88%]"
+        className={
+          props.compactBottle
+            ? "-left-[24%] bottom-[-6%] w-[40%]"
+            : "-left-[48%] bottom-[-10%] w-[88%]"
+        }
       />
     </div>
   );
@@ -274,12 +287,14 @@ export function Hero({ content }: { content: HeroContent }) {
   const caption = content.caption ?? "Lifting";
   const captionSub = content.captionSub ?? "Sıkılık, Elastikiyet, Canlılık";
   const captionHref = content.captionHref ?? "/urunler/kesu-six-lift";
+  const bottleSrc = getImageUrl(content.bottle, 900) || BOTTLE_FALLBACK;
   const visual: VisualProps = {
     portraitSrc: getImageUrl(content.image, 1800) || PORTRAIT_FALLBACK,
     portraitAlt: getImageAlt(content.image, "Kesu — cilt bakımı"),
-    bottleSrc: getImageUrl(content.bottle, 900) || BOTTLE_FALLBACK,
+    bottleSrc,
     bottleAlt: getImageAlt(content.bottle, "Kesu Lifting ampul"),
     reduced,
+    compactBottle: !bottleSrc.startsWith("/"),
   };
 
   return (

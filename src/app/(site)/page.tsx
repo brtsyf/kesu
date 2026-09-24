@@ -5,6 +5,7 @@ import { TestimonialSection } from "@/components/sections/Testimonial";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { CtaSection } from "@/components/sections/CtaSection";
 import { homePage } from "@/lib/data/seed";
+import { resolveBottleImage } from "@/lib/product-media";
 import { getProducts, getSiteSettings } from "@/lib/sanity/fetch";
 import {
   SEO,
@@ -28,6 +29,16 @@ export default async function HomePage() {
   const products = await getProducts();
   const settings = await getSiteSettings();
   const home = homePage;
+  const sixLift = products.find((product) => product.slug === "kesu-six-lift");
+  const heroBottle = sixLift
+    ? resolveBottleImage(
+        sixLift.slug,
+        sixLift.title,
+        sixLift.thumbnail,
+        sixLift.bottle,
+        sixLift.images?.[0],
+      )
+    : undefined;
 
   return (
     <>
@@ -43,7 +54,7 @@ export default async function HomePage() {
           __html: JSON.stringify(websiteJsonLd()),
         }}
       />
-      <Hero content={home.hero} />
+      <Hero content={{ ...home.hero, bottle: heroBottle ?? home.hero.bottle }} />
       <div className="relative z-10">
         <FeaturedProducts
           eyebrow={home.featuredEyebrow}
