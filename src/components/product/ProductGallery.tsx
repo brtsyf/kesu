@@ -9,7 +9,7 @@ import { ProductDetailExitMorph } from "@/components/product/ProductDetailExitMo
 import { useProductMorphOptional } from "@/components/product/ProductMorphContext";
 import { MediaBox } from "@/components/ui/MediaBox";
 import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
-import { getProductCutout, getProductTint } from "@/lib/product-media";
+import { getProductTint, resolveBottleImage } from "@/lib/product-media";
 import type { SanityImage } from "@/lib/sanity/types";
 
 function GalleryThumb({
@@ -70,8 +70,7 @@ export function ProductGallery({
 }) {
   const morph = useProductMorphOptional();
   const reduced = useReducedMotion();
-  const cutout = getProductCutout(slug);
-  const cutoutImage = cutout ? { url: cutout, alt: title } : undefined;
+  const cutoutImage = resolveBottleImage(slug, title, bottle, images[0]);
   const gallery = cutoutImage
     ? [cutoutImage]
     : images.length
@@ -80,17 +79,17 @@ export function ProductGallery({
   const [active, setActive] = useState(0);
   const [hovered, setHovered] = useState(false);
   const cutoutBottle = cutoutImage ?? bottle;
-  const hasLayers = Boolean(cutoutBottle && backdrop && !cutout);
+  const hasLayers = Boolean(cutoutBottle && backdrop && !cutoutImage);
   const showLayered = hasLayers && active === 0;
-  const showCutout = Boolean(cutout);
+  const showCutout = Boolean(cutoutImage);
   const current = gallery[active] ?? gallery[0];
   const morphing = Boolean(morph?.isActiveSlug(slug));
 
-  const bottleSrc = cutout || getImageUrl(cutoutBottle ?? current, 1600);
-  const backdropSrc = cutout ? undefined : getImageUrl(backdrop, 1800);
+  const bottleSrc = getImageUrl(cutoutBottle ?? current, 1600);
+  const backdropSrc = cutoutImage ? undefined : getImageUrl(backdrop, 1800);
   const imageSrc = bottleSrc || getImageUrl(current, 1600);
 
-  if (!gallery.length && !hasLayers && !cutout) {
+  if (!gallery.length && !hasLayers && !cutoutImage) {
     return (
       <div className="aspect-[4/5] bg-surface ring-1 ring-border/70 flex items-center justify-center text-muted text-sm">
         Görsel yakında

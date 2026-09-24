@@ -16,9 +16,9 @@ import {
 } from "@/components/product/ProductMorphContext";
 import { getImageUrl } from "@/lib/sanity/image";
 import {
-  getProductCutout,
   getProductTint,
   measureProductVisual,
+  resolveBottleImage,
 } from "@/lib/product-media";
 import { cn } from "@/lib/utils/cn";
 import type { Product } from "@/lib/sanity/types";
@@ -44,13 +44,14 @@ export function ProductCard({ product, className, large }: ProductCardProps) {
     active?.direction === "reverse" && active.slug === product.slug,
   );
 
-  const cutout = getProductCutout(product.slug);
-  const sanityBottle =
-    getImageUrl(product.bottle, 1600) || getImageUrl(product.thumbnail, 1600);
-  const bottleSrc = sanityBottle || cutout || undefined;
-  const cardBottle = bottleSrc
-    ? { url: bottleSrc, alt: product.title }
-    : undefined;
+  const cardBottle = resolveBottleImage(
+    product.slug,
+    product.title,
+    product.bottle,
+    product.thumbnail,
+    product.images?.[0],
+  );
+  const bottleSrc = getImageUrl(cardBottle, 1600) || undefined;
   const imageSrc = bottleSrc;
 
   // Reverse: restore list scroll, lock it, measure once — then overlay runs full tween

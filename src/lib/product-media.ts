@@ -58,6 +58,21 @@ function isRemoteUrl(url?: string): boolean {
   return Boolean(url && !url.startsWith("/"));
 }
 
+export function getRemoteProductImage(
+  ...images: (SanityImage | undefined)[]
+): SanityImage | undefined {
+  return images.find((image) => isRemoteUrl(image?.url));
+}
+
+/** Sanity cutout first; local `/images/products` only if CMS has no photo. */
+export function resolveBottleImage(
+  slug: string,
+  title: string,
+  ...images: (SanityImage | undefined)[]
+): SanityImage | undefined {
+  return getRemoteProductImage(...images) ?? cutoutImage(slug, title);
+}
+
 export function getProductStillLife(
   slug: string,
   images: SanityImage[] = [],

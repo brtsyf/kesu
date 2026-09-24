@@ -29,7 +29,7 @@ async function fetchSanity<T>(
   if (!hasSanityConfig || !sanityClient) return null;
   try {
     return await sanityClient.fetch<T>(query, params, {
-      cache: "force-cache",
+      cache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
       next: { tags: ["sanity"] },
     });
   } catch {
