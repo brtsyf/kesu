@@ -179,8 +179,6 @@ export function ProductMorphProvider({ children }: { children: ReactNode }) {
       setHandoff(false);
       setActive(payload);
       setDestinationState(options?.destination ?? null);
-      document.body.setAttribute("data-kesu-morphing", "1");
-      lenisRef.current?.stop();
 
       // Warm the exact URLs the destination page will paint
       [payload.bottleSrc, payload.backdropSrc, payload.imageSrc].forEach(
@@ -207,12 +205,23 @@ export function ProductMorphProvider({ children }: { children: ReactNode }) {
     });
     setDestinationState(null);
     setHandoff(false);
-    document.body.removeAttribute("data-kesu-morphing");
     document
       .querySelectorAll("[data-kesu-morph-hide]")
       .forEach((el) => el.removeAttribute("data-kesu-morph-hide"));
-    lenisRef.current?.start();
   }, []);
+
+  useLayoutEffect(() => {
+    const html = document.documentElement;
+    if (active) {
+      document.body.setAttribute("data-kesu-morphing", "1");
+      lenisRef.current?.stop();
+      return;
+    }
+
+    document.body.removeAttribute("data-kesu-morphing");
+    html.style.removeProperty("overflow");
+    lenisRef.current?.start();
+  }, [active]);
 
   const beginHandoff = useCallback(() => {
     setHandoff(true);

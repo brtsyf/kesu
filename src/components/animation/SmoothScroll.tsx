@@ -14,7 +14,9 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
         wheelMultiplier: 0.9,
         touchMultiplier: 1,
         anchors: true,
-        autoToggle: true,
+        // autoToggle + stop()/start() leaves html { overflow: clip } forever:
+        // stop() only sets the style, start() no-ops unless isStopped flipped via transitionend.
+        autoToggle: false,
         respectReducedMotion: true,
       }}
     >
