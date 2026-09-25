@@ -81,8 +81,9 @@ export function getProductStillLife(
   const cutout = getProductCutout(slug);
   const remotes = images.filter((image) => isRemoteUrl(image.url));
   const remoteStudio =
-    remotes.find((image) => image.url?.includes("-loci")) ??
-    (remotes.length > 1 ? remotes[1] : undefined);
+    remotes.find((image) =>
+      /loci|studio|stüdyo/i.test(`${image.url ?? ""} ${image.alt ?? ""}`),
+    ) ?? remotes[1];
   if (remoteStudio) {
     return { ...remoteStudio, alt: remoteStudio.alt || alt || "" };
   }
