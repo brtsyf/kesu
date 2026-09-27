@@ -65,7 +65,7 @@ export function Header({
             : "border-b border-transparent bg-transparent",
         )}
       >
-        <div className="container-hero relative flex h-[var(--header-height)] items-center justify-between">
+        <div className="relative mx-auto flex h-[var(--header-height)] w-full max-w-[104rem] items-center justify-between px-4 lg:px-[clamp(1.75rem,6.2vw,6rem)]">
           <BrandLogo
             width={isHome ? 118 : 110}
             priority
@@ -93,11 +93,11 @@ export function Header({
             ))}
           </nav>
 
-          <div className="flex items-center gap-1.5 sm:gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             <button
               type="button"
               onClick={() => setSearchOpen(true)}
-              className="p-2 text-foreground/55 transition-colors hover:text-foreground lg:hidden"
+              className="p-1.5 text-foreground/55 transition-colors hover:text-foreground lg:hidden lg:p-2"
               aria-label="Ara"
             >
               <Search className="size-6" strokeWidth={1.5} />
@@ -105,7 +105,7 @@ export function Header({
             <SocialLinks links={socialLinks} variant="header" />
             <button
               type="button"
-              className="p-2 text-foreground/70 transition-colors hover:text-foreground lg:hidden"
+              className="p-1.5 text-foreground/70 transition-colors hover:text-foreground lg:hidden lg:p-2"
               onClick={() => setMobileOpen((v) => !v)}
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
