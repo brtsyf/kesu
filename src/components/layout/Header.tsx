@@ -3,8 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Menu, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
+import { premiumEase } from "@/lib/motion";
+import { useScrollLock } from "@/lib/scroll-lock";
 import type { NavItem, SocialLink } from "@/lib/sanity/types";
 import { SearchOverlay } from "@/components/navigation/SearchOverlay";
 import { BrandLogo } from "@/components/brand/BrandLogo";
@@ -26,6 +29,8 @@ export function Header({
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const reduced = useReducedMotion();
+  useScrollLock(mobileOpen || searchOpen);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -40,11 +45,13 @@ export function Header({
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = mobileOpen || searchOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
+    if (!mobileOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMobileOpen(false);
     };
-  }, [mobileOpen, searchOpen]);
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [mobileOpen]);
 
   const solid = scrolled || mobileOpen || !isHome;
 
@@ -98,52 +105,134 @@ export function Header({
             <SocialLinks links={socialLinks} variant="header" />
             <button
               type="button"
-              className="p-2 lg:hidden"
+              className="p-2 text-foreground/70 transition-colors hover:text-foreground lg:hidden"
               onClick={() => setMobileOpen((v) => !v)}
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
               aria-label={mobileOpen ? "Menüyü kapat" : "Menüyü aç"}
             >
-              {mobileOpen ? (
-                <X className="size-6" strokeWidth={1.5} />
-              ) : (
-                <Menu className="size-6" strokeWidth={1.5} />
-              )}
+              <span className="relative block size-6">
+                <AnimatePresence initial={false} mode="wait">
+                  {mobileOpen ? (
+                    <motion.span
+                      key="close"
+                      className="absolute inset-0"
+                      initial={reduced ? false : { opacity: 0, rotate: -45 }}
+                      animate={{ opacity: 1, rotate: 0 }}
+                      exit={{ opacity: 0, rotate: 45 }}
+                      transition={{ duration: 0.28, ease: premiumEase }}
+                    >
+                      <X className="size-6" strokeWidth={1.5} />
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="open"
+                      className="absolute inset-0"
+                      initial={reduced ? false : { opacity: 0, rotate: 45 }}
+                      animate={{ opacity: 1, rotate: 0 }}
+                      exit={{ opacity: 0, rotate: -45 }}
+                      transition={{ duration: 0.28, ease: premiumEase }}
+                    >
+                      <Menu className="size-6" strokeWidth={1.5} />
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </span>
             </button>
           </div>
         </div>
-
-        <div
-          id="mobile-menu"
-          className={cn(
-            "overflow-hidden border-t border-border/50 bg-[#f6f6f4] transition-[max-height,opacity] duration-500 ease-[var(--ease-premium)] lg:hidden",
-            mobileOpen
-              ? "max-h-[80vh] opacity-100"
-              : "max-h-0 opacity-0 border-transparent",
-          )}
-        >
-          <nav
-            className="container-hero flex flex-col gap-1 py-8"
-            aria-label="Mobil menü"
-          >
-            {navigation.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-                className="py-3 text-2xl tracking-tight"
-              >
-                {item.label}
-              </Link>
-            ))}
-            <SocialLinks
-              links={socialLinks}
-              variant="header"
-              className="mt-6"
-            />
-          </nav>
-        </div>
       </header>
+
+      <AnimatePresence initial={false}>
+        {mobileOpen ? (
+          <motion.div
+            id="mobile-menu"
+            key="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobil menü"
+            initial={
+              reduced ? false : { opacity: 0, clipPath: "inset(0 0 100% 0)" }
+            }
+            animate={{ opacity: 1, clipPath: "inset(0 0 0% 0)" }}
+            exit={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
+            transition={{ duration: reduced ? 0.01 : 0.55, ease: premiumEase }}
+            className="fixed inset-x-0 top-[var(--header-height)] bottom-0 z-40 overflow-hidden lg:hidden"
+          >
+            <div className="relative flex h-full flex-col bg-[#f4f5f0]">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_0%_-10%,color-mix(in_srgb,var(--accent-soft)_42%,transparent),transparent_58%),radial-gradient(ellipse_60%_40%_at_100%_100%,color-mix(in_srgb,var(--accent)_12%,transparent),transparent_55%)]"
+              />
+
+              <nav
+                className="container-hero relative flex min-h-0 flex-1 flex-col justify-between pb-10 pt-8"
+                aria-label="Mobil menü"
+              >
+                <div>
+                  <p className="eyebrow mb-7">Menü</p>
+                  <ul>
+                    {navigation.map((item, index) => {
+                      const active = pathname === item.href;
+                      return (
+                        <motion.li
+                          key={item.href}
+                          initial={reduced ? false : { opacity: 0, y: 18 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{
+                            delay: reduced ? 0 : 0.12 + index * 0.06,
+                            duration: 0.46,
+                            ease: premiumEase,
+                          }}
+                        >
+                          <Link
+                            href={item.href}
+                            onClick={() => {
+                              if (pathname === item.href) setMobileOpen(false);
+                            }}
+                            className={cn(
+                              "group flex items-center gap-4 border-b border-black/[0.06] py-4 transition-colors duration-500 ease-[var(--ease-premium)]",
+                              active
+                                ? "text-[#141414]"
+                                : "text-[#141414]/55 hover:text-[#141414]",
+                            )}
+                          >
+                            <span
+                              aria-hidden
+                              className={cn(
+                                "inline-block h-px shrink-0 bg-accent-deep transition-[width,opacity] duration-500 ease-[var(--ease-premium)]",
+                                active
+                                  ? "w-7 opacity-100"
+                                  : "w-4 opacity-50 group-hover:w-7 group-hover:opacity-100",
+                              )}
+                            />
+                            <span className="text-[2.05rem] font-medium leading-[1.05] tracking-[-0.035em]">
+                              {item.label}
+                            </span>
+                          </Link>
+                        </motion.li>
+                      );
+                    })}
+                  </ul>
+                </div>
+
+                <motion.p
+                  initial={reduced ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{
+                    delay: reduced ? 0 : 0.28,
+                    duration: 0.4,
+                    ease: premiumEase,
+                  }}
+                  className="pt-10 text-[0.72rem] tracking-[0.14em] uppercase text-muted"
+                >
+                  Profesyonel mezoterapi solüsyonları
+                </motion.p>
+              </nav>
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
 
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>

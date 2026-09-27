@@ -13,6 +13,7 @@ import {
 import { usePathname } from "next/navigation";
 import { useLenis } from "lenis/react";
 import { SHARED_IMAGE_MS } from "@/lib/motion";
+import { acquireScrollLock, releaseScrollLock } from "@/lib/scroll-lock";
 
 export type MorphRect = {
   top: number;
@@ -211,16 +212,17 @@ export function ProductMorphProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useLayoutEffect(() => {
-    const html = document.documentElement;
-    if (active) {
-      document.body.setAttribute("data-kesu-morphing", "1");
-      lenisRef.current?.stop();
+    if (!active) {
+      document.body.removeAttribute("data-kesu-morphing");
       return;
     }
 
-    document.body.removeAttribute("data-kesu-morphing");
-    html.style.removeProperty("overflow");
-    lenisRef.current?.start();
+    document.body.setAttribute("data-kesu-morphing", "1");
+    acquireScrollLock(lenisRef.current);
+    return () => {
+      document.body.removeAttribute("data-kesu-morphing");
+      releaseScrollLock(lenisRef.current);
+    };
   }, [active]);
 
   const beginHandoff = useCallback(() => {

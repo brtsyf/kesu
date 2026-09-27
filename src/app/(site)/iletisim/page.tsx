@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
@@ -11,27 +12,6 @@ export const metadata = buildMetadata({
   description: SEO.contact.description,
   path: "/iletisim",
 });
-
-const STILL_LIFE = [
-  {
-    src: "/images/products/six-lift.png",
-    alt: "Kesu Six Lift ampul",
-    className:
-      "left-[8%] bottom-[2%] h-[90%] z-[2] md:left-[10%] md:h-[92%]",
-  },
-  {
-    src: "/images/products/white-effect.png",
-    alt: "Kesu White Effect ampul",
-    className:
-      "right-[20%] bottom-[10%] h-[56%] z-[3] md:right-[22%] md:h-[58%]",
-  },
-  {
-    src: "/images/products/anti-aging.png",
-    alt: "Kesu Anti-Aging ampul",
-    className:
-      "right-[5%] bottom-[12%] h-[40%] z-[1] md:right-[6%] md:h-[42%]",
-  },
-] as const;
 
 export default async function ContactPage() {
   const settings = await getSiteSettings();
@@ -61,22 +41,15 @@ export default async function ContactPage() {
           </Reveal>
 
           <Reveal delay={0.12}>
-            <div
-              className="relative min-h-[22rem] overflow-hidden rounded-[2rem] bg-[#eef1ec] sm:min-h-[26rem] md:min-h-[30rem] lg:min-h-[32rem]"
-              aria-label="Kesu mezoterapi ampulleri"
-            >
-              {STILL_LIFE.map((vial) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={vial.src}
-                  src={vial.src}
-                  alt={vial.alt}
-                  width={560}
-                  height={1080}
-                  className={`pointer-events-none absolute w-auto max-w-none object-contain object-bottom drop-shadow-[0_16px_28px_rgba(20,20,18,0.12)] ${vial.className}`}
-                  decoding="async"
-                />
-              ))}
+            <div className="relative aspect-[16/9] overflow-hidden rounded-[2rem] bg-[#eef1ec]">
+              <Image
+                src="/images/editorial/contact-still-life.png"
+                alt="Kesu mezoterapi koleksiyonu"
+                fill
+                priority
+                sizes="(min-width: 1024px) 48vw, 100vw"
+                className="object-cover object-center"
+              />
             </div>
           </Reveal>
         </div>

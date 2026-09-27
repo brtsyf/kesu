@@ -110,11 +110,11 @@ export default async function ProductDetailPage({
             </nav>
           </Reveal>
 
-          <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-14 xl:gap-20">
-            <div className="lg:col-span-5">
+          <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-14 xl:gap-20">
+            <div className="order-2 lg:order-1 lg:col-span-5">
               <ProductDetailInfo product={product} />
             </div>
-            <div className="lg:col-span-7">
+            <div className="order-1 lg:order-2 lg:col-span-7">
               <ProductGallery
                 images={gallery}
                 title={product.title}

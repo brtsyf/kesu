@@ -1,7 +1,24 @@
 "use client";
 
-import { ReactLenis } from "lenis/react";
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { ReactLenis, useLenis } from "lenis/react";
 import type { ReactNode } from "react";
+import { restorePageScroll } from "@/lib/scroll-lock";
+
+function ScrollRestore() {
+  const pathname = usePathname();
+  const lenis = useLenis();
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      restorePageScroll(lenis);
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [pathname, lenis]);
+
+  return null;
+}
 
 export function SmoothScroll({ children }: { children: ReactNode }) {
   return (
@@ -20,6 +37,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
         respectReducedMotion: true,
       }}
     >
+      <ScrollRestore />
       {children}
     </ReactLenis>
   );

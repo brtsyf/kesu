@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { BrandLogo } from "@/components/brand/BrandLogo";
+import { useScrollLock } from "@/lib/scroll-lock";
 
 const STORAGE_KEY = "kesu-intro-seen";
 /** Auto-dismiss after brand beat — intentionally brief */
@@ -45,10 +46,10 @@ export function IntroScreen({
     }
   }, []);
 
+  useScrollLock(visible);
+
   useEffect(() => {
     if (!visible) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
 
     const timer = window.setTimeout(dismiss, reduced ? 600 : AUTO_DISMISS_MS);
 
@@ -61,7 +62,6 @@ export function IntroScreen({
     window.addEventListener("keydown", onKey);
 
     return () => {
-      document.body.style.overflow = previous;
       window.clearTimeout(timer);
       window.removeEventListener("keydown", onKey);
     };

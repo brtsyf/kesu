@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { Reveal } from "@/components/animation/Reveal";
 import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
+import { useScrollLock } from "@/lib/scroll-lock";
 import type { CertificateItem } from "@/lib/sanity/types";
 
 export function CertificateGallery({
@@ -14,18 +15,15 @@ export function CertificateGallery({
   const [active, setActive] = useState<number | null>(null);
   const current = active !== null ? certificates[active] : null;
   const currentSrc = current ? getImageUrl(current.image, 1800) : "";
+  useScrollLock(active !== null);
 
   useEffect(() => {
     if (active === null) return;
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setActive(null);
     };
-    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", onKey);
-    };
+    return () => window.removeEventListener("keydown", onKey);
   }, [active]);
 
   if (!certificates.length) {
