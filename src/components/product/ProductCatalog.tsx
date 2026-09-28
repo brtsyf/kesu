@@ -21,6 +21,20 @@ export function ProductCatalog({
   const [category, setCategory] = useState(initialCategory);
   const [query, setQuery] = useState("");
 
+  const orderedCategories = useMemo(() => {
+    const rank = new Map<string, number>();
+    products.forEach((product, index) => {
+      const slug = product.category?.slug;
+      if (!slug || rank.has(slug)) return;
+      rank.set(slug, product.order ?? index);
+    });
+    return [...categories].sort(
+      (a, b) =>
+        (rank.get(a.slug) ?? Number.POSITIVE_INFINITY) -
+        (rank.get(b.slug) ?? Number.POSITIVE_INFINITY),
+    );
+  }, [categories, products]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return products.filter((product) => {
@@ -47,7 +61,7 @@ export function ProductCatalog({
             onClick={() => setCategory("all")}
             label="Tümü"
           />
-          {categories.map((cat) => (
+          {orderedCategories.map((cat) => (
             <FilterChip
               key={cat._id}
               active={category === cat.slug}

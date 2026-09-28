@@ -167,15 +167,11 @@ function HeroMobileFull({
   visual,
   content,
   lines,
-  caption,
-  captionHref,
   reduced,
 }: {
   visual: VisualProps;
   content: HeroContent;
   lines: string[];
-  caption: string;
-  captionHref: string;
   reduced: boolean | null;
 }) {
   return (
@@ -266,12 +262,6 @@ function HeroMobileFull({
             {content.primaryCta.label}
             <ArrowRight className="size-4" strokeWidth={1.7} />
           </Link>
-          <Link
-            href={captionHref}
-            className="text-[0.9rem] text-white/60 underline-offset-4 transition-colors hover:text-white hover:underline"
-          >
-            {caption}
-          </Link>
         </motion.div>
       </div>
     </div>
@@ -314,8 +304,6 @@ export function Hero({ content }: { content: HeroContent }) {
             visual={visual}
             content={content}
             lines={lines}
-            caption={caption}
-            captionHref={captionHref}
             reduced={reduced}
           />
         </div>
@@ -342,12 +330,6 @@ export function Hero({ content }: { content: HeroContent }) {
                   >
                     {content.primaryCta.label}
                     <ArrowRight className="size-4" strokeWidth={1.7} />
-                  </Link>
-                  <Link
-                    href={captionHref}
-                    className="text-[0.9rem] text-[#6b6860] underline-offset-4 transition-colors hover:text-[#141414] hover:underline"
-                  >
-                    {caption}
                   </Link>
                 </div>
               </Reveal>

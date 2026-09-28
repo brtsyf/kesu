@@ -38,9 +38,13 @@ export const productBySlugQuery = `*[_type == "product" && slug.current == $slug
   seo
 }`;
 
-export const categoriesQuery = `*[_type == "category"] | order(title asc) {
-  _id, title, "slug": slug.current, description
-}`;
+export const categoriesQuery = `*[_type == "category"] {
+  _id,
+  title,
+  "slug": slug.current,
+  description,
+  "sortOrder": *[_type == "product" && references(^._id)] | order(order asc)[0].order
+} | order(sortOrder asc, title asc)`;
 
 export const socialMediaQuery = `*[_type == "socialMedia"][0] {
   instagram, linkedin, tiktok, youtube
