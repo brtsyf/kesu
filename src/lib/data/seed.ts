@@ -14,13 +14,13 @@ const img = (url: string, alt: string) => ({
 
 /** Catalog product photos — layered bottle + fixed liquid backdrop */
 const placeholders = {
-  lift: img("/images/products/six-lift.jpg", "Kesu Six Lift ampul"),
-  liftBottle: img("/images/products/six-lift.png", "Kesu Six Lift ampul"),
+  lift: img("/images/products/six-lift.jpg", "Kesu Lifting ampul"),
+  liftBottle: img("/images/products/six-lift.png", "Kesu Lifting ampul"),
   liftStill: img(
     "/images/products/six-lift-loci.png",
-    "Kesu Six Lift stüdyo",
+    "Kesu Lifting stüdyo",
   ),
-  liftBg: img("/images/products/six-lift-bg.webp", "Kesu Six Lift arka plan"),
+  liftBg: img("/images/products/six-lift-bg.webp", "Kesu Lifting arka plan"),
   aging: img("/images/products/anti-aging.png", "Kesu Anti-Aging ampul"),
   agingBottle: img(
     "/images/products/anti-aging.png",
@@ -47,10 +47,10 @@ const placeholders = {
     "/images/products/white-effect-bg.webp",
     "Kesu White Effect arka plan",
   ),
-  eyes: img("/images/products/eyes.png", "Kesu Eyes ampul"),
-  eyesBottle: img("/images/products/eyes.png", "Kesu Eyes ampul"),
-  eyesStill: img("/images/products/eyes-loci.png", "Kesu Eyes stüdyo"),
-  eyesBg: img("/images/products/eyes-bg.webp", "Kesu Eyes arka plan"),
+  eyes: img("/images/products/eyes.png", "Kesu Eye ampul"),
+  eyesBottle: img("/images/products/eyes.png", "Kesu Eye ampul"),
+  eyesStill: img("/images/products/eyes-loci.png", "Kesu Eye stüdyo"),
+  eyesBg: img("/images/products/eyes-bg.webp", "Kesu Eye arka plan"),
   hair: img("/images/products/hair.png", "Kesu Hair ampul"),
   hairBottle: img("/images/products/hair.png", "Kesu Hair ampul"),
   hairStill: img("/images/products/hair-loci.png", "Kesu Hair stüdyo"),
@@ -118,7 +118,7 @@ export const siteSettings: SiteSettings = {
   seo: {
     metaTitle: "Kesu | Profesyonel Dermokozmetik Mezoterapi Solüsyonları",
     metaDescription:
-      "Kesu mezoterapi solüsyonları: Six Lift, Anti-Aging, White Effect, Eyes, Hair, Acnera, BioCA, Genishine ve Salmon DNA. Kore güzellik yaklaşımından esinlenen profesyonel bakım.",
+      "Kesu mezoterapi solüsyonları: Lifting, Anti-Aging, White Effect, Eye, Hair, Acnera, BioCA, Genishine ve Salmon DNA. Kore güzellik yaklaşımından esinlenen profesyonel bakım.",
   },
 };
 
@@ -137,13 +137,13 @@ export const categories: Category[] = [
   },
   {
     _id: "cat-whitening",
-    title: "Whitening",
+    title: "White Effect",
     slug: "whitening",
     description: "Leke ve ton eşitleme",
   },
   {
     _id: "cat-eyes",
-    title: "Eyes",
+    title: "Eye",
     slug: "eyes",
     description: "Göz çevresi bakımı",
   },
@@ -182,7 +182,7 @@ export const categories: Category[] = [
 export const products: Product[] = [
   {
     _id: "prod-six-lift",
-    title: "Kesu Six Lift",
+    title: "Kesu Lifting",
     slug: "kesu-six-lift",
     shortDescription:
       "Anında lifting ve sıkılaşma için mezoterapi solüsyonu. 10 ml × 5 ampul.",
@@ -225,7 +225,7 @@ export const products: Product[] = [
     tagline: "Sıkılık & elastikiyet",
     cardTint: "#eef1ec",
     seo: {
-      metaTitle: "Kesu Six Lift | Lifting Mezoterapi Solüsyonu",
+      metaTitle: "Kesu Lifting | Mezoterapi Solüsyonu",
       metaDescription:
         "10 ml × 5 ampul. Anında lifting, sıkılaşma ve Somon DNA destekli hücre yenileyici bakım.",
     },
@@ -277,7 +277,7 @@ export const products: Product[] = [
     title: "Kesu White Effect",
     slug: "kesu-white-effect",
     shortDescription:
-      "Leke ve hiperpigmentasyon görünümünü azaltan whitening solüsyonu. 10 ml × 5 ampul.",
+      "Leke ve hiperpigmentasyon görünümünü azaltan White Effect solüsyonu. 10 ml × 5 ampul.",
     description:
       "Kesu White Effect Mezoterapi Solüsyonu; güneş lekeleri, melazma, akne sonrası lekeler ile donuk cilt görünümüne yönelik geliştirilmiştir. Cilt tonunu eşitler, ışıltı kazandırır, serbest radikallere karşı koruma sunar ve retinol ile hücre yenilenmesini destekler. Yüz, boyun, el üstü ve dekolte bölgelerinde kullanılabilir.",
     thumbnail: placeholders.whiteBottle,
@@ -315,19 +315,19 @@ export const products: Product[] = [
     tagline: "Ton eşitliği & aydınlık",
     cardTint: "#f5f2e8",
     seo: {
-      metaTitle: "Kesu White Effect | Whitening Mezoterapi Solüsyonu",
+      metaTitle: "Kesu White Effect | Mezoterapi Solüsyonu",
       metaDescription:
-        "10 ml × 5 ampul. Leke, ton eşitleme ve parlaklık odaklı whitening solüsyonu.",
+        "10 ml × 5 ampul. Leke, ton eşitleme ve parlaklık odaklı White Effect solüsyonu.",
     },
   },
   {
     _id: "prod-eyes",
-    title: "Kesu Eyes",
+    title: "Kesu Eye",
     slug: "kesu-eyes",
     shortDescription:
       "Göz çevresi ince çizgi, koyu halka ve yorgunluk görünümü için. 5 ml × 5 ampul.",
     description:
-      "Kesu Eyes Mezoterapi Solüsyonu; göz altı torbaları, morluklar, ince çizgiler ve göz çevresi ton eşitsizliklerine yönelik özel formüle edilmiştir. İnce çizgilerin görünümünü azaltmaya yardımcı olur, koyu halka ve yorgunluk görünümünü hafifletir, aydınlatır, nemlendirir ve sıkılaştırıcı bir etki sunar.",
+      "Kesu Eye Mezoterapi Solüsyonu; göz altı torbaları, morluklar, ince çizgiler ve göz çevresi ton eşitsizliklerine yönelik özel formüle edilmiştir. İnce çizgilerin görünümünü azaltmaya yardımcı olur, koyu halka ve yorgunluk görünümünü hafifletir, aydınlatır, nemlendirir ve sıkılaştırıcı bir etki sunar.",
     thumbnail: placeholders.eyesBottle,
     bottle: placeholders.eyesBottle,
     images: [placeholders.eyesBottle, placeholders.eyesStill],
@@ -362,7 +362,7 @@ export const products: Product[] = [
     tagline: "Göz çevresi canlandırma",
     cardTint: "#f1f0f5",
     seo: {
-      metaTitle: "Kesu Eyes | Göz Çevresi Mezoterapi Solüsyonu",
+      metaTitle: "Kesu Eye | Göz Çevresi Mezoterapi Solüsyonu",
       metaDescription:
         "5 ml × 5 ampul. Göz çevresi ince çizgi, koyu halka ve yorgunluk görünümü için özel solüsyon.",
     },
@@ -552,10 +552,6 @@ export const homePage: HomePageContent = {
       "Kore güzellik yaklaşımından ilham alan profesyonel bakım. Cildinize, ihtiyaçlarınıza ve doğal ifadenize odaklanan bir dünya.",
     primaryCta: { label: "Ürünleri Keşfet", href: "/urunler" },
     image: placeholders.editorial.hero,
-    bottle: img("/images/products/six-lift-bottle.png", "Kesu Six Lift ampul"),
-    caption: "Lifting",
-    captionSub: "Sıkılık, Elastikiyet, Canlılık",
-    captionHref: "/urunler/kesu-six-lift",
   },
   featuredEyebrow: "Öne çıkanlar",
   featuredTitle: "Farklı ihtiyaçlar.\nAynı özen.",
@@ -576,12 +572,7 @@ export const homePage: HomePageContent = {
     {
       question: "Hangi ürün gruplarınız var?",
       answer:
-        "Katalogda Six Lift, Anti-Aging, White Effect, Eyes, Hair, Acnera, BioCA, Genishine ve Salmon DNA mezoterapi solüsyonları yer alır.",
-    },
-    {
-      question: "Kesu’nun Kore ile ilişkisi nedir?",
-      answer:
-        "Ürünler Kore menşeli değildir. Formüllerimiz, Kore güzellik yaklaşımından esinlenerek profesyonel estetik uygulamaları için geliştirilir.",
+        "Katalogda Lifting, Anti-Aging, White Effect, Eye, Hair, Acnera, BioCA, Genishine ve Salmon DNA mezoterapi solüsyonları yer alır.",
     },
     {
       question: "Bilgi veya iş birliği için nasıl ulaşabilirim?",

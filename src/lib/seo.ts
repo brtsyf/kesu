@@ -11,17 +11,17 @@ export const SEO = {
   home: {
     title: "Kesu | Profesyonel Dermokozmetik Mezoterapi Solüsyonları",
     description:
-      "Kesu mezoterapi solüsyonları: Six Lift, Anti-Aging, White Effect, Eyes, Hair, Acnera, BioCA, Genishine ve Salmon DNA. Kore güzellik yaklaşımından esinlenen profesyonel bakım.",
+      "Kesu mezoterapi solüsyonları: Lifting, Anti-Aging, White Effect, Eye, Hair, Acnera, BioCA, Genishine ve Salmon DNA. Kore güzellik yaklaşımından esinlenen profesyonel bakım.",
   },
   products: {
     title: "Ürünler",
     description:
-      "Six Lift, Anti-Aging, White Effect, Eyes, Hair, Acnera, BioCA, Genishine ve Salmon DNA. Profesyonel estetik uygulamaları için Kesu mezoterapi koleksiyonu.",
+      "Lifting, Anti-Aging, White Effect, Eye, Hair, Acnera, BioCA, Genishine ve Salmon DNA. Profesyonel estetik uygulamaları için Kesu mezoterapi koleksiyonu.",
   },
   about: {
     title: "Hakkımızda",
     description:
-      "Kesu, profesyonel estetik için Six Lift, Anti-Aging, White Effect, Eyes, Hair, Acnera, BioCA, Genishine ve Salmon DNA sunan yenilikçi bir dermokozmetik markasıdır.",
+      "Kesu, profesyonel estetik için Lifting, Anti-Aging, White Effect, Eye, Hair, Acnera, BioCA, Genishine ve Salmon DNA sunan yenilikçi bir dermokozmetik markasıdır.",
   },
   certificates: {
     title: "Sertifikalarımız",

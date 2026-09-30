@@ -19,13 +19,13 @@ const CATEGORIES = [
   },
   {
     _id: "cat-whitening",
-    title: "Whitening",
+    title: "White Effect",
     slug: "whitening",
     description: "Leke ve ton eşitleme",
   },
   {
     _id: "cat-eyes",
-    title: "Eyes",
+    title: "Eye",
     slug: "eyes",
     description: "Göz çevresi bakımı",
   },
@@ -64,7 +64,7 @@ const CATEGORIES = [
 const PRODUCTS = [
   {
     _id: "prod-six-lift",
-    title: "Kesu Six Lift",
+    title: "Kesu Lifting",
     slug: "kesu-six-lift",
     categoryId: "cat-lifting",
     thumbnail: "public/images/products/six-lift.png",
@@ -106,7 +106,7 @@ const PRODUCTS = [
     featured: true,
     order: 1,
     seo: {
-      metaTitle: "Kesu Six Lift | Lifting Mezoterapi Solüsyonu",
+      metaTitle: "Kesu Lifting | Mezoterapi Solüsyonu",
       metaDescription:
         "10 ml × 5 ampul. Anında lifting, sıkılaşma ve Somon DNA destekli hücre yenileyici bakım.",
     },
@@ -160,7 +160,7 @@ const PRODUCTS = [
     thumbnail: "public/images/products/white-effect.png",
     extras: ["public/images/products/white-effect-loci.png"],
     shortDescription:
-      "Leke ve hiperpigmentasyon görünümünü azaltan whitening solüsyonu. 10 ml × 5 ampul.",
+      "Leke ve hiperpigmentasyon görünümünü azaltan White Effect solüsyonu. 10 ml × 5 ampul.",
     description:
       "Kesu White Effect Mezoterapi Solüsyonu; güneş lekeleri, melazma, akne sonrası lekeler ile donuk cilt görünümüne yönelik geliştirilmiştir. Cilt tonunu eşitler, ışıltı kazandırır, serbest radikallere karşı koruma sunar ve retinol ile hücre yenilenmesini destekler. Yüz, boyun, el üstü ve dekolte bölgelerinde kullanılabilir.",
     ingredients: [
@@ -194,14 +194,14 @@ const PRODUCTS = [
     featured: true,
     order: 3,
     seo: {
-      metaTitle: "Kesu White Effect | Whitening Mezoterapi Solüsyonu",
+      metaTitle: "Kesu White Effect | Mezoterapi Solüsyonu",
       metaDescription:
-        "10 ml × 5 ampul. Leke, ton eşitleme ve parlaklık odaklı whitening solüsyonu.",
+        "10 ml × 5 ampul. Leke, ton eşitleme ve parlaklık odaklı White Effect solüsyonu.",
     },
   },
   {
     _id: "prod-eyes",
-    title: "Kesu Eyes",
+    title: "Kesu Eye",
     slug: "kesu-eyes",
     categoryId: "cat-eyes",
     thumbnail: "public/images/products/eyes.png",
@@ -209,7 +209,7 @@ const PRODUCTS = [
     shortDescription:
       "Göz çevresi ince çizgi, koyu halka ve yorgunluk görünümü için. 5 ml × 5 ampul.",
     description:
-      "Kesu Eyes Mezoterapi Solüsyonu; göz altı torbaları, morluklar, ince çizgiler ve göz çevresi ton eşitsizliklerine yönelik özel formüle edilmiştir. İnce çizgilerin görünümünü azaltmaya yardımcı olur, koyu halka ve yorgunluk görünümünü hafifletir, aydınlatır, nemlendirir ve sıkılaştırıcı bir etki sunar.",
+      "Kesu Eye Mezoterapi Solüsyonu; göz altı torbaları, morluklar, ince çizgiler ve göz çevresi ton eşitsizliklerine yönelik özel formüle edilmiştir. İnce çizgilerin görünümünü azaltmaya yardımcı olur, koyu halka ve yorgunluk görünümünü hafifletir, aydınlatır, nemlendirir ve sıkılaştırıcı bir etki sunar.",
     ingredients: [
       "Ascorbic Acid",
       "Aqua",
@@ -240,7 +240,7 @@ const PRODUCTS = [
     featured: true,
     order: 4,
     seo: {
-      metaTitle: "Kesu Eyes | Göz Çevresi Mezoterapi Solüsyonu",
+      metaTitle: "Kesu Eye | Göz Çevresi Mezoterapi Solüsyonu",
       metaDescription:
         "5 ml × 5 ampul. Göz çevresi ince çizgi, koyu halka ve yorgunluk görünümü için özel solüsyon.",
     },

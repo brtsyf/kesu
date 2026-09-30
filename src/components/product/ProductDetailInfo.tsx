@@ -24,7 +24,7 @@ const DETAIL_COPY: Record<
     eyebrow: "Ton eşitliği & aydınlık bakımı",
     lead: "Aydınlık, eşit bir tonda başlar.",
     intro:
-      "Leke ve donuk görünüm için whitening solüsyonu. Cilt tonunu dengelemeye ve daha ışıklı bir ifade kazandırmaya yardımcı olur.",
+      "Leke ve donuk görünüm için White Effect solüsyonu. Cilt tonunu dengelemeye ve daha ışıklı bir ifade kazandırmaya yardımcı olur.",
   },
   "kesu-eyes": {
     eyebrow: "Göz çevresi bakımı",

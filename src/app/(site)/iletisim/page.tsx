@@ -43,7 +43,7 @@ export default async function ContactPage() {
           <Reveal delay={0.12}>
             <div className="relative aspect-[16/9] overflow-hidden rounded-[2rem] bg-[#eef1ec]">
               <Image
-                src="/images/editorial/contact-still-life.png"
+                src="/images/editorial/contact-collection.png"
                 alt="Kesu mezoterapi koleksiyonu"
                 fill
                 priority

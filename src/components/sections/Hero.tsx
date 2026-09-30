@@ -14,104 +14,25 @@ import { KoreanBeautyHeadline } from "@/components/animation/KoreanBeautyHeadlin
 import { Reveal } from "@/components/animation/Reveal";
 import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
 import type { HeroContent } from "@/lib/sanity/types";
-import { cn } from "@/lib/utils/cn";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const wipeEase = [0.16, 1, 0.3, 1] as const;
-const BOTTLE_FALLBACK = "/images/products/six-lift-bottle.png";
 const PORTRAIT_FALLBACK = "/images/editorial/hero-portrait.jpg";
 
 type VisualProps = {
   portraitSrc: string;
   portraitAlt: string;
-  bottleSrc: string;
-  bottleAlt: string;
   reduced: boolean | null;
-  compactBottle?: boolean;
 };
 
-function OrbitRing({
-  half,
-  wide = false,
-}: {
-  half: "top" | "bottom";
-  wide?: boolean;
-}) {
+/** Desktop: editorial portrait, no product. */
+function HeroVisualDesktop({ portraitSrc, portraitAlt }: VisualProps) {
   return (
-    <svg
-      aria-hidden
-      viewBox="0 0 200 80"
-      className={cn(
-        "pointer-events-none absolute left-1/2 top-[56%] -translate-x-1/2 -translate-y-1/2 -rotate-[18deg]",
-        wide ? "w-[242%]" : "w-[110%]",
-        half === "top"
-          ? "z-0 [clip-path:inset(0_0_49%_0)]"
-          : "z-[2] [clip-path:inset(51%_0_0_0)]",
-      )}
-    >
-      <ellipse
-        cx="100"
-        cy="40"
-        rx="93"
-        ry="30"
-        fill="none"
-        stroke="#c9c5bd"
-        strokeWidth={half === "top" ? 0.7 : 0.75}
-      />
-    </svg>
-  );
-}
-
-function HeroBottle({
-  bottleSrc,
-  bottleAlt,
-  reduced,
-  className,
-  tight = false,
-  compactBottle = false,
-}: Pick<VisualProps, "bottleSrc" | "bottleAlt" | "reduced" | "compactBottle"> & {
-  className: string;
-  tight?: boolean;
-}) {
-  return (
-    <motion.div
-      className={cn("pointer-events-none absolute z-[2]", className)}
-      initial={reduced ? false : { opacity: 0, y: 18 }}
-      animate={reduced ? { opacity: 1, y: 0 } : { opacity: 1, y: [0, -5, 0] }}
-      transition={
-        reduced
-          ? { duration: 0.8, delay: 0.4, ease }
-          : {
-              opacity: { duration: 0.8, delay: 0.4, ease },
-              y: { duration: 5.6, repeat: Infinity, ease: "easeInOut" },
-            }
-      }
-    >
-      <div className={cn("relative", tight && "origin-top scale-[1.72]")}>
-        <OrbitRing half="top" wide={compactBottle} />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={bottleSrc}
-          alt={bottleAlt}
-          width={1024}
-          height={1536}
-          className="relative z-[1] h-auto w-full -rotate-[9deg] drop-shadow-[0_22px_36px_rgba(20,20,18,0.16)]"
-          decoding="async"
-        />
-        <OrbitRing half="bottom" wide={compactBottle} />
-      </div>
-    </motion.div>
-  );
-}
-
-/** Desktop: arch portrait with the bottle to its left. */
-function HeroVisualDesktop(props: VisualProps) {
-  return (
-    <div className="relative aspect-[4/5] w-full overflow-visible">
+    <div className="relative aspect-[4/5] w-full">
       <div className="absolute inset-0 overflow-hidden rounded-t-[999px] bg-[#ddd8cf]">
         <Image
-          src={props.portraitSrc}
-          alt={props.portraitAlt}
+          src={portraitSrc}
+          alt={portraitAlt}
           fill
           priority
           quality={92}
@@ -120,45 +41,7 @@ function HeroVisualDesktop(props: VisualProps) {
         />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-[#f4f3ef]/55 to-transparent" />
       </div>
-      <HeroBottle
-        {...props}
-        className={
-          props.compactBottle
-            ? "-left-[24%] bottom-[-6%] w-[40%]"
-            : "-left-[48%] bottom-[-10%] w-[88%]"
-        }
-      />
     </div>
-  );
-}
-
-function ProductCaption({
-  href,
-  caption,
-  captionSub,
-  className,
-}: {
-  href: string;
-  caption: string;
-  captionSub: string;
-  className?: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className={cn(
-        "flex w-fit items-start gap-3 text-[#6b6860] transition-colors hover:text-[#141414]",
-        className,
-      )}
-    >
-      <span className="mt-[0.85rem] w-8 shrink-0 border-t border-[#141414]/25" />
-      <span className="text-right leading-snug">
-        <span className="block text-[1.125rem] font-medium tracking-[-0.015em] text-[#141414]">
-          {caption}
-        </span>
-        <span className="mt-0.5 block text-[0.95rem]">{captionSub}</span>
-      </span>
-    </Link>
   );
 }
 
@@ -274,17 +157,10 @@ export function Hero({ content }: { content: HeroContent }) {
   const blurPx = useTransform(scrollY, [0, 180, 520], [0, 4, 16]);
   const heroFilter = useMotionTemplate`blur(${blurPx}px)`;
   const lines = content.headline.split("\n");
-  const caption = content.caption ?? "Lifting";
-  const captionSub = content.captionSub ?? "Sıkılık, Elastikiyet, Canlılık";
-  const captionHref = content.captionHref ?? "/urunler/kesu-six-lift";
-  const bottleSrc = getImageUrl(content.bottle, 900) || BOTTLE_FALLBACK;
   const visual: VisualProps = {
     portraitSrc: getImageUrl(content.image, 1800) || PORTRAIT_FALLBACK,
     portraitAlt: getImageAlt(content.image, "Kesu — cilt bakımı"),
-    bottleSrc,
-    bottleAlt: getImageAlt(content.bottle, "Kesu Lifting ampul"),
     reduced,
-    compactBottle: !bottleSrc.startsWith("/"),
   };
 
   return (
@@ -337,12 +213,6 @@ export function Hero({ content }: { content: HeroContent }) {
 
             <div className="relative w-full overflow-visible pb-6 lg:ml-auto lg:max-w-[36.5rem] lg:self-center">
               <HeroVisualDesktop {...visual} />
-              <ProductCaption
-                href={captionHref}
-                caption={caption}
-                captionSub={captionSub}
-                className="mt-5 ml-auto"
-              />
             </div>
           </div>
         </div>

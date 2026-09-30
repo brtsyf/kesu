@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     "profesyonel estetik",
     "lifting",
     "anti-aging",
-    "whitening",
+    "white effect",
   ],
   alternates: { canonical: "/" },
   openGraph: {

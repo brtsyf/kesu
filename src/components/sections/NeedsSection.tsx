@@ -44,7 +44,7 @@ const NEEDS: NeedCard[] = [
     title: "Göz çevresine özen",
     description: "Nem, ince çizgi ve koyu halka görünümü için hassas bakım.",
     tint: "#f1f0f5",
-    links: [{ label: "Eyes", href: "/urunler/kesu-eyes" }],
+    links: [{ label: "Eye", href: "/urunler/kesu-eyes" }],
   },
   {
     title: "Saç & saç derisi",
