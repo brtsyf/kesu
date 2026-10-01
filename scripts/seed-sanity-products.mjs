@@ -51,7 +51,7 @@ const CATEGORIES = [
     _id: "cat-genishine",
     title: "Genishine",
     slug: "genishine",
-    description: "Genital bölge dış cilt bakımı ve ton eşitliği",
+    description: "Kol altı ve genital bölge dış cilt bakımı ve ton eşitliği",
   },
   {
     _id: "cat-salmon",
@@ -87,7 +87,7 @@ const PRODUCTS = [
       "Cysteine",
       "Glycine",
       "Oligopeptide-3",
-      "L-Tryptophan",
+      "Tryptophan",
       "Glutamic Acid",
       "Somon DNA",
     ],
@@ -125,10 +125,9 @@ const PRODUCTS = [
     ingredients: [
       "Hyaluronic Acid",
       "Glutathione",
+      "Niacinamide",
       "Ascorbic Acid",
       "Arginine",
-      "Aqua",
-      "Niacinamide",
       "Acetyl Hexapeptide-8",
       "Panthenol",
     ],
@@ -164,10 +163,6 @@ const PRODUCTS = [
     description:
       "Kesu White Effect Mezoterapi Solüsyonu; güneş lekeleri, melazma, akne sonrası lekeler ile donuk cilt görünümüne yönelik geliştirilmiştir. Cilt tonunu eşitler, ışıltı kazandırır, serbest radikallere karşı koruma sunar ve retinol ile hücre yenilenmesini destekler. Yüz, boyun, el üstü ve dekolte bölgelerinde kullanılabilir.",
     ingredients: [
-      "Ascorbic Acid",
-      "Succinic Acid",
-      "Cyanocobalamin",
-      "Aqua",
       "Hyaluronic Acid",
       "Riboflavin",
       "Retinol",
@@ -175,7 +170,10 @@ const PRODUCTS = [
       "Mannitol",
       "Arbutin",
       "Rutin",
-      "Thiamine",
+      "Thiamine HCl",
+      "Ascorbic Acid",
+      "Succinic Acid",
+      "Cyanocobalamin",
       "Panthenol",
       "Tranexamic Acid",
     ],
@@ -211,12 +209,13 @@ const PRODUCTS = [
     description:
       "Kesu Eye Mezoterapi Solüsyonu; göz altı torbaları, morluklar, ince çizgiler ve göz çevresi ton eşitsizliklerine yönelik özel formüle edilmiştir. İnce çizgilerin görünümünü azaltmaya yardımcı olur, koyu halka ve yorgunluk görünümünü hafifletir, aydınlatır, nemlendirir ve sıkılaştırıcı bir etki sunar.",
     ingredients: [
-      "Ascorbic Acid",
       "Aqua",
       "Hyaluronic Acid",
+      "Vitamin K",
       "Niacinamide",
       "Riboflavin",
       "Thiamine",
+      "Ascorbic Acid",
       "Succinic Acid",
       "Cyanocobalamin",
       "Panthenol",
@@ -302,7 +301,19 @@ const PRODUCTS = [
       "Akne, yağlanmaya eğilimli cilt ve gözenek görünümü için mezoterapi solüsyonu. 5 ml × 5 ampul.",
     description:
       "Kesu Acnera Mezoterapi Solüsyonu; akne ve aktif sivilce, yağlanmaya eğilimli cilt, gözenek görünümü ve sivilce sonrası oluşan cilt problemlerine yönelik geliştirilmiştir. Akne ve sivilce görünümünün azalmasına yardımcı olur, cildin sebum dengesini destekler, gözeneklerin daha sıkı görünmesine yardımcı olur ve cildin daha temiz ve dengeli görünmesini destekler.",
-    ingredients: [],
+    ingredients: [
+      "Aqua",
+      "Niacinamide",
+      "Hyaluronic Acid",
+      "Glutathione",
+      "Tranexamic Acid",
+      "Succinic Acid",
+      "Limonene",
+      "Pinene",
+      "Borneol",
+      "Alpha-Phellandrene",
+      "Myrcene",
+    ],
     benefits: [
       "Akne ve sivilce görünümünün azalmasına yardımcı olur.",
       "Cildin sebum dengesini destekler.",
@@ -333,7 +344,15 @@ const PRODUCTS = [
       "Yüz ve boyun için sıkılık ve toparlanma odaklı mezoterapi solüsyonu. 5 ml × 5 ampul.",
     description:
       "Kesu BioCA Mezoterapi Solüsyonu; yüz ve boyun bölgesi, ince çizgi ve kırışıklık görünümü, elastikiyet kaybı ve cilt sarkması görünümüne yönelik geliştirilmiştir. Cildin daha sıkı görünmesini destekler, yüz hatlarının daha toparlanmış görünmesine yardımcı olur, cilt elastikiyetini destekler ve daha pürüzsüz ve genç bir görünüm sağlar.",
-    ingredients: [],
+    ingredients: [
+      "Aqua",
+      "Hyaluronic Acid",
+      "Nicotinamide Adenine Dinucleotide",
+      "Succinic Acid",
+      "Glutathione",
+      "Arginine",
+      "Calcium Hydroxyapatite",
+    ],
     benefits: [
       "Cildin daha sıkı görünmesini destekler.",
       "Yüz hatlarının daha toparlanmış görünmesine yardımcı olur.",
@@ -361,10 +380,20 @@ const PRODUCTS = [
     thumbnail: "public/images/products/genishine.png",
     extras: ["public/images/products/genishine-loci.png"],
     shortDescription:
-      "Genital bölge dış cilt bakımı ve renk eşitliği için mezoterapi solüsyonu. 10 ml × 5 ampul.",
+      "Kol altı ve genital bölge dış cilt bakımı ile renk eşitliği için mezoterapi solüsyonu. 10 ml × 5 ampul.",
     description:
-      "Kesu Genishine Mezoterapi Solüsyonu; genital bölge dış cilt bakımı, bölgesel renk eşitsizlikleri, koyu görünüm bulunan bölgeler ve cilt tonu eşitsizliklerine yönelik geliştirilmiştir. Cilt tonunun daha eşit görünmesini destekler, daha aydınlık ve canlı bir görünüm sağlar, koyu görünümün azalmasına yardımcı olur ve cildin nemli ve bakımlı görünümünü destekler.",
-    ingredients: [],
+      "Kesu Genishine Mezoterapi Solüsyonu; kol altı ve genital bölge dış cilt bakımı, bölgesel renk eşitsizlikleri, koyu görünüm bulunan bölgeler ve cilt tonu eşitsizliklerine yönelik geliştirilmiştir. Cilt tonunun daha eşit görünmesini destekler, daha aydınlık ve canlı bir görünüm sağlar, koyu görünümün azalmasına yardımcı olur ve cildin nemli ve bakımlı görünümünü destekler.",
+    ingredients: [
+      "Aqua",
+      "Hyaluronic Acid",
+      "Glutathione",
+      "Ascorbic Acid",
+      "Sodium Succinate",
+      "Arbutin",
+      "Tranexamic Acid",
+      "Acetyl Cysteine",
+      "Glucosamine Sulfate",
+    ],
     benefits: [
       "Cilt tonunun daha eşit görünmesini destekler.",
       "Daha aydınlık ve canlı bir görünüm sağlar.",
@@ -372,7 +401,7 @@ const PRODUCTS = [
       "Cildin nemli ve bakımlı görünümünü destekler.",
     ],
     usage:
-      "Profesyonel mezoterapi uygulamalarında kullanılır. Genital bölge dış cilt bakımı, bölgesel renk eşitsizlikleri, koyu görünüm bulunan bölgeler ve cilt tonu eşitsizliklerinde tercih edilir. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
+      "Profesyonel mezoterapi uygulamalarında kullanılır. Kol altı ve genital bölge dış cilt bakımı, bölgesel renk eşitsizlikleri, koyu görünüm bulunan bölgeler ve cilt tonu eşitsizliklerinde tercih edilir. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
     volume: "5 × 10 ml",
     tagline: "Renk eşitliği & aydınlık",
     cardTint: "#f5efed",
@@ -381,7 +410,7 @@ const PRODUCTS = [
     seo: {
       metaTitle: "Kesu Genishine | Mezoterapi Solüsyonu",
       metaDescription:
-        "10 ml × 5 ampul. Genital bölge dış cilt bakımı ve renk eşitliğine yönelik Kesu Genishine. Cilt tonunun daha eşit görünmesini destekler.",
+        "10 ml × 5 ampul. Kol altı ve genital bölge dış cilt bakımı ile renk eşitliğine yönelik Kesu Genishine. Cilt tonunun daha eşit görünmesini destekler.",
     },
   },
   {

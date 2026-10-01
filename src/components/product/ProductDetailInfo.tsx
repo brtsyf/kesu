@@ -51,10 +51,10 @@ const DETAIL_COPY: Record<
       "Yüz ve boyun bölgesi, ince çizgi ve kırışıklık görünümü, elastikiyet kaybı ve cilt sarkması görünümüne yönelik bakım.",
   },
   "kesu-genishine": {
-    eyebrow: "Genital bölge dış cilt bakımı",
+    eyebrow: "Kol altı ve genital bölge dış cilt bakımı",
     lead: "Daha aydınlık ve eşit bir görünüm.",
     intro:
-      "Genital bölge dış cilt bakımı, bölgesel renk eşitsizlikleri, koyu görünüm bulunan bölgeler ve cilt tonu eşitsizliklerine yönelik bakım.",
+      "Kol altı ve genital bölge dış cilt bakımı, bölgesel renk eşitsizlikleri, koyu görünüm bulunan bölgeler ve cilt tonu eşitsizliklerine yönelik bakım.",
   },
   "kesu-salmon": {
     eyebrow: "Cilt yenileme ve bakım",
