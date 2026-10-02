@@ -551,7 +551,7 @@ export const products: Product[] = [
     bottle: placeholders.salmonBottle,
     images: [placeholders.salmonBottle, placeholders.salmonStill],
     category: categories[8],
-    ingredients: [],
+    ingredients: ["Aqua", "Salmon DNA", "Hyaluronic Acid"],
     benefits: [
       "Cildin nem dengesini destekler.",
       "Daha canlı ve ışıltılı bir görünüm sağlar.",

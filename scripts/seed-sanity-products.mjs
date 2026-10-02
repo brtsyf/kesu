@@ -424,7 +424,7 @@ const PRODUCTS = [
       "Cilt yenileme, nem ve elastikiyet için mezoterapi solüsyonu. 5 ml × 5 ampul.",
     description:
       "Kesu Salmon DNA Mezoterapi Solüsyonu; cilt yenileme ve bakım, elastikiyet kaybı, ince çizgi ve kırışıklık görünümü ile kuruluk ve nem kaybına yönelik geliştirilmiştir. Cildin nem dengesini destekler, daha canlı ve ışıltılı bir görünüm sağlar, cilt elastikiyetinin korunmasına yardımcı olur ve cilt yenilenmesini destekler.",
-    ingredients: [],
+    ingredients: ["Aqua", "Salmon DNA", "Hyaluronic Acid"],
     benefits: [
       "Cildin nem dengesini destekler.",
       "Daha canlı ve ışıltılı bir görünüm sağlar.",
