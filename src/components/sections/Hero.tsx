@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import {
+  AnimatePresence,
   motion,
   useMotionTemplate,
   useReducedMotion,
@@ -14,10 +16,22 @@ import { KoreanBeautyHeadline } from "@/components/animation/KoreanBeautyHeadlin
 import { Reveal } from "@/components/animation/Reveal";
 import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
 import type { HeroContent } from "@/lib/sanity/types";
+import { cn } from "@/lib/utils/cn";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const wipeEase = [0.16, 1, 0.3, 1] as const;
 const PORTRAIT_FALLBACK = "/images/editorial/hero-portrait.jpg";
+
+const SLIDE_MS = 5400;
+const landEase = [0.16, 1, 0.3, 1] as const;
+
+export type HeroProductSlide = {
+  src: string;
+  alt: string;
+  caption: string;
+  captionSub: string;
+  href: string;
+};
 
 type VisualProps = {
   portraitSrc: string;
@@ -25,10 +39,154 @@ type VisualProps = {
   reduced: boolean | null;
 };
 
-/** Desktop: editorial portrait, no product. */
-function HeroVisualDesktop({ portraitSrc, portraitAlt }: VisualProps) {
+const bottleSlots = {
+  offLeft: {
+    x: "-128%",
+    y: 28,
+    scale: 0.68,
+    opacity: 0,
+    filter: "blur(14px) brightness(0.7)",
+    zIndex: 0,
+  },
+  left: {
+    x: "-64%",
+    y: 8,
+    scale: 0.78,
+    opacity: 0.85,
+    filter: "blur(7px) brightness(0.82)",
+    zIndex: 0,
+  },
+  center: {
+    x: "0%",
+    y: 0,
+    scale: 1,
+    opacity: 1,
+    filter: "blur(0px) brightness(1)",
+    zIndex: 1,
+  },
+  right: {
+    x: "64%",
+    y: 8,
+    scale: 0.78,
+    opacity: 0.85,
+    filter: "blur(7px) brightness(0.82)",
+    zIndex: 0,
+  },
+  offRight: {
+    x: "128%",
+    y: 28,
+    scale: 0.68,
+    opacity: 0,
+    filter: "blur(14px) brightness(0.7)",
+    zIndex: 0,
+  },
+} as const;
+
+function HeroBottleCycle({
+  slides,
+  slide,
+  reduced,
+  className,
+}: {
+  slides: HeroProductSlide[];
+  slide: HeroProductSlide;
+  reduced: boolean | null;
+  className: string;
+}) {
+  const spacer = slides[0];
+  if (!spacer || !slide) return null;
+
+  const count = slides.length;
+  const currentIndex = Math.max(
+    0,
+    slides.findIndex((item) => item.href === slide.href),
+  );
+  const at = (offset: number) => slides[(currentIndex + offset + count) % count];
+  const slots =
+    reduced || count < 3
+      ? [{ item: slide, role: "center" as const }]
+      : [
+          { item: at(-1), role: "left" as const },
+          { item: slide, role: "center" as const },
+          { item: at(1), role: "right" as const },
+        ];
+
   return (
-    <div className="relative aspect-[4/5] w-full">
+    <motion.div
+      className={cn("pointer-events-none absolute z-[2]", className)}
+      initial={reduced ? false : { opacity: 0, y: 18 }}
+      animate={reduced ? { opacity: 1, y: 0 } : { opacity: 1, y: [0, -3, 0] }}
+      transition={
+        reduced
+          ? { duration: 0.8, delay: 0.4, ease }
+          : {
+              opacity: { duration: 0.8, delay: 0.4, ease },
+              y: { duration: 7.4, repeat: Infinity, ease: "easeInOut" },
+            }
+      }
+    >
+      <div className="relative">
+        {/* Reserves the vial box so the slides stay aligned. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={spacer.src}
+          alt=""
+          aria-hidden
+          width={1024}
+          height={1536}
+          className="invisible h-auto w-full"
+        />
+        <AnimatePresence initial={false}>
+          {slots.map(({ item, role }) => (
+            <motion.div
+              key={item.href}
+              className="absolute inset-0"
+              style={{ transformOrigin: "50% 82%" }}
+              variants={bottleSlots}
+              initial={reduced ? false : "offRight"}
+              animate={role}
+              exit="offLeft"
+              transition={{ duration: 1.15, ease: landEase }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={item.src}
+                alt={role === "center" ? item.alt : ""}
+                aria-hidden={role === "center" ? undefined : true}
+                width={1024}
+                height={1536}
+                className="h-auto w-full drop-shadow-[0_22px_36px_rgba(20,20,18,0.2)]"
+                decoding="async"
+              />
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+      <div className="hidden" aria-hidden>
+        {slides.map((item) => (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img key={item.href} src={item.src} alt="" />
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
+/** Desktop: arch portrait with the product vial and orbit ring. */
+function HeroVisualDesktop({
+  portraitSrc,
+  portraitAlt,
+  slides,
+  slide,
+  reduced,
+  compactBottle,
+}: VisualProps & {
+  slides: HeroProductSlide[];
+  slide: HeroProductSlide;
+  compactBottle: boolean;
+}) {
+  return (
+    <div className="relative aspect-[4/5] w-full overflow-visible">
       <div className="absolute inset-0 overflow-hidden rounded-t-[999px] bg-[#ddd8cf]">
         <Image
           src={portraitSrc}
@@ -41,7 +199,47 @@ function HeroVisualDesktop({ portraitSrc, portraitAlt }: VisualProps) {
         />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-[#f4f3ef]/55 to-transparent" />
       </div>
+      <HeroBottleCycle
+        slides={slides}
+        slide={slide}
+        reduced={reduced}
+        className={
+          compactBottle
+            ? "-left-[12%] bottom-[-6%] w-[36%]"
+            : "-left-[18%] bottom-[18%] w-[68%]"
+        }
+      />
     </div>
+  );
+}
+
+function ProductCaption({
+  href,
+  caption,
+  captionSub,
+  className,
+}: {
+  href: string;
+  caption: string;
+  captionSub: string;
+  className?: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className={cn(
+        "flex w-fit items-start gap-3 text-[#6b6860] transition-colors hover:text-[#141414]",
+        className,
+      )}
+    >
+      <span className="mt-[0.85rem] w-8 shrink-0 border-t border-[#141414]/25" />
+      <span className="text-right leading-snug">
+        <span className="block text-[1.125rem] font-medium tracking-[-0.015em] text-[#141414]">
+          {caption}
+        </span>
+        <span className="mt-0.5 block text-[0.95rem]">{captionSub}</span>
+      </span>
+    </Link>
   );
 }
 
@@ -151,12 +349,95 @@ function HeroMobileFull({
   );
 }
 
-export function Hero({ content }: { content: HeroContent }) {
+function HeroDesktopShowcase({
+  visual,
+  slides,
+}: {
+  visual: VisualProps;
+  slides: HeroProductSlide[];
+}) {
+  const [index, setIndex] = useState(0);
+  const paused = useRef(false);
+  const slide = slides[index] ?? slides[0];
+  const compactBottle = !slides[0]?.src.startsWith("/");
+
+  useEffect(() => {
+    if (visual.reduced || slides.length < 2) return;
+    const id = window.setInterval(() => {
+      if (paused.current) return;
+      setIndex((current) => (current + 1) % slides.length);
+    }, SLIDE_MS);
+    return () => window.clearInterval(id);
+  }, [visual.reduced, slides.length]);
+
+  if (!slide) return null;
+
+  return (
+    <div
+      className="relative w-full overflow-visible pb-6 lg:ml-auto lg:max-w-[36.5rem] lg:self-center"
+      onMouseEnter={() => {
+        paused.current = true;
+      }}
+      onMouseLeave={() => {
+        paused.current = false;
+      }}
+    >
+      <HeroVisualDesktop
+        {...visual}
+        slides={slides}
+        slide={slide}
+        compactBottle={compactBottle}
+      />
+      <div className="relative mt-5 ml-auto h-[4.25rem]">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={slide.href}
+            className="absolute top-0 right-0"
+            initial={visual.reduced ? false : { opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.7, ease: landEase }}
+          >
+            <ProductCaption
+              href={slide.href}
+              caption={slide.caption}
+              captionSub={slide.captionSub}
+            />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
+
+export function Hero({
+  content,
+  slides = [],
+}: {
+  content: HeroContent;
+  slides?: HeroProductSlide[];
+}) {
   const reduced = useReducedMotion();
   const { scrollY } = useScroll();
   const blurPx = useTransform(scrollY, [0, 180, 520], [0, 4, 16]);
   const heroFilter = useMotionTemplate`blur(${blurPx}px)`;
   const lines = content.headline.split("\n");
+  const bottleSrc = getImageUrl(content.bottle, 900);
+  const fromContent: HeroProductSlide[] =
+    bottleSrc.includes("cdn.sanity.io")
+      ? [
+          {
+            src: bottleSrc,
+            alt: getImageAlt(content.bottle, "Kesu Lifting ampul"),
+            caption: content.caption ?? "Lifting",
+            captionSub: content.captionSub ?? "Sıkılık & elastikiyet",
+            href: content.captionHref ?? "/urunler/kesu-six-lift",
+          },
+        ]
+      : [];
+  const heroSlides = (slides.length > 0 ? slides : fromContent).filter((slide) =>
+    slide.src.includes("cdn.sanity.io"),
+  );
   const visual: VisualProps = {
     portraitSrc: getImageUrl(content.image, 1800) || PORTRAIT_FALLBACK,
     portraitAlt: getImageAlt(content.image, "Kesu — cilt bakımı"),
@@ -211,9 +492,7 @@ export function Hero({ content }: { content: HeroContent }) {
               </Reveal>
             </div>
 
-            <div className="relative w-full overflow-visible pb-6 lg:ml-auto lg:max-w-[36.5rem] lg:self-center">
-              <HeroVisualDesktop {...visual} />
-            </div>
+            <HeroDesktopShowcase visual={visual} slides={heroSlides} />
           </div>
         </div>
       </motion.div>
