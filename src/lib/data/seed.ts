@@ -187,7 +187,7 @@ export const products: Product[] = [
     shortDescription:
       "Anında lifting ve sıkılaşma için mezoterapi solüsyonu. 10 ml × 5 ampul.",
     description:
-      "Kesu Lifting Mezoterapi Solüsyonu; sarkma ve elastikiyet kaybı, ince kırışıklıklar, donuk ve yorgun cilt ile cilt tonu eşitsizliklerine yönelik geliştirilmiştir. Somon DNA ile hücre yenileyici bakım sunar; kolajen üretimini destekler, cilt tonunu dengeler ve parlaklık kazandırır.",
+      "Kesu Lifting Mezoterapi Solüsyonu; sarkma, elastikiyet kaybı, ince kırışıklıklar, donuk ve yorgun görünüm ile ton eşitsizliğine yönelik geliştirilmiştir.",
     thumbnail: placeholders.liftBottle,
     bottle: placeholders.liftBottle,
     images: [placeholders.liftBottle, placeholders.liftStill],
@@ -218,7 +218,7 @@ export const products: Product[] = [
       "Somon DNA ile hücre yenileyici bakım",
     ],
     usage:
-      "Profesyonel mezoterapi uygulamalarında kullanılır. Sarkma ve elastikiyet kaybı, ince kırışıklıklar, donuk/yorgun cilt ve ton eşitsizliklerinde tercih edilir. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
+      "Protokolü hekim veya yetkili uygulayıcı belirler.",
     featured: true,
     order: 1,
     volume: "5 × 10 ml",
@@ -237,7 +237,7 @@ export const products: Product[] = [
     shortDescription:
       "İnce çizgi ve kırışıklık görünümünü azaltan mezoterapi solüsyonu. 10 ml × 5 ampul.",
     description:
-      "Kesu Anti-Aging Mezoterapi Solüsyonu; mimik çizgileri, statik kırışıklıklar, mat ve canlılığını yitirmiş cilt, yaşlanma kaynaklı elastikiyet kaybı ile göz çevresi kırışıklıkları ve cilt kuruluğuna yönelik formüle edilmiştir. Nem dengesini destekler, serbest radikallere karşı koruma sağlar ve yorgun cildi canlandırır.",
+      "Kesu Anti-Aging Mezoterapi Solüsyonu; mimik çizgileri, statik kırışıklıklar, matlık, canlılık kaybı, elastikiyet kaybı, göz çevresi kırışıklıkları ve kuruluya yönelik formüle edilmiştir.",
     thumbnail: placeholders.agingBottle,
     bottle: placeholders.agingBottle,
     images: [placeholders.agingBottle, placeholders.agingStill],
@@ -255,11 +255,11 @@ export const products: Product[] = [
       "İnce çizgi ve kırışıklıkların görünümünü azaltır",
       "Cildin nem dengesini düzenler",
       "Serbest radikallere karşı güçlü koruma sağlar",
-      "Cilt tonunu dengeler, parlaklık sağlar",
+      "Cilt tonunu dengeler, parlaklık verir",
       "Yorgun ve yaşlanmış cildi canlandırır",
     ],
     usage:
-      "Profesyonel mezoterapi uygulamalarında kullanılır. Mimik/statik kırışıklıklar, mat cilt, elastikiyet kaybı ve göz çevresi kuruluğunda tercih edilir. Uygulama hekim veya yetkili uygulayıcı tarafından yapılır.",
+      "Protokolü hekim veya yetkili uygulayıcı belirler.",
     featured: true,
     order: 2,
     volume: "5 × 10 ml",
@@ -278,7 +278,7 @@ export const products: Product[] = [
     shortDescription:
       "Leke ve hiperpigmentasyon görünümünü azaltan White Effect solüsyonu. 10 ml × 5 ampul.",
     description:
-      "Kesu White Effect Mezoterapi Solüsyonu; güneş lekeleri, melazma, akne sonrası lekeler ile donuk cilt görünümüne yönelik geliştirilmiştir. Cilt tonunu eşitler, ışıltı kazandırır, serbest radikallere karşı koruma sunar ve retinol ile hücre yenilenmesini destekler. Yüz, boyun, el üstü ve dekolte bölgelerinde kullanılabilir.",
+      "Kesu White Effect Mezoterapi Solüsyonu; güneş lekeleri, melazma, akne sonrası lekeler ve donuk görünüme yönelik geliştirilmiştir. Yüz, boyun, el üstü ve dekolte bölgelerinde kullanılabilir.",
     thumbnail: placeholders.whiteBottle,
     bottle: placeholders.whiteBottle,
     images: [placeholders.whiteBottle, placeholders.whiteStill],
@@ -300,13 +300,13 @@ export const products: Product[] = [
     ],
     benefits: [
       "Cilt lekelerini ve hiperpigmentasyonu azaltmaya yardımcı olur",
-      "Cilt tonunu eşitler",
-      "Işıltılı ve parlak bir görünüm sağlar",
+      "Tonu eşitler",
+      "Işıltılı bir görünüm sağlar",
       "Serbest radikallere karşı koruma sunar",
       "Retinol ile hücre yenilenmesini destekler",
     ],
     usage:
-      "Profesyonel mezoterapi uygulamalarında kullanılır. Solar lentigo, melazma, post-akne lekeleri ve donuk ciltte tercih edilir. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
+      "Protokolü hekim veya yetkili uygulayıcı belirler.",
     featured: true,
     order: 3,
     volume: "5 × 10 ml",
@@ -325,7 +325,7 @@ export const products: Product[] = [
     shortDescription:
       "Göz çevresi ince çizgi, koyu halka ve yorgunluk görünümü için. 5 ml × 5 ampul.",
     description:
-      "Kesu Eye Mezoterapi Solüsyonu; göz altı torbaları, morluklar, ince çizgiler ve göz çevresi ton eşitsizliklerine yönelik özel formüle edilmiştir. İnce çizgilerin görünümünü azaltmaya yardımcı olur, koyu halka ve yorgunluk görünümünü hafifletir, aydınlatır, nemlendirir ve sıkılaştırıcı bir etki sunar.",
+      "Kesu Eye Mezoterapi Solüsyonu; göz altı torbaları, morluklar, ince çizgiler ve çevredeki ton eşitsizliğine yönelik özel formüle edilmiştir.",
     thumbnail: placeholders.eyesBottle,
     bottle: placeholders.eyesBottle,
     images: [placeholders.eyesBottle, placeholders.eyesStill],
@@ -348,13 +348,13 @@ export const products: Product[] = [
     ],
     benefits: [
       "Göz çevresindeki ince çizgi ve kırışıklık görünümünü azaltır",
-      "Koyu halka ve yorgunluk görünümünü hafifletir",
-      "Cilt tonunu aydınlatır ve eşitler",
+      "Koyu halka ve yorgunluğu hafifletir",
+      "Tonu aydınlatır ve eşitler",
       "Derinlemesine nemlendirir ve onarır",
-      "Göz çevresine canlılık kazandırır",
+      "Bu bölgeye canlılık kazandırır",
     ],
     usage:
-      "Profesyonel mezoterapi uygulamalarında, göz çevresi protokollerinde kullanılır. Uygulama yalnızca yetkili profesyoneller tarafından yapılmalıdır.",
+      "Yalnızca yetkili uygulayıcıların protokolünde kullanılır.",
     featured: true,
     order: 4,
     volume: "5 × 5 ml",
@@ -373,7 +373,7 @@ export const products: Product[] = [
     shortDescription:
       "Saç dökülmesini azaltmaya ve kökleri beslemeye yardımcı solüsyon. 10 ml × 5 ampul.",
     description:
-      "Kesu Hair Mezoterapi Solüsyonu; androgenetik alopesi, kadın tipi yaygın dökülme, mevsimsel dökülmeler, zayıf/ince teller ile stres veya gebelik sonrası dökülmeye yönelik geliştirilmiştir. Saç köklerini besler, yeni saç oluşumunu destekler, telleri kalınlaştırmaya yardımcı olur ve dolaşımı artırarak saç derisini canlandırır. Tüm saç tiplerine uygundur.",
+      "Kesu Hair Mezoterapi Solüsyonu; androgenetik alopesi, kadın tipi yaygın, mevsimsel, stres veya gebelik sonrası dökülme ile zayıf ve ince tellere yönelik geliştirilmiştir. Tüm saç tiplerine uygundur.",
     thumbnail: placeholders.hairBottle,
     bottle: placeholders.hairBottle,
     images: [placeholders.hairBottle, placeholders.hairStill],
@@ -394,14 +394,14 @@ export const products: Product[] = [
       "Tocopheryl Acetate",
     ],
     benefits: [
-      "Saç dökülmesini azaltmaya yardımcı olur",
-      "Saç köklerini besler ve canlandırır",
-      "Yeni saç oluşumunu destekler",
-      "Saç tellerini kalınlaştırmaya yardımcı olur",
-      "Dolaşımı artırarak saç derisini canlandırır",
+      "Dökülmeyi azaltmaya yardımcı olur",
+      "Kökleri besler",
+      "Yeni saç oluşumuna katkıda bulunur",
+      "Tellerin kalınlaşmasını destekler",
+      "Dolaşımı artırarak deriyi canlandırır",
     ],
     usage:
-      "Profesyonel saç mezoterapisi uygulamalarında kullanılır. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
+      "Protokolü hekim veya yetkili uygulayıcı belirler.",
     featured: true,
     order: 5,
     volume: "5 × 10 ml",
@@ -420,7 +420,7 @@ export const products: Product[] = [
     shortDescription:
       "Akne, yağlanmaya eğilimli cilt ve gözenek görünümü için mezoterapi solüsyonu. 5 ml × 5 ampul.",
     description:
-      "Kesu Acnera Mezoterapi Solüsyonu; akne ve aktif sivilce, yağlanmaya eğilimli cilt, gözenek görünümü ve sivilce sonrası oluşan cilt problemlerine yönelik geliştirilmiştir. Akne ve sivilce görünümünün azalmasına yardımcı olur, cildin sebum dengesini destekler, gözeneklerin daha sıkı görünmesine yardımcı olur ve cildin daha temiz ve dengeli görünmesini destekler.",
+      "Kesu Acnera Mezoterapi Solüsyonu; akne ve aktif sivilce, yağlanma, gözenek ve sonrası oluşan sorunlara yönelik geliştirilmiştir.",
     thumbnail: placeholders.acneraBottle,
     bottle: placeholders.acneraBottle,
     images: [placeholders.acneraBottle, placeholders.acneraStill],
@@ -440,12 +440,12 @@ export const products: Product[] = [
     ],
     benefits: [
       "Akne ve sivilce görünümünün azalmasına yardımcı olur.",
-      "Cildin sebum dengesini destekler.",
-      "Gözeneklerin daha sıkı görünmesine yardımcı olur.",
-      "Cildin daha temiz ve dengeli görünmesini destekler.",
+      "Sebum dengesini destekler.",
+      "Gözeneklerin sıkılaşmasına yardımcı olur.",
+      "Arınmış bir sonuç hedefler.",
     ],
     usage:
-      "Profesyonel mezoterapi uygulamalarında kullanılır. Akne ve aktif sivilce, yağlanmaya eğilimli cilt, gözenek görünümü ve sivilce sonrası oluşan cilt problemlerinde tercih edilir. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
+      "Protokolü hekim veya yetkili uygulayıcı belirler.",
     featured: true,
     order: 6,
     volume: "5 × 5 ml",
@@ -464,7 +464,7 @@ export const products: Product[] = [
     shortDescription:
       "Yüz ve boyun için sıkılık ve toparlanma odaklı mezoterapi solüsyonu. 5 ml × 5 ampul.",
     description:
-      "Kesu BioCA Mezoterapi Solüsyonu; yüz ve boyun bölgesi, ince çizgi ve kırışıklık görünümü, elastikiyet kaybı ve cilt sarkması görünümüne yönelik geliştirilmiştir. Cildin daha sıkı görünmesini destekler, yüz hatlarının daha toparlanmış görünmesine yardımcı olur, cilt elastikiyetini destekler ve daha pürüzsüz ve genç bir görünüm sağlar.",
+      "Kesu BioCA Mezoterapi Solüsyonu; yüz ve boyun, ince çizgi ve kırışıklık, elastikiyet kaybı ile sarkmaya yönelik geliştirilmiştir.",
     thumbnail: placeholders.biocaBottle,
     bottle: placeholders.biocaBottle,
     images: [placeholders.biocaBottle, placeholders.biocaStill],
@@ -479,13 +479,13 @@ export const products: Product[] = [
       "Calcium Hydroxyapatite",
     ],
     benefits: [
-      "Cildin daha sıkı görünmesini destekler.",
-      "Yüz hatlarının daha toparlanmış görünmesine yardımcı olur.",
-      "Cilt elastikiyetini destekler.",
-      "Daha pürüzsüz ve genç bir görünüm sağlar.",
+      "Daha sıkı bir cilt sunar.",
+      "Yüz hatlarının toparlanmasına yardımcı olur.",
+      "Elastikiyeti destekler.",
+      "Daha pürüzsüz ve genç bir ifade sağlar.",
     ],
     usage:
-      "Profesyonel mezoterapi uygulamalarında kullanılır. Yüz ve boyun bölgesi, ince çizgi ve kırışıklık görünümü, elastikiyet kaybı ve cilt sarkması görünümünde tercih edilir. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
+      "Protokolü hekim veya yetkili uygulayıcı belirler.",
     featured: true,
     order: 7,
     volume: "5 × 5 ml",
@@ -504,7 +504,7 @@ export const products: Product[] = [
     shortDescription:
       "Kol altı ve genital bölge dış cilt bakımı ile renk eşitliği için mezoterapi solüsyonu. 10 ml × 5 ampul.",
     description:
-      "Kesu Genishine Mezoterapi Solüsyonu; kol altı ve genital bölge dış cilt bakımı, bölgesel renk eşitsizlikleri, koyu görünüm bulunan bölgeler ve cilt tonu eşitsizliklerine yönelik geliştirilmiştir. Cilt tonunun daha eşit görünmesini destekler, daha aydınlık ve canlı bir görünüm sağlar, koyu görünümün azalmasına yardımcı olur ve cildin nemli ve bakımlı görünümünü destekler.",
+      "Kesu Genishine Mezoterapi Solüsyonu; kol altı ve genital bölgenin dış cildi, renk farkı ve koyu görünüm için geliştirilmiştir.",
     thumbnail: placeholders.genishineBottle,
     bottle: placeholders.genishineBottle,
     images: [placeholders.genishineBottle, placeholders.genishineStill],
@@ -521,13 +521,13 @@ export const products: Product[] = [
       "Glucosamine Sulfate",
     ],
     benefits: [
-      "Cilt tonunun daha eşit görünmesini destekler.",
-      "Daha aydınlık ve canlı bir görünüm sağlar.",
-      "Koyu görünümün azalmasına yardımcı olur.",
-      "Cildin nemli ve bakımlı görünümünü destekler.",
+      "Cilt tonunu eşitler.",
+      "Daha aydınlık ve canlı bir ifade sağlar.",
+      "Koyu bölgelerin hafiflemesine yardımcı olur.",
+      "Nemli ve bakımlı kalmasını destekler.",
     ],
     usage:
-      "Profesyonel mezoterapi uygulamalarında kullanılır. Kol altı ve genital bölge dış cilt bakımı, bölgesel renk eşitsizlikleri, koyu görünüm bulunan bölgeler ve cilt tonu eşitsizliklerinde tercih edilir. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
+      "Protokolü hekim veya yetkili uygulayıcı belirler.",
     featured: true,
     order: 8,
     volume: "5 × 10 ml",
@@ -546,20 +546,20 @@ export const products: Product[] = [
     shortDescription:
       "Cilt yenileme, nem ve elastikiyet için mezoterapi solüsyonu. 5 ml × 5 ampul.",
     description:
-      "Kesu Salmon DNA Mezoterapi Solüsyonu; cilt yenileme ve bakım, elastikiyet kaybı, ince çizgi ve kırışıklık görünümü ile kuruluk ve nem kaybına yönelik geliştirilmiştir. Cildin nem dengesini destekler, daha canlı ve ışıltılı bir görünüm sağlar, cilt elastikiyetinin korunmasına yardımcı olur ve cilt yenilenmesini destekler.",
+      "Kesu Salmon DNA Mezoterapi Solüsyonu; yenileme, elastikiyet kaybı, ince çizgi ve kırışıklık ile kuruluk ve nem kaybına yönelik geliştirilmiştir.",
     thumbnail: placeholders.salmonBottle,
     bottle: placeholders.salmonBottle,
     images: [placeholders.salmonBottle, placeholders.salmonStill],
     category: categories[8],
     ingredients: ["Aqua", "Salmon DNA", "Hyaluronic Acid"],
     benefits: [
-      "Cildin nem dengesini destekler.",
-      "Daha canlı ve ışıltılı bir görünüm sağlar.",
-      "Cilt elastikiyetinin korunmasına yardımcı olur.",
-      "Cilt yenilenmesini destekler.",
+      "Nem dengesini destekler.",
+      "Canlılık ve ışıltı kazandırır.",
+      "Elastikiyetin korunmasına yardımcı olur.",
+      "Yenilenmeyi destekler.",
     ],
     usage:
-      "Profesyonel mezoterapi uygulamalarında kullanılır. Cilt yenileme ve bakım, elastikiyet kaybı, ince çizgi ve kırışıklık görünümü ile kuruluk ve nem kaybında tercih edilir. Uygulama protokolü hekim veya yetkili uygulayıcı tarafından belirlenir.",
+      "Protokolü hekim veya yetkili uygulayıcı belirler.",
     featured: true,
     order: 9,
     volume: "5 × 5 ml",
@@ -578,14 +578,14 @@ export const homePage: HomePageContent = {
     eyebrow: "Profesyonel dermokozmetik",
     headline: "Inspired by\nKorean\nBeauty.",
     description:
-      "Kore güzellik yaklaşımından ilham alan profesyonel bakım. Cildinize, ihtiyaçlarınıza ve doğal ifadenize odaklanan bir dünya.",
+      "Cildinize, ihtiyaçlarınıza ve doğal ifadenize odaklanan bir dünya.",
     primaryCta: { label: "Ürünleri Keşfet", href: "/urunler" },
     image: placeholders.editorial.hero,
   },
   featuredEyebrow: "Öne çıkanlar",
   featuredTitle: "Farklı ihtiyaçlar.\nAynı özen.",
   featuredDescription:
-    "Her cildin ihtiyacı farklı. Nemden sıkılığa, leke görünümünden ışıltıya — her formül net bir endikasyona odaklanır.",
+    "Nemden sıkılığa, leke görünümünden ışıltıya — her formül net bir endikasyona odaklanır.",
   testimonial: {
     quote:
       "Gerçek bakım, doğru formül ve doğru uygulama ile başlar.",
@@ -596,7 +596,7 @@ export const homePage: HomePageContent = {
     {
       question: "Kesu ürünleri kimler için uygundur?",
       answer:
-        "Kesu solüsyonları profesyonel estetik ve medikal uygulamalar için geliştirilmiştir. Uygulama, hekim veya yetkili uygulayıcı tarafından yapılmalıdır.",
+        "Kesu solüsyonları profesyonel estetik ve medikal kullanım için geliştirilmiştir. Uygulama, hekim veya yetkili uygulayıcı tarafından yapılmalıdır.",
     },
     {
       question: "Hangi ürün gruplarınız var?",
@@ -615,24 +615,24 @@ export const aboutPage: AboutPageContent = {
   eyebrow: "Hakkımızda",
   title: "Profesyonel estetik için\ngüvenilir bir marka.",
   intro:
-    "Kesu, profesyonel estetik ve medikal uygulamalar için geliştirilmiş ürünler sunmak amacıyla kurulmuş, yıllardır sektörde başarıyla kullanılan ve uzmanlar tarafından güvenle tercih edilen yenilikçi bir dermokozmetik markasıdır.",
+    "Yıllardır sektörde başarıyla kullanılır ve uzmanlar tarafından güvenle tercih edilir. Medikal uygulamalara yönelik ürünler sunar.",
   storyBlocks: [
     {
       body: "Uzun yıllara dayanan deneyimimiz ve profesyonellerden aldığımız güçlü geri bildirimler doğrultusunda geliştirdiğimiz tüm ürünlerimiz, etkinliği ve güvenilirliği dünya çapında kanıtlanmış Kore menşeli ileri teknoloji üretim süreçleriyle hazırlanır. Cilt gençleştirme, sıkılaşma, leke karşıtı bakım, saç güçlendirme ve göz çevresi problemlerine yönelik çözümlerimiz; doktorların ve kliniklerin beklentilerini karşılamanın ötesine geçerek uygulama sonuçlarını üst seviyeye taşır.",
     },
     {
-      body: "Bilimsel yaklaşımımız, müşteri memnuniyetini esas alan hizmet anlayışımız ve sürekli gelişen ürün portföyümüz sayesinde Kesu, estetik dünyasında kalitesi ve sonuç odaklı yaklaşımıyla takdir edilen güçlü bir marka konumuna gelmiştir.",
+      body: "Bilimsel yaklaşımımız, müşteri memnuniyetini esas alan hizmet anlayışımız ve sürekli gelişen ürün portföyümüz sayesinde Kesu, estetik dünyasında kalitesi ve sonuçlarıyla takdir edilen bir marka konumuna gelmiştir.",
     },
   ],
   philosophyTitle: "Misyonumuz",
   philosophyBody:
-    "Kesu olarak misyonumuz; yüksek performanslı, stabil ve güvenli formüller ile uygulayıcıların başarısını artırmak, profesyonel estetisyen ve doktorlar tarafından yıllardır bize duyulan güveni daha da güçlendirmektir.",
+    "Yüksek performanslı, stabil ve güvenli formüller ile uygulayıcıların başarısını artırmak, estetisyen ve doktorların yıllardır duyduğu güveni daha da güçlendirmektir.",
 };
 
 export const certificatesPage: CertificatesPageContent = {
   eyebrow: "Sertifikalarımız",
   title: "Güven, belgelenir.",
   intro:
-    "Kesu ürünleri; kalite, üretim ve klinik uygunluk standartlarını karşılayan belgelerle desteklenir. Sertifika görsellerini buradan inceleyebilirsiniz.",
+    "Kalite, üretim ve klinik uygunluk standartlarını karşılayan belgelerle desteklenir. Görselleri buradan inceleyebilirsiniz.",
   certificates: [],
 };

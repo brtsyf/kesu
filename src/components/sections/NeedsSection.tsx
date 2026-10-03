@@ -30,13 +30,13 @@ const NEEDS: NeedCard[] = [
   },
   {
     title: "Ton eşitliği & aydınlık",
-    description: "Cilt tonu eşitsizliği ve donukluk için aydınlık bakım.",
+    description: "Leke görünümünü hedefleyen bakım.",
     tint: "#f5f2e8",
     links: [{ label: "White Effect", href: "/urunler/kesu-white-effect" }],
   },
   {
     title: "Denge & arınmış görünüm",
-    description: "Yoğunlaşmış ve lekeli görünümü daha ferah bir hale getirir.",
+    description: "Yoğunlaşmış ve lekeli cildi ferahlatır.",
     tint: "#f3efe8",
     links: [{ label: "White Effect", href: "/urunler/kesu-white-effect" }],
   },
@@ -48,7 +48,7 @@ const NEEDS: NeedCard[] = [
   },
   {
     title: "Saç & saç derisi",
-    description: "Daha güçlü ve dolgun görünen saç için bütüncül yaklaşım.",
+    description: "Daha güçlü ve dolgun teller için bütüncül yaklaşım.",
     tint: "#f3eee8",
     links: [{ label: "Hair", href: "/urunler/kesu-hair" }],
   },
@@ -65,8 +65,7 @@ export function NeedsSection() {
               <span className="block">tanımı yok.</span>
             </h2>
             <p className="max-w-md text-[0.98rem] leading-relaxed text-[#7a776e] lg:col-span-5 lg:justify-self-end">
-              Her cildin, her saçın ve her uygulamanın ihtiyacı farklıdır.
-              Endikasyona göre net formüller.
+              Bir başlık seçin; formül ona göre ayrılır.
             </p>
           </div>
         </Reveal>

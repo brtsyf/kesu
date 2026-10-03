@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { detailContentTransition } from "@/lib/motion";
+import { getProductTint } from "@/lib/product-media";
 import type { Product } from "@/lib/sanity/types";
 
 const DETAIL_COPY: Record<
@@ -10,57 +11,50 @@ const DETAIL_COPY: Record<
 > = {
   "kesu-six-lift": {
     eyebrow: "Sıkılık & elastikiyet bakımı",
-    lead: "Sıkılık, cildin doğal ifadesinde başlar.",
-    intro:
-      "Sarkma, elastikiyet kaybı ve yorgun görünüme yönelik lifting solüsyonu. Somon DNA destekli formül, daha toparlanmış bir cilt ifadesi için geliştirilmiştir.",
+    lead: "Doğal ifade, burada başlar.",
+    intro: "Toparlanmış bir sonuç için geliştirildi.",
   },
   "kesu-anti-aging": {
     eyebrow: "Nem & canlılık bakımı",
-    lead: "Canlılık, derin nemle yeniden kurulur.",
+    lead: "Derin bir tazelikle yeniden kurulur.",
     intro:
-      "İnce çizgi, matlık ve nem kaybına odaklanan anti-aging solüsyonu. Cildi canlandırmaya, nem dengesini desteklemeye yardımcı olur.",
+      "İnce çizgi ve matlığı aynı anda ele alır.",
   },
   "kesu-white-effect": {
     eyebrow: "Ton eşitliği & aydınlık bakımı",
-    lead: "Aydınlık, eşit bir tonda başlar.",
-    intro:
-      "Leke ve donuk görünüm için White Effect solüsyonu. Cilt tonunu dengelemeye ve daha ışıklı bir ifade kazandırmaya yardımcı olur.",
+    lead: "Işık, dengeli bir zeminde başlar.",
+    intro: "Leke bakımını ferah bir ifadeye bağlar.",
   },
   "kesu-eyes": {
     eyebrow: "Göz çevresi bakımı",
     lead: "Özen, en hassas çizgide başlar.",
-    intro:
-      "Göz çevresi ince çizgi, koyu halka ve yorgunluk görünümüne yönelik özel solüsyon. Hassas bölge için nazik, odaklı bir bakım sunar.",
+    intro: "Nazik ve odaklı bir formül sunar.",
   },
   "kesu-hair": {
     eyebrow: "Saç & saç derisi bakımı",
-    lead: "Bakım, saç tellerinin ötesinde başlar.",
-    intro:
-      "Saç ve saç derisini bir bütün olarak ele alan profesyonel yaklaşım. Zayıf ve ince saç tellerinin daha güçlü, dolgun görünümüne yönelik bakım sunar.",
+    lead: "Kök, telin ötesinde başlar.",
+    intro: "Bütüncül bir yaklaşım.",
   },
   "kesu-acnera": {
     eyebrow: "Akne ve yağlanma bakımı",
-    lead: "Daha temiz ve dengeli bir görünüm.",
-    intro:
-      "Akne ve aktif sivilce, yağlanmaya eğilimli cilt, gözenek görünümü ve sivilce sonrası oluşan cilt problemlerine yönelik bakım.",
+    lead: "Daha temiz ve dengeli bir cilt.",
+    intro: "Tek formülde ele alınır.",
   },
   "kesu-bioca": {
     eyebrow: "Yüz ve boyun bakımı",
     lead: "Daha sıkı ve toparlanmış bir görünüm.",
-    intro:
-      "Yüz ve boyun bölgesi, ince çizgi ve kırışıklık görünümü, elastikiyet kaybı ve cilt sarkması görünümüne yönelik bakım.",
+    intro: "Aynı formül, iki bölgeyi de kapsar.",
   },
   "kesu-genishine": {
     eyebrow: "Kol altı ve genital bölge dış cilt bakımı",
     lead: "Daha aydınlık ve eşit bir görünüm.",
     intro:
-      "Kol altı ve genital bölge dış cilt bakımı, bölgesel renk eşitsizlikleri, koyu görünüm bulunan bölgeler ve cilt tonu eşitsizliklerine yönelik bakım.",
+      "Bölgesel koyuluğu hedefleyen bir formül.",
   },
   "kesu-salmon": {
     eyebrow: "Cilt yenileme ve bakım",
     lead: "Daha canlı ve ışıltılı bir görünüm.",
-    intro:
-      "Cilt yenileme ve bakım, elastikiyet kaybı, ince çizgi ve kırışıklık görünümü ile kuruluk ve nem kaybına yönelik bakım.",
+    intro: "Nem ve elastikiyeti bir araya getirir.",
   },
 };
 
@@ -81,14 +75,31 @@ function copyFor(product: Product) {
   );
 }
 
+function ProductNameRule({ tint }: { tint: string }) {
+  return (
+    <span
+      aria-hidden
+      className="mt-4 block h-[3px] w-28"
+      style={{ backgroundColor: tint }}
+    />
+  );
+}
+
 export function ProductDetailInfo({ product }: { product: Product }) {
   const reduced = useReducedMotion();
   const copy = copyFor(product);
   const name = product.category?.title ?? product.title;
+  const tint =
+    product.cardTint ?? getProductTint(product.slug, product.category?.slug);
 
   if (reduced) {
     return (
-      <ProductDetailInfoBody product={product} copy={copy} name={name} />
+      <ProductDetailInfoBody
+        product={product}
+        copy={copy}
+        name={name}
+        tint={tint}
+      />
     );
   }
 
@@ -105,6 +116,7 @@ export function ProductDetailInfo({ product }: { product: Product }) {
         {...item(0.28, 18)}
       >
         {name}
+        <ProductNameRule tint={tint} />
       </motion.h1>
       <motion.p
         className="mb-5 max-w-md text-[1.35rem] font-medium leading-snug tracking-[-0.03em] text-[#141414] md:text-[1.5rem]"
@@ -162,15 +174,20 @@ function ProductDetailInfoBody({
   product,
   copy,
   name,
+  tint,
 }: {
   product: Product;
   copy: { eyebrow: string; lead: string; intro: string };
   name: string;
+  tint: string;
 }) {
   return (
     <div className="max-w-xl lg:pt-4">
       <p className="mb-5 text-[0.95rem] text-[#7a776e]">{copy.eyebrow}</p>
-      <h1 className="heading-section mb-6 text-[#141414]">{name}</h1>
+      <h1 className="heading-section mb-6 text-[#141414]">
+        {name}
+        <ProductNameRule tint={tint} />
+      </h1>
       <p className="mb-5 max-w-md text-[1.35rem] font-medium leading-snug tracking-[-0.03em] text-[#141414] md:text-[1.5rem]">
         {copy.lead}
       </p>

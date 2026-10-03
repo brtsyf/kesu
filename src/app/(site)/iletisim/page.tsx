@@ -28,8 +28,7 @@ export default async function ContactPage() {
               <span className="block">yerden bakalım.</span>
             </h1>
             <p className="mb-9 max-w-md text-[0.98rem] leading-[1.75] text-[#7a776e]">
-              Ürün bilgisi ve profesyonel iş birliği için buradayız. Kesu
-              koleksiyonunu birlikte, yakından tanıyalım.
+              Sorularınız ve iş birliği için buradayız.
             </p>
             <a
               href="#iletisim"
@@ -58,8 +57,7 @@ export default async function ContactPage() {
           <Reveal>
             <h2 className="heading-display mb-5 text-balance">Ürün bilgisi</h2>
             <p className="mb-8 max-w-md text-[0.98rem] leading-relaxed text-[#7a776e]">
-              İlgilendiğiniz ürünü ve merak ettiğiniz konuyu paylaşın; bakımı ve
-              koleksiyonu birlikte konuşalım.
+              İlgilendiğiniz ürünü ve merak ettiğiniz konuyu paylaşın.
             </p>
             <Link
               href="/urunler"

@@ -135,11 +135,11 @@ export default async function ProductDetailPage({
             <Reveal>
               <div className="mb-12 grid gap-6 lg:mb-16 lg:grid-cols-12 lg:items-end">
                 <h2 className="heading-section text-balance lg:col-span-7">
-                  <span className="block">Birlikte</span>
-                  <span className="block">düşünün.</span>
+                  <span className="block">Diğer</span>
+                  <span className="block">solüsyonlar.</span>
                 </h2>
                 <p className="max-w-md text-[0.98rem] leading-relaxed text-[#7a776e] lg:col-span-5 lg:justify-self-end">
-                  Aynı özenle formüle edilmiş diğer Kesu solüsyonları.
+                  Her biri ayrı bir ihtiyaca, aynı özenle.
                 </p>
               </div>
             </Reveal>
@@ -156,7 +156,7 @@ export default async function ProductDetailPage({
 
       <CtaSection
         title="Birlikte değerlendirelim."
-        description="Hekim ve profesyonel iş birliği hakkında bize ulaşın."
+        description="İş birliği için bize ulaşın."
         label="Kesu ile iletişime geçin"
         href="/iletisim"
         secondaryLabel="Tüm koleksiyona dön"

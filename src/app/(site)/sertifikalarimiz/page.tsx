@@ -57,7 +57,7 @@ export default async function CertificatesPage() {
 
       <CtaSection
         title="Birlikte değerlendirelim."
-        description="Hekim ve profesyonel iş birliği hakkında bize ulaşın."
+        description="İş birliği için bize ulaşın."
         label="Kesu ile iletişime geçin"
         href="/iletisim"
         secondaryLabel="Tüm koleksiyona dön"
