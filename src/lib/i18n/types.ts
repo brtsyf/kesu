@@ -43,6 +43,7 @@ export type Dictionary = {
     label: string;
     body: string;
     accept: string;
+    details: string;
   };
   hero: {
     description: string;

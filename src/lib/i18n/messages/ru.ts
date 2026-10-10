@@ -10,7 +10,7 @@ export const ru: Dictionary = {
   footer: {
     blurb:
       "Kesu — инновационный дермокосметический бренд, созданный для профессиональной эстетической и медицинской практики.",
-    privacy: "Конфиденциальность",
+    privacy: "Политика cookie",
     terms: "Условия",
     menu: "Меню в подвале",
   },
@@ -32,9 +32,10 @@ export const ru: Dictionary = {
     label: "Приветствие",
   },
   cookies: {
-    label: "Уведомление о cookie",
-    body: "Мы используем cookie, чтобы запомнить ваш язык.",
-    accept: "Принять cookie",
+    label: "Уведомление о файлах cookie",
+    body: "Этот сайт использует только необходимый файл cookie, чтобы запомнить ваш язык. Файлы cookie не используются для рекламы или аналитики.",
+    accept: "Принять",
+    details: "Политика cookie",
   },
   hero: {
     description:

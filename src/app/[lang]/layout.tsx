@@ -52,13 +52,16 @@ export default async function LocaleLayout({
           privacy={dict.footer.privacy}
           terms={dict.footer.terms}
           menuLabel={dict.footer.menu}
-          privacyHref={localizeHref(lang, "/iletisim")}
+          privacyHref={localizeHref(lang, "/cerez-politikasi")}
+          termsHref={localizeHref(lang, "/iletisim")}
           socialLabel={dict.header.social}
         />
         <CookieConsent
           label={dict.cookies.label}
           body={dict.cookies.body}
           accept={dict.cookies.accept}
+          details={dict.cookies.details}
+          detailsHref={localizeHref(lang, "/cerez-politikasi")}
         />
         <WhatsAppButton
           phone={settings.contact.whatsapp}

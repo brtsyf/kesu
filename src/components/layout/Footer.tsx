@@ -12,6 +12,7 @@ export function Footer({
   terms,
   menuLabel,
   privacyHref,
+  termsHref,
   socialLabel,
 }: {
   settings: SiteSettings;
@@ -21,6 +22,7 @@ export function Footer({
   terms: string;
   menuLabel: string;
   privacyHref: string;
+  termsHref: string;
   socialLabel: string;
 }) {
   return (
@@ -73,7 +75,7 @@ export function Footer({
             <Link href={privacyHref} className="hover:text-foreground transition-colors">
               {privacy}
             </Link>
-            <Link href={privacyHref} className="hover:text-foreground transition-colors">
+            <Link href={termsHref} className="hover:text-foreground transition-colors">
               {terms}
             </Link>
           </div>

@@ -3,7 +3,14 @@ import { locales, localizeHref } from "@/lib/i18n/config";
 import { getProducts } from "@/lib/sanity/fetch";
 import { absoluteUrl } from "@/lib/seo";
 
-const paths = ["/", "/urunler", "/hakkimizda", "/sertifikalarimiz", "/iletisim"];
+const paths = [
+  "/",
+  "/urunler",
+  "/hakkimizda",
+  "/sertifikalarimiz",
+  "/iletisim",
+  "/cerez-politikasi",
+];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const products = await getProducts();

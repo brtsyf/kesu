@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { premiumEase } from "@/lib/motion";
 
@@ -10,6 +11,8 @@ type CookieConsentProps = {
   label: string;
   body: string;
   accept: string;
+  details: string;
+  detailsHref: string;
 };
 
 function hasConsent() {
@@ -18,7 +21,13 @@ function hasConsent() {
     .some((part) => part.startsWith(`${CONSENT_COOKIE}=`));
 }
 
-export function CookieConsent({ label, body, accept }: CookieConsentProps) {
+export function CookieConsent({
+  label,
+  body,
+  accept,
+  details,
+  detailsHref,
+}: CookieConsentProps) {
   const reduced = useReducedMotion();
   const [open, setOpen] = useState(false);
 
@@ -45,7 +54,10 @@ export function CookieConsent({ label, body, accept }: CookieConsentProps) {
         >
           <div className="border border-border bg-[#fafaf7]/95 px-5 py-4 shadow-[0_16px_40px_rgba(20,20,18,0.08)] backdrop-blur-md lg:flex lg:items-center lg:justify-between lg:gap-8 lg:px-7 lg:py-5">
             <p className="text-[0.92rem] leading-relaxed text-[#3c403b] lg:text-[0.98rem]">
-              {body}
+              {body}{" "}
+              <Link href={detailsHref} className="underline underline-offset-4">
+                {details}
+              </Link>
             </p>
             <button
               type="button"

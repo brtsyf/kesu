@@ -10,7 +10,7 @@ export const tr: Dictionary = {
   footer: {
     blurb:
       "Kesu; profesyonel estetik ve medikal uygulamalar için geliştirilmiş yenilikçi bir dermokozmetik markasıdır.",
-    privacy: "Gizlilik",
+    privacy: "Çerez politikası",
     terms: "Koşullar",
     menu: "Footer menü",
   },
@@ -33,8 +33,9 @@ export const tr: Dictionary = {
   },
   cookies: {
     label: "Çerez bildirimi",
-    body: "Dil tercihinizi hatırlamak için çerez kullanıyoruz.",
-    accept: "Çerezleri kabul et",
+    body: "Bu site, dil tercihinizi hatırlamak için yalnızca zorunlu çerez kullanır. Çerezler reklam veya analiz için kullanılmaz.",
+    accept: "Kabul et",
+    details: "Çerez politikası",
   },
   hero: {
     description:

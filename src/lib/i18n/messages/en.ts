@@ -10,7 +10,7 @@ export const en: Dictionary = {
   footer: {
     blurb:
       "Kesu is an innovative dermocosmetic brand developed for professional aesthetic and medical practice.",
-    privacy: "Privacy",
+    privacy: "Cookie policy",
     terms: "Terms",
     menu: "Footer menu",
   },
@@ -33,8 +33,9 @@ export const en: Dictionary = {
   },
   cookies: {
     label: "Cookie notice",
-    body: "We use a cookie to remember your language.",
-    accept: "Accept cookies",
+    body: "This site uses only a necessary cookie to remember your language. Cookies are not used for advertising or analytics.",
+    accept: "Accept",
+    details: "Cookie policy",
   },
   hero: {
     description: "A world focused on your skin, your needs, and your natural expression.",
