@@ -2,19 +2,34 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/animation/Reveal";
 import { CertificateGallery } from "@/components/sections/CertificateGallery";
 import { CtaSection } from "@/components/sections/CtaSection";
-import { certificatesPage } from "@/lib/data/seed";
+import { notFound } from "next/navigation";
+import { isLocale, localizeHref, type LocaleRoute } from "@/lib/i18n/config";
+import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { getCertificates } from "@/lib/sanity/fetch";
-import { SEO, buildMetadata } from "@/lib/seo";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata = buildMetadata({
-  title: SEO.certificates.title,
-  description: SEO.certificates.description,
-  path: "/sertifikalarimiz",
-});
+export async function generateMetadata({
+  params,
+}: LocaleRoute) {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  const dict = getDictionary(lang);
+  return buildMetadata({
+    title: dict.seo.certificatesTitle,
+    description: dict.seo.certificatesDescription,
+    path: "/sertifikalarimiz",
+    locale: lang,
+  });
+}
 
-export default async function CertificatesPage() {
+export default async function CertificatesPage({
+  params,
+}: LocaleRoute) {
+  const { lang } = await params;
+  if (!isLocale(lang)) notFound();
   const certificates = await getCertificates();
-  const page = certificatesPage;
+  const page = getDictionary(lang).certificates;
+  const home = getDictionary(lang).home;
   const titleLines = page.title.split("\n");
 
   return (
@@ -51,17 +66,23 @@ export default async function CertificatesPage() {
 
       <section className="pt-10 pb-24 md:pt-16 md:pb-32">
         <Container>
-          <CertificateGallery certificates={certificates} />
+          <CertificateGallery
+            certificates={certificates}
+            emptyLabel={page.empty}
+            closeLabel={page.close}
+            dialogLabel={page.dialog}
+            imageAlt={page.imageAlt}
+          />
         </Container>
       </section>
 
       <CtaSection
-        title="Birlikte değerlendirelim."
-        description="İş birliği için bize ulaşın."
-        label="Kesu ile iletişime geçin"
-        href="/iletisim"
-        secondaryLabel="Tüm koleksiyona dön"
-        secondaryHref="/urunler"
+        title={home.ctaTitle}
+        description={home.ctaBody}
+        label={home.ctaLabel}
+        href={localizeHref(lang, "/iletisim")}
+        secondaryLabel={home.ctaSecondary}
+        secondaryHref={localizeHref(lang, "/urunler")}
       />
     </div>
   );

@@ -9,8 +9,16 @@ import type { CertificateItem } from "@/lib/sanity/types";
 
 export function CertificateGallery({
   certificates,
+  emptyLabel,
+  closeLabel,
+  dialogLabel,
+  imageAlt,
 }: {
   certificates: CertificateItem[];
+  emptyLabel: string;
+  closeLabel: string;
+  dialogLabel: string;
+  imageAlt: string;
 }) {
   const [active, setActive] = useState<number | null>(null);
   const current = active !== null ? certificates[active] : null;
@@ -31,8 +39,7 @@ export function CertificateGallery({
       <Reveal>
         <div className="rounded-[2rem] bg-white/70 px-8 py-16 text-center ring-1 ring-[#e8e4dc] md:px-12">
           <p className="text-[1.05rem] leading-relaxed text-[#6b6860]">
-            Sertifika görselleri Sanity üzerinden eklendiğinde burada
-            listelenecek.
+            {emptyLabel}
           </p>
         </div>
       </Reveal>
@@ -45,7 +52,7 @@ export function CertificateGallery({
         {certificates.map((item, index) => {
           const src = getImageUrl(item.image, 1200);
           if (!src) return null;
-          const alt = getImageAlt(item.image, item.title || "Kesu sertifikası");
+          const alt = getImageAlt(item.image, item.title || imageAlt);
           return (
             <Reveal key={`${src}-${index}`} delay={index * 0.04}>
               <button
@@ -78,20 +85,20 @@ export function CertificateGallery({
           onClick={() => setActive(null)}
           role="dialog"
           aria-modal
-          aria-label={current.title || "Sertifika"}
+          aria-label={current.title || dialogLabel}
         >
           <button
             type="button"
             onClick={() => setActive(null)}
             className="absolute right-5 top-5 inline-flex size-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20"
-            aria-label="Kapat"
+            aria-label={closeLabel}
           >
             <X className="size-5" strokeWidth={1.6} />
           </button>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={currentSrc}
-            alt={getImageAlt(current.image, current.title || "Kesu sertifikası")}
+            alt={getImageAlt(current.image, current.title || imageAlt)}
             className="max-h-full max-w-full object-contain"
             onClick={(event) => event.stopPropagation()}
           />

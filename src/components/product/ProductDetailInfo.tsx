@@ -3,60 +3,8 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { detailContentTransition } from "@/lib/motion";
 import { getProductTint } from "@/lib/product-media";
+import type { ProductDetailCopy } from "@/lib/i18n/types";
 import type { Product } from "@/lib/sanity/types";
-
-const DETAIL_COPY: Record<
-  string,
-  { eyebrow: string; lead: string; intro: string }
-> = {
-  "kesu-six-lift": {
-    eyebrow: "Sıkılık & elastikiyet bakımı",
-    lead: "Doğal ifade, burada başlar.",
-    intro: "Toparlanmış bir sonuç için geliştirildi.",
-  },
-  "kesu-anti-aging": {
-    eyebrow: "Nem & canlılık bakımı",
-    lead: "Derin bir tazelikle yeniden kurulur.",
-    intro:
-      "İnce çizgi ve matlığı aynı anda ele alır.",
-  },
-  "kesu-white-effect": {
-    eyebrow: "Ton eşitliği & aydınlık bakımı",
-    lead: "Işık, dengeli bir zeminde başlar.",
-    intro: "Leke bakımını ferah bir ifadeye bağlar.",
-  },
-  "kesu-eyes": {
-    eyebrow: "Göz çevresi bakımı",
-    lead: "Özen, en hassas çizgide başlar.",
-    intro: "Nazik ve odaklı bir formül sunar.",
-  },
-  "kesu-hair": {
-    eyebrow: "Saç & saç derisi bakımı",
-    lead: "Kök, telin ötesinde başlar.",
-    intro: "Bütüncül bir yaklaşım.",
-  },
-  "kesu-acnera": {
-    eyebrow: "Akne ve yağlanma bakımı",
-    lead: "Daha temiz ve dengeli bir cilt.",
-    intro: "Tek formülde ele alınır.",
-  },
-  "kesu-bioca": {
-    eyebrow: "Yüz ve boyun bakımı",
-    lead: "Daha sıkı ve toparlanmış bir görünüm.",
-    intro: "Aynı formül, iki bölgeyi de kapsar.",
-  },
-  "kesu-genishine": {
-    eyebrow: "Kol altı ve genital bölge dış cilt bakımı",
-    lead: "Daha aydınlık ve eşit bir görünüm.",
-    intro:
-      "Bölgesel koyuluğu hedefleyen bir formül.",
-  },
-  "kesu-salmon": {
-    eyebrow: "Cilt yenileme ve bakım",
-    lead: "Daha canlı ve ışıltılı bir görünüm.",
-    intro: "Nem ve elastikiyeti bir araya getirir.",
-  },
-};
 
 const item = (delay: number, y = 18) => ({
   initial: { opacity: 0, y },
@@ -65,14 +13,12 @@ const item = (delay: number, y = 18) => ({
   transition: { ...detailContentTransition, delay },
 });
 
-function copyFor(product: Product) {
-  return (
-    DETAIL_COPY[product.slug] ?? {
-      eyebrow: product.tagline ?? product.category?.title ?? "Kesu",
-      lead: product.tagline ?? product.title,
-      intro: product.shortDescription,
-    }
-  );
+function fallbackCopy(product: Product): ProductDetailCopy {
+  return {
+    eyebrow: product.tagline ?? product.category?.title ?? "Kesu",
+    lead: product.tagline ?? product.title,
+    intro: product.shortDescription,
+  };
 }
 
 function ProductNameRule({ tint }: { tint: string }) {
@@ -85,9 +31,16 @@ function ProductNameRule({ tint }: { tint: string }) {
   );
 }
 
-export function ProductDetailInfo({ product }: { product: Product }) {
+export function ProductDetailInfo({
+  product,
+  copy = fallbackCopy(product),
+  collectionLabel = "Profesyonel bakım koleksiyonu",
+}: {
+  product: Product;
+  copy?: ProductDetailCopy;
+  collectionLabel?: string;
+}) {
   const reduced = useReducedMotion();
-  const copy = copyFor(product);
   const name = product.category?.title ?? product.title;
   const tint =
     product.cardTint ?? getProductTint(product.slug, product.category?.slug);
@@ -99,6 +52,7 @@ export function ProductDetailInfo({ product }: { product: Product }) {
         copy={copy}
         name={name}
         tint={tint}
+        collectionLabel={collectionLabel}
       />
     );
   }
@@ -164,7 +118,7 @@ export function ProductDetailInfo({ product }: { product: Product }) {
             <span className="mx-2.5 text-[#d0cbc2]">|</span>
           </>
         ) : null}
-        Profesyonel bakım koleksiyonu
+        {collectionLabel}
       </motion.p>
     </div>
   );
@@ -175,11 +129,13 @@ function ProductDetailInfoBody({
   copy,
   name,
   tint,
+  collectionLabel,
 }: {
   product: Product;
   copy: { eyebrow: string; lead: string; intro: string };
   name: string;
   tint: string;
+  collectionLabel: string;
 }) {
   return (
     <div className="max-w-xl lg:pt-4">
@@ -219,7 +175,7 @@ function ProductDetailInfoBody({
             <span className="mx-2.5 text-[#d0cbc2]">|</span>
           </>
         ) : null}
-        Profesyonel bakım koleksiyonu
+        {collectionLabel}
       </p>
     </div>
   );

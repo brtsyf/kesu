@@ -11,6 +11,9 @@ import { Reveal } from "@/components/animation/Reveal";
 import { getImageUrl } from "@/lib/sanity/image";
 import { getProductBySlug, getProducts } from "@/lib/sanity/fetch";
 import { getProductStillLife } from "@/lib/product-media";
+import { isLocale, localizeHref, type LocaleSlugRoute } from "@/lib/i18n/config";
+import { getDictionary } from "@/lib/i18n/get-dictionary";
+import { detailCopy, localizeProduct, localizeProducts } from "@/lib/i18n/localize-product";
 import { buildMetadata, productJsonLd } from "@/lib/seo";
 
 export const dynamicParams = true;
@@ -22,28 +25,34 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
   params,
-}: PageProps<"/urunler/[slug]">) {
-  const { slug } = await params;
-  const product = await getProductBySlug(slug);
-  if (!product) return {};
+}: LocaleSlugRoute) {
+  const { lang, slug } = await params;
+  if (!isLocale(lang)) return {};
+  const found = await getProductBySlug(slug);
+  if (!found) return {};
+  const product = localizeProduct(found, lang);
   return buildMetadata({
-    title: `${product.title} | Kesu`,
+    title: `${product.category?.title ?? product.title} | Kesu`,
     description: product.shortDescription,
     path: `/urunler/${product.slug}`,
-    seo: product.seo,
+    seo: lang === "tr" ? product.seo : undefined,
     image: getImageUrl(product.thumbnail, 1200),
     absolute: true,
+    locale: lang,
   });
 }
 
 export default async function ProductDetailPage({
   params,
-}: PageProps<"/urunler/[slug]">) {
-  const { slug } = await params;
-  const product = await getProductBySlug(slug);
-  if (!product) notFound();
+}: LocaleSlugRoute) {
+  const { lang, slug } = await params;
+  if (!isLocale(lang)) notFound();
+  const dict = getDictionary(lang);
+  const found = await getProductBySlug(slug);
+  if (!found) notFound();
+  const product = localizeProduct(found, lang);
 
-  const all = await getProducts();
+  const all = localizeProducts(await getProducts(), lang);
   const related = all
     .filter(
       (p) =>
@@ -62,6 +71,7 @@ export default async function ProductDetailPage({
     description: product.shortDescription,
     slug: product.slug,
     image: getImageUrl(product.thumbnail, 1200),
+    locale: lang,
   });
 
   const gallery =
@@ -73,7 +83,7 @@ export default async function ProductDetailPage({
   const stillLife = getProductStillLife(
     product.slug,
     product.images,
-    `${product.title} stüdyo`,
+    `${product.title} ${dict.product.studio}`,
   );
 
   return (
@@ -87,21 +97,21 @@ export default async function ProductDetailPage({
         <Container>
           <Reveal y={12}>
             <nav
-              aria-label="Sayfa konumu"
+              aria-label={dict.product.crumb}
               className="mb-10 flex flex-wrap items-center gap-2 text-[0.86rem] text-[#9a958c] md:mb-14"
             >
               <Link
-                href="/"
+                href={localizeHref(lang, "/")}
                 className="transition-colors hover:text-[#141414]"
               >
-                Ana sayfa
+                {dict.product.home}
               </Link>
               <span>/</span>
               <Link
-                href="/urunler"
+                href={localizeHref(lang, "/urunler")}
                 className="transition-colors hover:text-[#141414]"
               >
-                Koleksiyon
+                {dict.product.collection}
               </Link>
               <span>/</span>
               <span className="text-[#6b6860]">
@@ -112,7 +122,11 @@ export default async function ProductDetailPage({
 
           <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-14 xl:gap-20">
             <div className="order-2 lg:order-1 lg:col-span-5">
-              <ProductDetailInfo product={product} />
+              <ProductDetailInfo
+                product={product}
+                copy={detailCopy(product)}
+                collectionLabel={dict.product.professional}
+              />
             </div>
             <div className="order-1 lg:order-2 lg:col-span-7">
               <ProductGallery
@@ -121,13 +135,25 @@ export default async function ProductDetailPage({
                 slug={product.slug}
                 bottle={product.bottle}
                 backdrop={product.backdrop}
+                imageLabel={dict.product.image}
+                emptyLabel={dict.product.imageSoon}
               />
             </div>
           </div>
         </Container>
       </section>
 
-      <ProductDetailStory product={product} stillLife={stillLife} />
+      <ProductDetailStory
+        product={product}
+        stillLife={stillLife}
+        labels={{
+          usage: dict.product.usage,
+          usageTitle: dict.product.usageTitle,
+          ingredients: dict.product.ingredients,
+          ingredientsTitle: dict.product.ingredientsTitle,
+          studio: dict.product.studio,
+        }}
+      />
 
       {relatedFallback.length ? (
         <section className="kesu-related-products bg-[#fafaf7] pb-20 md:pb-28">
@@ -135,11 +161,14 @@ export default async function ProductDetailPage({
             <Reveal>
               <div className="mb-12 grid gap-6 lg:mb-16 lg:grid-cols-12 lg:items-end">
                 <h2 className="heading-section text-balance lg:col-span-7">
-                  <span className="block">Diğer</span>
-                  <span className="block">solüsyonlar.</span>
+                  {dict.product.relatedTitle.split("\n").map((line) => (
+                    <span key={line} className="block">
+                      {line}
+                    </span>
+                  ))}
                 </h2>
                 <p className="max-w-md text-[0.98rem] leading-relaxed text-[#7a776e] lg:col-span-5 lg:justify-self-end">
-                  Her biri ayrı bir ihtiyaca, aynı özenle.
+                  {dict.product.relatedBody}
                 </p>
               </div>
             </Reveal>
@@ -155,12 +184,12 @@ export default async function ProductDetailPage({
       ) : null}
 
       <CtaSection
-        title="Birlikte değerlendirelim."
-        description="İş birliği için bize ulaşın."
-        label="Kesu ile iletişime geçin"
-        href="/iletisim"
-        secondaryLabel="Tüm koleksiyona dön"
-        secondaryHref="/urunler"
+        title={dict.product.ctaTitle}
+        description={dict.product.ctaBody}
+        label={dict.product.ctaLabel}
+        href={localizeHref(lang, "/iletisim")}
+        secondaryLabel={dict.product.ctaSecondary}
+        secondaryHref={localizeHref(lang, "/urunler")}
       />
     </div>
   );

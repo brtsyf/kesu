@@ -6,10 +6,12 @@ export function StillLifePhoto({
   src,
   alt,
   tint = "#f4f2ee",
+  placeholder = "Stüdyo",
 }: {
   src?: string;
   alt: string;
   tint?: string;
+  placeholder?: string;
 }) {
   const imageRef = useRef<HTMLImageElement>(null);
   const [ready, setReady] = useState(false);
@@ -34,7 +36,7 @@ export function StillLifePhoto({
       >
         {!ready ? (
           <p className="text-[0.82rem] tracking-[0.18em] text-[#b0aaa0] uppercase">
-            Stüdyo
+            {placeholder}
           </p>
         ) : null}
       </div>

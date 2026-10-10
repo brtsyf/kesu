@@ -20,6 +20,7 @@ import {
   measureProductVisual,
   resolveBottleImage,
 } from "@/lib/product-media";
+import { useI18n } from "@/components/i18n/I18nProvider";
 import { cn } from "@/lib/utils/cn";
 import type { Product } from "@/lib/sanity/types";
 
@@ -31,6 +32,7 @@ type ProductCardProps = {
 
 export function ProductCard({ product, className, large }: ProductCardProps) {
   const router = useRouter();
+  const { href: localize, discover } = useI18n();
   const { active, start, setDestination, shouldHideSlug } = useProductMorph();
   const lenis = useLenis();
   const reduced = useReducedMotion();
@@ -38,7 +40,8 @@ export function ProductCard({ product, className, large }: ProductCardProps) {
   const refined = useRef(false);
   const [hovered, setHovered] = useState(false);
   const [snap, setSnap] = useState(false);
-  const href = `/urunler/${product.slug}`;
+  const href = localize(`/urunler/${product.slug}`);
+  const name = product.category?.title ?? product.title;
   const hiding = shouldHideSlug(product.slug);
   const isReverseDest = Boolean(
     active?.direction === "reverse" && active.slug === product.slug,
@@ -222,7 +225,7 @@ export function ProductCard({ product, className, large }: ProductCardProps) {
         <div className="mt-6 flex items-end justify-between gap-4">
           <div>
             <h3 className="text-[1.25rem] font-medium tracking-[-0.03em] text-[#141414]">
-              {product.category?.title ?? product.title}
+              {name}
             </h3>
             {product.volume ? (
               <p className="mt-1 text-[0.88rem] text-[#8a867c]">
@@ -243,7 +246,7 @@ export function ProductCard({ product, className, large }: ProductCardProps) {
         ) : null}
 
         <span className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#d5d0c6]/80 px-4 py-[0.55rem] text-[0.8rem] text-[#141414] transition-colors duration-400 group-hover:border-[#141414]/35">
-          {product.category?.title ?? "Ürün"} ürününü keşfet
+          {discover(name)}
           <ArrowUpRight className="size-3.5" strokeWidth={1.6} />
         </span>
       </div>

@@ -50,12 +50,14 @@ type SocialLinksProps = {
   links: SocialLink[];
   className?: string;
   variant?: "header" | "footer" | "page";
+  label?: string;
 };
 
 export function SocialLinks({
   links,
   className,
   variant = "header",
+  label = "Sosyal medya",
 }: SocialLinksProps) {
   const items = links.filter(
     (link) => link.href && resolveSocialPlatform(link),
@@ -64,7 +66,7 @@ export function SocialLinks({
 
   return (
     <nav
-      aria-label="Sosyal medya"
+      aria-label={label}
       className={cn(
         "flex items-center",
         variant === "header" && "gap-0.5",

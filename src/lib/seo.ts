@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import type { SeoFields, SiteSettings } from "@/lib/sanity/types";
 import { getImageUrl } from "@/lib/sanity/image";
+import {
+  defaultLocale,
+  localizeHref,
+  locales,
+  openGraphLocale,
+  type Locale,
+} from "@/lib/i18n/config";
 
 export const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -46,6 +53,7 @@ export function buildMetadata({
   seo,
   image,
   absolute = false,
+  locale = defaultLocale,
 }: {
   title: string;
   description: string;
@@ -53,26 +61,31 @@ export function buildMetadata({
   seo?: SeoFields;
   image?: string;
   absolute?: boolean;
+  locale?: Locale;
 }): Metadata {
   const finalTitle = seo?.metaTitle ?? title;
   const finalDescription = seo?.metaDescription ?? description;
   const customImage =
     image || (seo?.ogImage ? getImageUrl(seo.ogImage, 1200) : undefined);
   const ogImage = customImage ?? "/brand/og-default.png";
-  const url = absoluteUrl(path);
+  const localizedPath = localizeHref(locale, path);
+  const url = absoluteUrl(localizedPath);
+  const languages = Object.fromEntries(
+    locales.map((item) => [item, absoluteUrl(localizeHref(item, path))]),
+  );
   const useAbsolute = absolute || Boolean(seo?.metaTitle);
   const shareTitle = useAbsolute ? finalTitle : `${finalTitle} | ${SITE_NAME}`;
 
   return {
     title: useAbsolute ? { absolute: finalTitle } : finalTitle,
     description: finalDescription,
-    alternates: { canonical: url },
+    alternates: { canonical: url, languages },
     openGraph: {
       title: shareTitle,
       description: finalDescription,
       url,
       siteName: SITE_NAME,
-      locale: "tr_TR",
+      locale: openGraphLocale(locale),
       type: "website",
       images: [{ url: ogImage, alt: shareTitle, width: 1200, height: 630 }],
     },
@@ -94,6 +107,7 @@ export function productJsonLd(product: {
   description: string;
   slug: string;
   image?: string;
+  locale?: Locale;
 }) {
   return {
     "@context": "https://schema.org",
@@ -103,7 +117,9 @@ export function productJsonLd(product: {
     image: product.image,
     sku: product.slug,
     brand: { "@type": "Brand", name: SITE_NAME },
-    url: absoluteUrl(`/urunler/${product.slug}`),
+    url: absoluteUrl(
+      localizeHref(product.locale ?? defaultLocale, `/urunler/${product.slug}`),
+    ),
   };
 }
 

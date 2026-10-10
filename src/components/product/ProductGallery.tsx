@@ -61,12 +61,16 @@ export function ProductGallery({
   slug,
   bottle,
   backdrop,
+  imageLabel = "Görsel {n}",
+  emptyLabel = "Görsel yakında",
 }: {
   images: SanityImage[];
   title: string;
   slug: string;
   bottle?: SanityImage;
   backdrop?: SanityImage;
+  imageLabel?: string;
+  emptyLabel?: string;
 }) {
   const morph = useProductMorphOptional();
   const reduced = useReducedMotion();
@@ -92,7 +96,7 @@ export function ProductGallery({
   if (!gallery.length && !hasLayers && !cutoutImage) {
     return (
       <div className="aspect-[4/5] bg-surface ring-1 ring-border/70 flex items-center justify-center text-muted text-sm">
-        Görsel yakında
+        {emptyLabel}
       </div>
     );
   }
@@ -162,7 +166,7 @@ export function ProductGallery({
                 alt={getImageAlt(image, `${title} ${index + 1}`)}
                 active={active === index}
                 onSelect={() => setActive(index)}
-                label={`Görsel ${index + 1}`}
+                label={imageLabel.replace("{n}", String(index + 1))}
               />
             );
           })}

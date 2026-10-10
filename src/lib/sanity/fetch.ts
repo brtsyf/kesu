@@ -68,17 +68,13 @@ function withSeedFields(product: Product): Product {
     ...seed,
     ...product,
     volume: product.volume ?? seed.volume,
-    tagline: product.tagline ?? seed.tagline,
     cardTint: product.cardTint ?? seed.cardTint,
-    shortDescription:
-      product.shortDescription &&
-      product.shortDescription !== "Ürün metni yakında eklenecek."
-        ? product.shortDescription
-        : seed.shortDescription,
-    description: product.description || seed.description,
-    ingredients: product.ingredients?.length ? product.ingredients : seed.ingredients,
-    benefits: product.benefits?.length ? product.benefits : seed.benefits,
-    usage: product.usage || seed.usage,
+    ingredients: product.ingredients?.length ? product.ingredients : [],
+    shortDescription: product.shortDescription ?? "",
+    description: product.description ?? "",
+    benefits: product.benefits ?? [],
+    usage: product.usage ?? "",
+    tagline: product.tagline,
   };
 }
 

@@ -499,29 +499,46 @@ async function seed() {
       extras.push(await uploadImage(extra, `${product.title} stüdyo`));
     }
 
-    await client.createOrReplace({
-      _id: product._id,
-      _type: "product",
-      title: product.title,
-      slug: { _type: "slug", current: product.slug },
-      shortDescription: product.shortDescription,
-      description: product.description,
-      thumbnail,
-      images: extras.map((image, index) => ({
-        ...image,
-        _key: `img-${index + 1}`,
-      })),
-      category: { _type: "reference", _ref: product.categoryId },
-      ingredients: product.ingredients,
-      benefits: product.benefits,
-      usage: product.usage,
-      volume: product.volume,
-      tagline: product.tagline,
-      cardTint: product.cardTint,
-      featured: product.featured,
-      order: product.order,
-      seo: product.seo,
-    });
+    const images = extras.map((image, index) => ({
+      ...image,
+      _key: `img-${index + 1}`,
+    }));
+    const existing = await client.getDocument(product._id);
+
+    if (existing) {
+      await client
+        .patch(product._id)
+        .set({
+          thumbnail,
+          images,
+          volume: product.volume,
+          cardTint: product.cardTint,
+          featured: product.featured,
+          order: product.order,
+        })
+        .commit();
+    } else {
+      await client.create({
+        _id: product._id,
+        _type: "product",
+        title: product.title,
+        slug: { _type: "slug", current: product.slug },
+        shortDescription: product.shortDescription,
+        description: product.description,
+        thumbnail,
+        images,
+        category: { _type: "reference", _ref: product.categoryId },
+        ingredients: product.ingredients,
+        benefits: product.benefits,
+        usage: product.usage,
+        volume: product.volume,
+        tagline: product.tagline,
+        cardTint: product.cardTint,
+        featured: product.featured,
+        order: product.order,
+        seo: product.seo,
+      });
+    }
     console.log(`ürün: ${product.title}`);
   }
 }

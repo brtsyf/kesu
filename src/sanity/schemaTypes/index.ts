@@ -20,6 +20,74 @@ export const seoFields = [
   }),
 ];
 
+function productCopyFields() {
+  return [
+    defineField({
+      name: "tagline",
+      title: "Kısa slogan",
+      type: "string",
+    }),
+    defineField({
+      name: "shortDescription",
+      title: "Kısa açıklama",
+      type: "text",
+      rows: 2,
+    }),
+    defineField({
+      name: "description",
+      title: "Açıklama",
+      type: "text",
+      rows: 5,
+    }),
+    defineField({
+      name: "benefits",
+      title: "Faydalar",
+      type: "array",
+      of: [{ type: "string" }],
+    }),
+    defineField({
+      name: "usage",
+      title: "Kullanım",
+      type: "text",
+      rows: 3,
+    }),
+    defineField({
+      name: "ingredients",
+      title: "İçerikler",
+      type: "array",
+      of: [{ type: "string" }],
+      description: "Boşsa Türkçe içerik kullanılır.",
+    }),
+    defineField({
+      name: "eyebrow",
+      title: "Üst satır",
+      type: "string",
+      description: "Ürün adının üstündeki kısa satır.",
+    }),
+    defineField({
+      name: "lead",
+      title: "Vurgu cümlesi",
+      type: "string",
+    }),
+    defineField({
+      name: "intro",
+      title: "Kısa giriş",
+      type: "text",
+      rows: 2,
+    }),
+  ];
+}
+
+function localeCopy(name: string, title: string) {
+  return defineField({
+    name,
+    title,
+    type: "object",
+    options: { collapsible: true, collapsed: true },
+    fields: productCopyFields(),
+  });
+}
+
 export const category = defineType({
   name: "category",
   title: "Kategori",
@@ -51,6 +119,13 @@ export const product = defineType({
   name: "product",
   title: "Ürün",
   type: "document",
+  fieldsets: [
+    {
+      name: "detail",
+      title: "Detay başlığı",
+      options: { collapsible: true, collapsed: false },
+    },
+  ],
   fields: [
     defineField({
       name: "title",
@@ -130,6 +205,39 @@ export const product = defineType({
       name: "tagline",
       title: "Kısa slogan",
       type: "string",
+    }),
+    defineField({
+      name: "eyebrow",
+      title: "Üst satır",
+      type: "string",
+      description: "Ürün adının üstündeki kısa satır.",
+      fieldset: "detail",
+    }),
+    defineField({
+      name: "lead",
+      title: "Vurgu cümlesi",
+      type: "string",
+      fieldset: "detail",
+    }),
+    defineField({
+      name: "intro",
+      title: "Kısa giriş",
+      type: "text",
+      rows: 2,
+      fieldset: "detail",
+    }),
+    defineField({
+      name: "translations",
+      title: "Diğer diller",
+      type: "object",
+      description:
+        "Yeni ürün eklerken İngilizce, Arapça ve Rusça metinleri buraya yazın. Şişe adlarını (Lifting, Eye, Hair…) çevirmeyin. Boş alan sitede Türkçe metne düşer.",
+      options: { collapsible: true, collapsed: false },
+      fields: [
+        localeCopy("en", "İngilizce"),
+        localeCopy("ar", "Arapça"),
+        localeCopy("ru", "Rusça"),
+      ],
     }),
     defineField({
       name: "cardTint",

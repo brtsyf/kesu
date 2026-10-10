@@ -13,6 +13,8 @@ type IntroScreenProps = {
   brand?: string;
   line?: string;
   subline?: string;
+  continueLabel?: string;
+  label?: string;
 };
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -21,6 +23,8 @@ export function IntroScreen({
   brand = "KESU",
   line = "Klinik sonuç.\nKesin formül.",
   subline = "Kore güzellik yaklaşımından esinlenen profesyonel estetik.",
+  continueLabel = "Devam etmek için dokunun",
+  label = "Karşılama",
 }: IntroScreenProps) {
   const reduced = useReducedMotion();
   const [visible, setVisible] = useState(false);
@@ -78,7 +82,7 @@ export function IntroScreen({
           className="kesu-intro fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-dark text-background cursor-pointer"
           role="dialog"
           aria-modal="true"
-          aria-label="Karşılama"
+          aria-label={label}
           onClick={dismiss}
           initial={{ opacity: 1 }}
           exit={{
@@ -172,7 +176,7 @@ export function IntroScreen({
               animate={{ opacity: 1 }}
               transition={{ duration: 0.45, delay: 0.75, ease }}
             >
-              Devam etmek için dokunun
+              {continueLabel}
             </motion.p>
           </div>
         </motion.div>

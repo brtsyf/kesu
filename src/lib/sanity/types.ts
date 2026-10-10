@@ -27,6 +27,18 @@ export type Category = {
   description?: string;
 };
 
+export type ProductLocaleCopy = {
+  tagline?: string;
+  shortDescription?: string;
+  description?: string;
+  benefits?: string[];
+  usage?: string;
+  ingredients?: string[];
+  eyebrow?: string;
+  lead?: string;
+  intro?: string;
+};
+
 export type Product = {
   _id: string;
   title: string;
@@ -47,6 +59,14 @@ export type Product = {
   order?: number;
   volume?: string;
   tagline?: string;
+  eyebrow?: string;
+  lead?: string;
+  intro?: string;
+  translations?: {
+    en?: ProductLocaleCopy;
+    ar?: ProductLocaleCopy;
+    ru?: ProductLocaleCopy;
+  };
   cardTint?: string;
   seo?: SeoFields;
 };

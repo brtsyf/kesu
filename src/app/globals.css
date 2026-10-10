@@ -65,6 +65,10 @@
     }
   }
 
+  html[lang="ar"] .eyebrow {
+    letter-spacing: 0.04em;
+  }
+
   body {
     background-color: var(--background);
     background-image:
@@ -438,5 +442,55 @@
   .kesu-intro-glass::before,
   .kesu-intro-drop {
     animation: none !important;
+  }
+}
+
+html[lang="ar"] body {
+  font-family: var(--font-arabic), var(--font-sans), sans-serif;
+}
+
+@keyframes kesu-wa-drift {
+  0% {
+    transform: translate3d(95%, -50%, 0);
+  }
+  100% {
+    transform: translate3d(-115%, -50%, 0);
+  }
+}
+
+.kesu-whatsapp::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 0;
+  width: 78%;
+  height: 260%;
+  border-radius: 999px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(14, 130, 68, 0.95) 0%,
+    rgba(28, 168, 86, 0.42) 48%,
+    transparent 76%
+  );
+  filter: blur(12px);
+  pointer-events: none;
+  animation: kesu-wa-drift 3.6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kesu-whatsapp::before {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+.kesu-whatsapp {
+  box-shadow: 0 12px 26px rgba(90, 94, 88, 0.16);
+}
+
+@media (min-width: 1024px) {
+  .kesu-whatsapp {
+    box-shadow: 0 16px 34px rgba(90, 94, 88, 0.16);
   }
 }

@@ -11,21 +11,27 @@ import { useScrollLock } from "@/lib/scroll-lock";
 import type { NavItem, SocialLink } from "@/lib/sanity/types";
 import { SearchOverlay } from "@/components/navigation/SearchOverlay";
 import { BrandLogo } from "@/components/brand/BrandLogo";
+import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
+import { useI18n } from "@/components/i18n/I18nProvider";
 import { SocialLinks } from "@/components/ui/SocialLinks";
+import type { Dictionary } from "@/lib/i18n/types";
 
 type HeaderProps = {
-  logoText: string;
   navigation: NavItem[];
   socialLinks?: SocialLink[];
+  labels: Dictionary["header"];
+  searchLabels: Dictionary["search"];
 };
 
 export function Header({
-  logoText,
   navigation,
   socialLinks = [],
+  labels,
+  searchLabels,
 }: HeaderProps) {
   const pathname = usePathname();
-  const isHome = pathname === "/";
+  const { locale, href } = useI18n();
+  const isHome = pathname === `/${locale}`;
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -69,13 +75,14 @@ export function Header({
           <BrandLogo
             width={isHome ? 118 : 110}
             priority
-            label={`${logoText} ana sayfa`}
+            href={href("/")}
+            label={labels.logoHome}
             className="relative -mt-0.5 shrink-0"
           />
 
           <nav
             className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-12 lg:flex"
-            aria-label="Ana menü"
+            aria-label={labels.mainNav}
           >
             {navigation.map((item) => (
               <Link
@@ -98,18 +105,23 @@ export function Header({
               type="button"
               onClick={() => setSearchOpen(true)}
               className="p-1.5 text-foreground/55 transition-colors hover:text-foreground lg:hidden lg:p-2"
-              aria-label="Ara"
+              aria-label={labels.search}
             >
               <Search className="size-6" strokeWidth={1.5} />
             </button>
-            <SocialLinks links={socialLinks} variant="header" />
+            <LanguageSwitcher />
+            <SocialLinks
+              links={socialLinks}
+              variant="header"
+              label={labels.social}
+            />
             <button
               type="button"
               className="p-1.5 text-foreground/70 transition-colors hover:text-foreground lg:hidden lg:p-2"
               onClick={() => setMobileOpen((v) => !v)}
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
-              aria-label={mobileOpen ? "Menüyü kapat" : "Menüyü aç"}
+              aria-label={mobileOpen ? labels.closeMenu : labels.openMenu}
             >
               <span className="relative block size-6">
                 <AnimatePresence initial={false} mode="wait">
@@ -150,14 +162,14 @@ export function Header({
             key="mobile-menu"
             role="dialog"
             aria-modal="true"
-            aria-label="Mobil menü"
+            aria-label={labels.mobileNav}
             initial={
               reduced ? false : { opacity: 0, clipPath: "inset(0 0 100% 0)" }
             }
             animate={{ opacity: 1, clipPath: "inset(0 0 0% 0)" }}
             exit={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
             transition={{ duration: reduced ? 0.01 : 0.55, ease: premiumEase }}
-            className="fixed inset-x-0 top-[var(--header-height)] bottom-0 z-40 overflow-hidden lg:hidden"
+            className="fixed inset-x-0 top-[var(--header-height)] bottom-0 z-[46] overflow-hidden lg:hidden"
           >
             <div className="relative flex h-full flex-col bg-[#f4f5f0]">
               <div
@@ -167,10 +179,10 @@ export function Header({
 
               <nav
                 className="container-hero relative flex min-h-0 flex-1 flex-col justify-between pb-10 pt-8"
-                aria-label="Mobil menü"
+                aria-label={labels.mobileNav}
               >
                 <div>
-                  <p className="eyebrow mb-7">Menü</p>
+                  <p className="eyebrow mb-7">{labels.menu}</p>
                   <ul>
                     {navigation.map((item, index) => {
                       const active = pathname === item.href;
@@ -214,6 +226,7 @@ export function Header({
                       );
                     })}
                   </ul>
+                  <LanguageSwitcher placement="menu" />
                 </div>
 
                 <motion.p
@@ -226,7 +239,7 @@ export function Header({
                   }}
                   className="pt-10 text-[0.72rem] tracking-[0.14em] uppercase text-muted"
                 >
-                  Profesyonel mezoterapi solüsyonları
+                  {labels.tagline}
                 </motion.p>
               </nav>
             </div>
@@ -234,7 +247,11 @@ export function Header({
         ) : null}
       </AnimatePresence>
 
-      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <SearchOverlay
+        open={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        labels={searchLabels}
+      />
     </>
   );
 }

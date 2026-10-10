@@ -7,9 +7,17 @@ import type { Product, SanityImage } from "@/lib/sanity/types";
 export function ProductDetailStory({
   product,
   stillLife,
+  labels,
 }: {
   product: Product;
   stillLife?: SanityImage;
+  labels: {
+    usage: string;
+    usageTitle: string;
+    ingredients: string;
+    ingredientsTitle: string;
+    studio: string;
+  };
 }) {
   const hasIngredients = Boolean(product.ingredients?.length);
   const hasCopy = Boolean(product.usage || hasIngredients);
@@ -23,17 +31,18 @@ export function ProductDetailStory({
           <Reveal className="lg:col-span-6">
             <StillLifePhoto
               src={stillLife?.url}
-              alt={stillLife?.alt || `${product.title} stüdyo`}
+              alt={stillLife?.alt || `${product.title} ${labels.studio}`}
               tint={getProductTint(product.slug, product.category?.slug)}
+              placeholder={labels.studio}
             />
           </Reveal>
           <div className="lg:col-span-6">
             <div className="flex flex-col justify-center gap-12 lg:min-h-full lg:py-4">
               {product.usage ? (
                 <Reveal>
-                  <p className="mb-4 text-[0.95rem] text-[#7a776e]">Kullanım</p>
+                  <p className="mb-4 text-[0.95rem] text-[#7a776e]">{labels.usage}</p>
                   <h2 className="heading-display mb-6 text-balance text-[#141414]">
-                    Profesyonel uygulama.
+                    {labels.usageTitle}
                   </h2>
                   <p className="max-w-lg text-[0.98rem] leading-[1.8] text-[#6b6860]">
                     {product.usage}
@@ -42,9 +51,9 @@ export function ProductDetailStory({
               ) : null}
               {hasIngredients ? (
                 <Reveal delay={0.06}>
-                  <p className="mb-4 text-[0.95rem] text-[#7a776e]">İçerikler</p>
+                  <p className="mb-4 text-[0.95rem] text-[#7a776e]">{labels.ingredients}</p>
                   <h2 className="heading-display mb-6 text-balance text-[#141414]">
-                    Formülün dili.
+                    {labels.ingredientsTitle}
                   </h2>
                   <p className="max-w-lg text-[0.95rem] leading-[1.9] text-[#7a776e]">
                     {product.ingredients.join(" · ")}

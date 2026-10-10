@@ -1,11 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope } from "next/font/google";
+import { headers } from "next/headers";
+import { Manrope, Noto_Sans_Arabic } from "next/font/google";
 import "./globals.css";
-import { SEO, siteUrl } from "@/lib/seo";
+import { htmlLang, isLocale } from "@/lib/i18n/config";
+import { siteUrl } from "@/lib/seo";
 
 const manrope = Manrope({
   variable: "--font-sans",
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin", "latin-ext", "cyrillic"],
+  display: "swap",
+});
+
+const arabic = Noto_Sans_Arabic({
+  variable: "--font-arabic",
+  subsets: ["arabic"],
   display: "swap",
 });
 
@@ -16,10 +24,9 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: SEO.home.title,
+    default: "Kesu",
     template: "%s | Kesu",
   },
-  description: SEO.home.description,
   applicationName: "Kesu",
   authors: [{ name: "Kesu" }],
   creator: "Kesu",
@@ -34,18 +41,13 @@ export const metadata: Metadata = {
     "anti-aging",
     "white effect",
   ],
-  alternates: { canonical: "/" },
   openGraph: {
-    title: SEO.home.title,
-    description: SEO.home.description,
-    url: "/",
     siteName: "Kesu",
-    locale: "tr_TR",
     type: "website",
     images: [
       {
         url: "/brand/og-default.png",
-        alt: SEO.home.title,
+        alt: "Kesu",
         width: 1200,
         height: 630,
       },
@@ -53,8 +55,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: SEO.home.title,
-    description: SEO.home.description,
     images: ["/brand/og-default.png"],
   },
   robots: {
@@ -67,9 +67,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const headerStore = await headers();
+  const requested = headerStore.get("x-kesu-locale");
+  const locale = isLocale(requested) ? requested : "tr";
+
   return (
-    <html lang="tr" className={`${manrope.variable} h-full antialiased`}>
+    <html
+      lang={htmlLang(locale)}
+      dir="ltr"
+      className={`${manrope.variable} ${arabic.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col font-sans">{children}</body>
     </html>
   );

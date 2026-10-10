@@ -2,19 +2,32 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/animation/Reveal";
-import { aboutPage } from "@/lib/data/seed";
-import { SEO, buildMetadata } from "@/lib/seo";
+import { notFound } from "next/navigation";
+import { isLocale, localizeHref, type LocaleRoute } from "@/lib/i18n/config";
+import { getDictionary } from "@/lib/i18n/get-dictionary";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata = buildMetadata({
-  title: SEO.about.title,
-  description: SEO.about.description,
-  path: "/hakkimizda",
-});
+export async function generateMetadata({
+  params,
+}: LocaleRoute) {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  const dict = getDictionary(lang);
+  return buildMetadata({
+    title: dict.seo.aboutTitle,
+    description: dict.seo.aboutDescription,
+    path: "/hakkimizda",
+    locale: lang,
+  });
+}
 
-export default function AboutPage() {
-  const page = aboutPage;
+export default async function AboutPage({
+  params,
+}: LocaleRoute) {
+  const { lang } = await params;
+  if (!isLocale(lang)) notFound();
+  const page = getDictionary(lang).about;
   const titleLines = page.title.split("\n");
-  const [story, closing] = page.storyBlocks;
 
   return (
     <main>
@@ -53,13 +66,11 @@ export default function AboutPage() {
       <section className="bg-[#fafaf7] py-28 md:py-36">
         <Container>
           <div className="mx-auto max-w-3xl">
-            {story && (
-              <Reveal>
-                <p className="text-[1.05rem] leading-[1.85] text-[#6b6860]">
-                  {story.body}
-                </p>
-              </Reveal>
-            )}
+            <Reveal>
+              <p className="text-[1.05rem] leading-[1.85] text-[#6b6860]">
+                {page.story}
+              </p>
+            </Reveal>
           </div>
         </Container>
       </section>
@@ -74,27 +85,25 @@ export default function AboutPage() {
           <div className="mx-auto max-w-3xl text-center">
             <Reveal>
               <p className="eyebrow mb-8 !text-[#f4f3ef]/50 before:bg-[#f4f3ef]/30">
-                {page.philosophyTitle}
+                {page.missionTitle}
               </p>
               <blockquote className="heading-display text-pretty text-[#f4f3ef]">
-                "{page.philosophyBody}"
+                "{page.mission}"
               </blockquote>
             </Reveal>
           </div>
         </Container>
       </section>
 
-      {closing ? (
-        <section className="bg-[#fafaf7] py-28 md:py-36">
-          <Container>
-            <Reveal>
-              <p className="mx-auto max-w-3xl text-[1.05rem] leading-[1.85] text-[#6b6860]">
-                {closing.body}
-              </p>
-            </Reveal>
-          </Container>
-        </section>
-      ) : null}
+      <section className="bg-[#fafaf7] py-28 md:py-36">
+        <Container>
+          <Reveal>
+            <p className="mx-auto max-w-3xl text-[1.05rem] leading-[1.85] text-[#6b6860]">
+              {page.closing}
+            </p>
+          </Reveal>
+        </Container>
+      </section>
 
       {/* ── CTA ─────────────────────────────────────────────────── */}
       <section className="bg-[#fafaf7] py-28 md:py-36">
@@ -102,26 +111,25 @@ export default function AboutPage() {
           <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
             <Reveal className="lg:col-span-7">
               <h2 className="heading-display max-w-xl text-[#141414]">
-                Birlikte çalışalım.
+                {page.ctaTitle}
               </h2>
               <p className="mt-5 max-w-md text-[1rem] leading-[1.8] text-[#6b6860]">
-                Kliniğiniz için doğru ürünü bulmak, iş birliği kurmak veya
-                koleksiyonu keşfetmek için bize ulaşın.
+                {page.ctaBody}
               </p>
             </Reveal>
             <Reveal delay={0.1} className="flex flex-col gap-4 sm:flex-row lg:col-span-5 lg:justify-end">
               <Link
-                href="/iletisim"
+                href={localizeHref(lang, "/iletisim")}
                 className="inline-flex items-center gap-2.5 rounded-full bg-[#24382f] px-6 py-[0.85rem] text-[0.9rem] text-white transition-colors duration-500 ease-[var(--ease-premium)] hover:bg-[#1b2c24]"
               >
-                İletişime geçin
+                {page.contact}
                 <ArrowUpRight className="size-4" strokeWidth={1.7} />
               </Link>
               <Link
-                href="/urunler"
+                href={localizeHref(lang, "/urunler")}
                 className="inline-flex items-center gap-2.5 rounded-full border border-[#141414]/20 px-6 py-[0.85rem] text-[0.9rem] text-[#141414] transition-colors duration-500 ease-[var(--ease-premium)] hover:border-[#141414]/50"
               >
-                Koleksiyona bak
+                {page.collection}
               </Link>
             </Reveal>
           </div>

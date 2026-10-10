@@ -1,4 +1,4 @@
-export const productsQuery = `*[_type == "product"] | order(order asc, title asc) {
+const productFields = `
   _id,
   title,
   "slug": slug.current,
@@ -12,31 +12,23 @@ export const productsQuery = `*[_type == "product"] | order(order asc, title asc
   usage,
   volume,
   tagline,
+  eyebrow,
+  lead,
+  intro,
+  translations {
+    en { tagline, shortDescription, description, benefits, usage, ingredients, eyebrow, lead, intro },
+    ar { tagline, shortDescription, description, benefits, usage, ingredients, eyebrow, lead, intro },
+    ru { tagline, shortDescription, description, benefits, usage, ingredients, eyebrow, lead, intro }
+  },
   cardTint,
   featured,
   order,
   seo
-}`;
+`;
 
-export const productBySlugQuery = `*[_type == "product" && slug.current == $slug][0] {
-  _id,
-  title,
-  "slug": slug.current,
-  shortDescription,
-  description,
-  images[]{..., "url": asset->url, alt},
-  thumbnail{..., "url": asset->url, alt},
-  category->{_id, title, "slug": slug.current, description},
-  ingredients,
-  benefits,
-  usage,
-  volume,
-  tagline,
-  cardTint,
-  featured,
-  order,
-  seo
-}`;
+export const productsQuery = `*[_type == "product"] | order(order asc, title asc) {${productFields}}`;
+
+export const productBySlugQuery = `*[_type == "product" && slug.current == $slug][0] {${productFields}}`;
 
 export const categoriesQuery = `*[_type == "category"] {
   _id,

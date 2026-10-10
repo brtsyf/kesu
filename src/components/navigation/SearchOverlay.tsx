@@ -4,16 +4,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Search, X } from "lucide-react";
+import { useI18n } from "@/components/i18n/I18nProvider";
 import { MediaBox } from "@/components/ui/MediaBox";
+import type { Dictionary } from "@/lib/i18n/types";
 import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
 import type { Product } from "@/lib/sanity/types";
 
 type SearchOverlayProps = {
   open: boolean;
   onClose: () => void;
+  labels: Dictionary["search"];
 };
 
-export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
+export function SearchOverlay({ open, onClose, labels }: SearchOverlayProps) {
+  const { locale, href } = useI18n();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
@@ -50,7 +54,9 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
     const timer = window.setTimeout(async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`, {
+        const res = await fetch(
+          `/api/search?q=${encodeURIComponent(q)}&lang=${locale}`,
+          {
           signal: controller.signal,
         });
         const data = (await res.json()) as { products: Product[] };
@@ -66,14 +72,14 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
       controller.abort();
       window.clearTimeout(timer);
     };
-  }, [query, open]);
+  }, [query, open, locale]);
 
   const emptyMessage = useMemo(() => {
-    if (!query.trim()) return "Ürün, kategori veya içerik arayın.";
-    if (loading) return "Aranıyor…";
-    if (!results.length) return "Sonuç bulunamadı.";
+    if (!query.trim()) return labels.hint;
+    if (loading) return labels.loading;
+    if (!results.length) return labels.empty;
     return null;
-  }, [query, loading, results.length]);
+  }, [query, loading, results.length, labels]);
 
   if (!open) return null;
 
@@ -82,7 +88,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
       className="fixed inset-0 z-[60] flex items-start justify-center bg-dark/40 px-4 pt-[12vh] backdrop-blur-[2px]"
       role="dialog"
       aria-modal="true"
-      aria-label="Ürün ara"
+      aria-label={labels.label}
       onClick={onClose}
     >
       <div
@@ -95,15 +101,15 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Ne arıyorsunuz?"
+            placeholder={labels.placeholder}
             className="w-full bg-transparent text-xl md:text-3xl tracking-tight outline-none placeholder:text-muted/60"
-            aria-label="Arama"
+            aria-label={labels.label}
           />
           <button
             type="button"
             onClick={onClose}
             className="p-2 text-muted hover:text-foreground"
-            aria-label="Aramayı kapat"
+            aria-label={labels.close}
           >
             <X className="size-5" strokeWidth={1.5} />
           </button>
@@ -119,7 +125,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                 return (
                   <li key={product._id}>
                     <Link
-                      href={`/urunler/${product.slug}`}
+                      href={href(`/urunler/${product.slug}`)}
                       onClick={onClose}
                       className="flex items-center gap-4 py-4 group"
                     >
@@ -139,7 +145,9 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                         }
                       </MediaBox>
                       <div className="min-w-0 flex-1">
-                        <p className="tracking-tight truncate">{product.title}</p>
+                        <p className="tracking-tight truncate">
+                          {product.category?.title ?? product.title}
+                        </p>
                         <p className="text-sm text-muted truncate">
                           {product.shortDescription}
                         </p>
@@ -151,7 +159,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
             </ul>
           )}
           <p className="pt-2 pb-1 text-[0.7rem] tracking-[0.12em] uppercase text-muted">
-            Esc ile kapat
+            {labels.esc}
           </p>
         </div>
       </div>

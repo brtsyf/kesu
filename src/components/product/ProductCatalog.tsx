@@ -5,18 +5,21 @@ import { Reveal } from "@/components/animation/Reveal";
 import { ProductCard } from "@/components/product/ProductCard";
 import type { Category, Product } from "@/lib/sanity/types";
 import { cn } from "@/lib/utils/cn";
+import type { Dictionary } from "@/lib/i18n/types";
 import { isLatinAscii } from "@/lib/utils/latin";
 
 type ProductCatalogProps = {
   products: Product[];
   categories: Category[];
   initialCategory?: string;
+  labels: Dictionary["catalog"];
 };
 
 export function ProductCatalog({
   products,
   categories,
   initialCategory = "all",
+  labels,
 }: ProductCatalogProps) {
   const [category, setCategory] = useState(initialCategory);
   const [query, setQuery] = useState("");
@@ -54,12 +57,12 @@ export function ProductCatalog({
         <div
           className="flex flex-wrap gap-x-6 gap-y-3"
           role="tablist"
-          aria-label="Kategori filtresi"
+          aria-label={labels.filter}
         >
           <FilterChip
             active={category === "all"}
             onClick={() => setCategory("all")}
-            label="Tümü"
+            label={labels.all}
           />
           {orderedCategories.map((cat) => (
             <FilterChip
@@ -71,11 +74,11 @@ export function ProductCatalog({
           ))}
         </div>
         <label className="relative block w-full md:max-w-xs">
-          <span className="sr-only">Ürün ara</span>
+          <span className="sr-only">{labels.searchLabel}</span>
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Ara…"
+            placeholder={labels.searchPlaceholder}
             className="w-full border-b border-border bg-transparent py-3 text-sm outline-none placeholder:text-muted focus:border-foreground transition-colors"
           />
         </label>
@@ -83,7 +86,7 @@ export function ProductCatalog({
 
       {filtered.length === 0 ? (
         <p className="py-20 text-muted text-center">
-          Bu kriterlere uygun ürün bulunamadı.
+          {labels.empty}
         </p>
       ) : (
         <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
