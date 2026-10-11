@@ -23,7 +23,7 @@ export function BrandLogo({
   priority = false,
   inverted = false,
   href = "/",
-  label = "Kesu ana sayfa",
+  label = "Kesu",
 }: BrandLogoProps) {
   const height = Math.round((width * LOGO_HEIGHT) / LOGO_WIDTH);
 

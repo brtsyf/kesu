@@ -14,6 +14,8 @@ export function Footer({
   privacyHref,
   termsHref,
   socialLabel,
+  logoHref,
+  logoLabel,
 }: {
   settings: SiteSettings;
   blurb: string;
@@ -24,13 +26,15 @@ export function Footer({
   privacyHref: string;
   termsHref: string;
   socialLabel: string;
+  logoHref: string;
+  logoLabel: string;
 }) {
   return (
     <footer className="mt-auto border-t border-accent/15 bg-surface">
       <Container className="py-16 md:py-20">
         <div className="grid gap-12 md:grid-cols-3 md:gap-8">
           <div className="max-w-sm">
-            <BrandLogo width={128} className="mb-6" />
+            <BrandLogo width={128} href={logoHref} label={logoLabel} className="mb-6" />
             <p className="text-muted text-[0.95rem] leading-relaxed">
               {blurb}
             </p>

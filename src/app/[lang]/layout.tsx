@@ -55,6 +55,8 @@ export default async function LocaleLayout({
           privacyHref={localizeHref(lang, "/cerez-politikasi")}
           termsHref={localizeHref(lang, "/iletisim")}
           socialLabel={dict.header.social}
+          logoHref={localizeHref(lang, "/")}
+          logoLabel={dict.header.logoHome}
         />
         <CookieConsent
           label={dict.cookies.label}

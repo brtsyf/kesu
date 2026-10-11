@@ -3,7 +3,13 @@ import { Reveal } from "@/components/animation/Reveal";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
 import type { FaqItem } from "@/lib/sanity/types";
 
-export function FaqSection({ items }: { items: FaqItem[] }) {
+export function FaqSection({
+  title,
+  items,
+}: {
+  title: string;
+  items: FaqItem[];
+}) {
   return (
     <section
       id="sss"
@@ -16,7 +22,7 @@ export function FaqSection({ items }: { items: FaqItem[] }) {
               Kesu
             </p>
             <h2 className="heading-display text-balance text-[#f4f3ef]">
-              Bizi daha iyi tanıyın.
+              {title}
             </h2>
           </Reveal>
           <Reveal className="lg:col-span-8" delay={0.08}>

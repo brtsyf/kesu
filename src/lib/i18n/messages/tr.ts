@@ -24,6 +24,7 @@ export const tr: Dictionary = {
     menu: "Menü",
     social: "Sosyal medya",
     tagline: "Profesyonel mezoterapi solüsyonları",
+    language: "Dil",
   },
   intro: {
     line: "Klinik sonuç.\nKesin formül.",
@@ -97,6 +98,7 @@ export const tr: Dictionary = {
       "Gerçek bakım, doğru formül ve doğru uygulama ile başlar.",
     testimonialName: "Kesu Klinik Ağı",
     testimonialRole: "Profesyonel uygulamalar",
+    faqTitle: "Bizi daha iyi tanıyın.",
     faqs: [
       {
         question: "Kesu ürünleri kimler için uygundur?",

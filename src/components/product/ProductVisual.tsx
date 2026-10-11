@@ -2,9 +2,11 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
-import { cn } from "@/lib/utils/cn";
+import { useI18n } from "@/components/i18n/I18nProvider";
+import { assetAlt } from "@/lib/i18n/asset-alt";
+import { getImageUrl } from "@/lib/sanity/image";
 import type { SanityImage } from "@/lib/sanity/types";
+import { cn } from "@/lib/utils/cn";
 
 type ProductVisualProps = {
   bottle?: SanityImage;
@@ -40,6 +42,8 @@ export function ProductVisual({
   variant = "stage",
 }: ProductVisualProps) {
   const reduced = useReducedMotion();
+  const { locale } = useI18n();
+  const pictureAlt = (image?: SanityImage) => assetAlt(image?.alt, alt, locale);
   const isCard = variant === "card";
   const bottleSrc = getImageUrl(bottle ?? (isCard ? undefined : image), 1600);
   const backdropSrc = isCard ? undefined : getImageUrl(backdrop, 1800);
@@ -98,7 +102,7 @@ export function ProductVisual({
         {singleSrc ? (
           <motion.img
             src={singleSrc}
-            alt={getImageAlt(bottle ?? image, alt)}
+            alt={pictureAlt(bottle ?? image)}
             className={cn(
               "kesu-product-cutout mx-auto w-auto origin-[50%_70%] object-contain object-center",
               editorial
@@ -210,7 +214,7 @@ export function ProductVisual({
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={bottleSrc}
-                alt={getImageAlt(bottle ?? image, alt)}
+                alt={pictureAlt(bottle ?? image)}
                 className="absolute inset-0 h-full w-full object-contain"
                 draggable={false}
                 decoding={priority ? "sync" : "async"}
@@ -231,7 +235,7 @@ export function ProductVisual({
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={singleSrc}
-          alt={getImageAlt(image ?? bottle, alt)}
+          alt={pictureAlt(image ?? bottle)}
           className={cn(
             "absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ease-[var(--ease-premium)]",
             loaded ? "opacity-100" : "opacity-0",

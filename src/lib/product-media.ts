@@ -85,7 +85,13 @@ export function getProductStillLife(
       /loci|studio|stüdyo/i.test(`${image.url ?? ""} ${image.alt ?? ""}`),
     ) ?? remotes[1];
   if (remoteStudio) {
-    return { ...remoteStudio, alt: remoteStudio.alt || alt || "" };
+    const stored = remoteStudio.alt?.trim() ?? "";
+    const translated = alt?.trim();
+    const staleTurkish = /stüdyo|ampul/i.test(stored);
+    return {
+      ...remoteStudio,
+      alt: staleTurkish && translated ? translated : stored || translated || "",
+    };
   }
   const local = PRODUCT_STILL_LIFES[slug];
   if (local) {

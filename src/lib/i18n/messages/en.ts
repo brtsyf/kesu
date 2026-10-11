@@ -24,6 +24,7 @@ export const en: Dictionary = {
     menu: "Menu",
     social: "Social media",
     tagline: "Professional mesotherapy solutions",
+    language: "Language",
   },
   intro: {
     line: "Clinical result.\nPrecise formula.",
@@ -95,6 +96,7 @@ export const en: Dictionary = {
     testimonialQuote: "Real care begins with the right formula and the right application.",
     testimonialName: "Kesu Clinic Network",
     testimonialRole: "Professional treatments",
+    faqTitle: "Get to know us better.",
     faqs: [
       {
         question: "Who are Kesu products for?",

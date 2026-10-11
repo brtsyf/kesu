@@ -24,6 +24,7 @@ export const ar: Dictionary = {
     menu: "القائمة",
     social: "وسائل التواصل",
     tagline: "محاليل ميزوثيرابي مهنية",
+    language: "اللغة",
   },
   intro: {
     line: "نتيجة سريرية.\nتركيبة دقيقة.",
@@ -95,6 +96,7 @@ export const ar: Dictionary = {
     testimonialQuote: "العناية الحقيقية تبدأ بالتركيبة الصحيحة والتطبيق الصحيح.",
     testimonialName: "شبكة عيادات Kesu",
     testimonialRole: "تطبيقات مهنية",
+    faqTitle: "تعرّفوا علينا أكثر.",
     faqs: [
       {
         question: "لمن تناسب منتجات Kesu؟",

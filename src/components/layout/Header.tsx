@@ -109,7 +109,7 @@ export function Header({
             >
               <Search className="size-6" strokeWidth={1.5} />
             </button>
-            <LanguageSwitcher />
+            <LanguageSwitcher label={labels.language} />
             <SocialLinks
               links={socialLinks}
               variant="header"
@@ -226,7 +226,7 @@ export function Header({
                       );
                     })}
                   </ul>
-                  <LanguageSwitcher placement="menu" />
+                  <LanguageSwitcher placement="menu" label={labels.language} />
                 </div>
 
                 <motion.p

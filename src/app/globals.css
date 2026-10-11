@@ -464,16 +464,16 @@ html[lang="ar"] body {
   top: 50%;
   left: 0;
   z-index: 0;
-  width: 78%;
-  height: 260%;
+  width: 62%;
+  height: 200%;
   border-radius: 999px;
   background: radial-gradient(
     ellipse at center,
-    rgba(14, 130, 68, 0.95) 0%,
-    rgba(28, 168, 86, 0.42) 48%,
-    transparent 76%
+    rgba(255, 255, 255, 0.42) 0%,
+    rgba(255, 255, 255, 0.16) 46%,
+    transparent 72%
   );
-  filter: blur(12px);
+  filter: blur(8px);
   pointer-events: none;
   animation: kesu-wa-drift 3.6s linear infinite;
 }

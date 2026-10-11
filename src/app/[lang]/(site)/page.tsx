@@ -11,7 +11,8 @@ import { localizeProduct } from "@/lib/i18n/localize-product";
 import { homePage } from "@/lib/data/seed";
 import { resolveBottleImage } from "@/lib/product-media";
 import { getProducts, getSiteSettings } from "@/lib/sanity/fetch";
-import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
+import { assetAlt } from "@/lib/i18n/asset-alt";
+import { getImageUrl } from "@/lib/sanity/image";
 import { buildMetadata, organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 
 export async function generateMetadata({
@@ -54,7 +55,7 @@ export default async function HomePage({ params }: LocaleRoute) {
       return [
         {
           src,
-          alt: getImageAlt(image, product.title),
+          alt: assetAlt(image?.alt, product.category?.title ?? product.title, lang),
           caption: product.category?.title ?? product.title,
           captionSub: product.tagline ?? "",
           href: localizeHref(lang, `/urunler/${product.slug}`),
@@ -117,7 +118,7 @@ export default async function HomePage({ params }: LocaleRoute) {
             product: dict.home.testimonialRole,
           }}
         />
-        <FaqSection items={dict.home.faqs} />
+        <FaqSection title={dict.home.faqTitle} items={dict.home.faqs} />
         <CtaSection
           title={dict.home.ctaTitle}
           description={dict.home.ctaBody}

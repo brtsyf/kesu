@@ -14,7 +14,7 @@ import {
 } from "framer-motion";
 import { KoreanBeautyHeadline } from "@/components/animation/KoreanBeautyHeadline";
 import { Reveal } from "@/components/animation/Reveal";
-import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
+import { getImageUrl } from "@/lib/sanity/image";
 import type { HeroContent } from "@/lib/sanity/types";
 import { cn } from "@/lib/utils/cn";
 
@@ -428,9 +428,9 @@ export function Hero({
       ? [
           {
             src: bottleSrc,
-            alt: getImageAlt(content.bottle, "Kesu Lifting ampul"),
+            alt: content.bottle?.alt?.trim() || "Kesu",
             caption: content.caption ?? "Lifting",
-            captionSub: content.captionSub ?? "Sıkılık & elastikiyet",
+            captionSub: content.captionSub ?? "",
             href: content.captionHref ?? "/urunler/kesu-six-lift",
           },
         ]
@@ -440,7 +440,7 @@ export function Hero({
   );
   const visual: VisualProps = {
     portraitSrc: getImageUrl(content.image, 1800) || PORTRAIT_FALLBACK,
-    portraitAlt: getImageAlt(content.image, "Kesu — cilt bakımı"),
+    portraitAlt: content.image?.alt?.trim() || "Kesu",
     reduced,
   };
 

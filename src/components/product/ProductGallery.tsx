@@ -8,7 +8,9 @@ import { ProductMorphTarget } from "@/components/product/ProductMorphTarget";
 import { ProductDetailExitMorph } from "@/components/product/ProductDetailExitMorph";
 import { useProductMorphOptional } from "@/components/product/ProductMorphContext";
 import { MediaBox } from "@/components/ui/MediaBox";
-import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
+import { useI18n } from "@/components/i18n/I18nProvider";
+import { assetAlt } from "@/lib/i18n/asset-alt";
+import { getImageUrl } from "@/lib/sanity/image";
 import { getProductTint, resolveBottleImage } from "@/lib/product-media";
 import type { SanityImage } from "@/lib/sanity/types";
 
@@ -73,6 +75,7 @@ export function ProductGallery({
   emptyLabel?: string;
 }) {
   const morph = useProductMorphOptional();
+  const { locale } = useI18n();
   const reduced = useReducedMotion();
   const cutoutImage = resolveBottleImage(slug, title, bottle, images[0]);
   const gallery = cutoutImage
@@ -163,7 +166,7 @@ export function ProductGallery({
               <GalleryThumb
                 key={`${thumb}-${index}`}
                 src={thumb}
-                alt={getImageAlt(image, `${title} ${index + 1}`)}
+                alt={assetAlt(image.alt, imageLabel.replace("{n}", String(index + 1)), locale)}
                 active={active === index}
                 onSelect={() => setActive(index)}
                 label={imageLabel.replace("{n}", String(index + 1))}

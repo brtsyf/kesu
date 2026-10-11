@@ -32,6 +32,7 @@ export type Dictionary = {
     menu: string;
     social: string;
     tagline: string;
+    language: string;
   };
   intro: {
     line: string;
@@ -59,6 +60,7 @@ export type Dictionary = {
     testimonialQuote: string;
     testimonialName: string;
     testimonialRole: string;
+    faqTitle: string;
     faqs: { question: string; answer: string }[];
     ctaTitle: string;
     ctaBody: string;

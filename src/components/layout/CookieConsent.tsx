@@ -46,7 +46,7 @@ export function CookieConsent({
         <motion.div
           role="dialog"
           aria-label={label}
-          className="fixed inset-x-3 bottom-36 z-[45] lg:inset-x-0 lg:bottom-6 lg:mx-auto lg:w-[42rem]"
+          className="fixed inset-x-3 bottom-28 z-[45] lg:inset-x-0 lg:bottom-6 lg:mx-auto lg:w-[42rem]"
           initial={reduced ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           exit={reduced ? undefined : { opacity: 0, y: 10 }}

@@ -7,7 +7,8 @@ import { Search, X } from "lucide-react";
 import { useI18n } from "@/components/i18n/I18nProvider";
 import { MediaBox } from "@/components/ui/MediaBox";
 import type { Dictionary } from "@/lib/i18n/types";
-import { getImageAlt, getImageUrl } from "@/lib/sanity/image";
+import { assetAlt } from "@/lib/i18n/asset-alt";
+import { getImageUrl } from "@/lib/sanity/image";
 import type { Product } from "@/lib/sanity/types";
 
 type SearchOverlayProps = {
@@ -134,7 +135,7 @@ export function SearchOverlay({ open, onClose, labels }: SearchOverlayProps) {
                           src ? (
                             <Image
                               src={src}
-                              alt={getImageAlt(product.thumbnail, product.title)}
+                              alt={assetAlt(product.thumbnail?.alt, product.title, locale)}
                               fill
                               className={`object-cover transition-transform duration-700 group-hover:scale-[1.03] ${imgClassName}`}
                               sizes="64px"

@@ -10,8 +10,10 @@ const labels = { tr: "TR", en: "EN", ar: "ع", ru: "RU" } as const;
 
 export function LanguageSwitcher({
   placement = "header",
+  label,
 }: {
   placement?: "header" | "menu";
+  label: string;
 }) {
   const { locale } = useI18n();
   const pathname = usePathname();
@@ -20,7 +22,7 @@ export function LanguageSwitcher({
 
   return (
     <nav
-      aria-label="Language"
+      aria-label={label}
       className={cn(
         "items-center",
         inMenu ? "mt-8 flex gap-6" : "hidden gap-1.5 lg:flex lg:me-2",
